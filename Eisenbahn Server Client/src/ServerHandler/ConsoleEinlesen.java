@@ -1,3 +1,4 @@
+package ServerHandler;
 import java.util.Scanner;
 
 public class ConsoleEinlesen implements Runnable {
