@@ -2,9 +2,10 @@ package GPIO;
 
 public class Weichen {
 	public static final Weichen WEICHEN = new Weichen();
-	char statusWeiche1;
-	char statusWeiche2;
-	char statusWeiche3;
+	
+	private char statusWeiche1;
+	private char statusWeiche2;
+	private char statusWeiche3;
 
 	/**
 	 * Pins steuern Schaltbox an und überbrücken den Taster

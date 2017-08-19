@@ -3,7 +3,7 @@ package GPIO;
 public class Signal {
 	public static final Signal SIGNAL = new Signal();
 	
-	char statusSignal;
+	private char statusSignal;
 	
 	/**
 	 * Pins steuern Schaltbox an und überbrücken den Taster
