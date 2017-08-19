@@ -2,6 +2,8 @@ package ServerHandler;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import GPIO.GpioHandler;
 /**
 
  * Verwaltung der neuen Clients
@@ -10,14 +12,29 @@ import java.net.Socket;
 public class SocketServer {
 
 	public static void main(String[] args) {
+		
+		
+		//GPIO Pins aktivieren
+//		GpioHandler gp = new GpioHandler();
+//		try {
+//			gp.gpio();
+//		} catch (InterruptedException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+		
+		
+		
 		ServerSocket serverSocket = null;
 
 		// ServerSocket erstellen
 		try {
-			serverSocket = new ServerSocket(602);
+			serverSocket = new ServerSocket(603);
 		} catch (IOException e) {
 			System.out.println("!! - ServerSocket -Port schlug fehl: " + e.getMessage());
 		}
+		
+		System.out.println("Gartenbahn Server gestartet! mit IP: " + serverSocket.getLocalSocketAddress().toString());
 
 		// Thread zum einlesen von der Konsole (NUR ZUM PROBEBETRIEB)
 		Thread senden = new Thread(new ConsoleEinlesen());
@@ -56,7 +73,7 @@ public class SocketServer {
 					//Zug connected gerade
 					connectedDevice = new Zug(helferName, clientSocket);
 					ZugManager.INSTANCE.registerZug((Zug) connectedDevice);
-				}
+					}
 
 				// Thread erstellen und zug übergeben
 				Thread threadHandler = new Thread(new EmpfangHandler(connectedDevice));
