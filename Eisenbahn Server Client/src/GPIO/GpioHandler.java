@@ -7,13 +7,15 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
+import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
+import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
 
 public class GpioHandler {
 	
 	private GpioHandler() {	}
 	
-	public static final GpioHandler GPIOHANDLER = new GpioHandler();
+	public static final GpioHandler INSTANCE = new GpioHandler();
 	
 	final GpioController gpio = GpioFactory.getInstance();
 		
@@ -37,7 +39,19 @@ public class GpioHandler {
 	final GpioPinDigitalInput tasterWeiche2 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_10, PinPullResistance.PULL_DOWN);
 	final GpioPinDigitalInput tasterWeiche3 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_11, PinPullResistance.PULL_DOWN);
 	
-	//TODO Zug Steuerung / Anzeige
+	//Drehregler
+	final GpioPinDigitalInput drehreglerEinsClk = gpio.provisionDigitalInputPin(RaspiPin.GPIO_12, PinPullResistance.PULL_DOWN);
+	final GpioPinDigitalInput drehreglerEinsDT = gpio.provisionDigitalInputPin(RaspiPin.GPIO_13, PinPullResistance.PULL_DOWN);
+	final GpioPinDigitalInput drehreglerEinsTaster = gpio.provisionDigitalInputPin(RaspiPin.GPIO_14, PinPullResistance.PULL_DOWN);
+	final GpioPinDigitalInput drehreglerZweiClk = gpio.provisionDigitalInputPin(RaspiPin.GPIO_10, PinPullResistance.PULL_DOWN);
+	final GpioPinDigitalInput drehreglerZweiDT = gpio.provisionDigitalInputPin(RaspiPin.GPIO_10, PinPullResistance.PULL_DOWN);
+	final GpioPinDigitalInput drehreglerZweiTaster = gpio.provisionDigitalInputPin(RaspiPin.GPIO_10, PinPullResistance.PULL_DOWN);
+		
+	//TODO LED Statusanzeige
+		
+	//TODO Ziffern der Tempoanzeige
+	
+	
 	
 	
 
