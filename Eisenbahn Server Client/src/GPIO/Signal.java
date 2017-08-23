@@ -1,6 +1,10 @@
 package GPIO;
 
-public class Signal {
+public class Signal extends GpioHandler {
+	
+	public Signal() {
+		super();
+	}
 	public static final Signal SIGNAL = new Signal();
 	
 	private char statusSignal;
@@ -15,15 +19,15 @@ public class Signal {
 	 */
 	public void schalteSignal(char c) throws InterruptedException {
 		if (c == 'g') {
-			GpioHandler.GPIOHANDLER.SignalAN.high();
+			SignalAN.high();
 			Thread.sleep(100);
-			GpioHandler.GPIOHANDLER.SignalAN.low();
+			SignalAN.low();
 			statusSignal = 'g';
 
 		} else if (c == 's') {
-			GpioHandler.GPIOHANDLER.SignalAUS.high();
+			SignalAUS.high();
 			Thread.sleep(100);
-			GpioHandler.GPIOHANDLER.SignalAUS.low();
+			SignalAUS.low();
 			statusSignal = 's';
 
 		} else if (c == 't') {

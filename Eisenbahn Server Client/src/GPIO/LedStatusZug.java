@@ -1,5 +1,9 @@
 package GPIO;
 
-public class LedStatusZug {
+public class LedStatusZug extends GpioHandler {
+	
+	public LedStatusZug() {
+		super();
+	}
 
 }

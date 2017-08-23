@@ -3,9 +3,10 @@ package GPIO;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
-public class TasterSnifferSignalWeiche implements Runnable {
+public class TasterSnifferSignalWeiche extends GpioHandler implements Runnable {
 
 	public TasterSnifferSignalWeiche() {
+		super();
 	}
 
 	@Override
@@ -13,7 +14,7 @@ public class TasterSnifferSignalWeiche implements Runnable {
 		/**
 		 * Signal warten auf Tasterdruck löst Toggle funktion bei Weiche aus
 		 */
-		GpioHandler.GPIOHANDLER.tasterSignal.addListener(new GpioPinListenerDigital() {
+		tasterSignal.addListener(new GpioPinListenerDigital() {
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				System.out.println(" --> GPIO Zustand: " + event.getPin() + " = " + event.getState());
@@ -28,7 +29,7 @@ public class TasterSnifferSignalWeiche implements Runnable {
 		/**
 		 * Weiche 1 warten auf Tasterdruck löst Toggle funktion bei Weiche aus
 		 */
-		GpioHandler.GPIOHANDLER.tasterWeiche1.addListener(new GpioPinListenerDigital() {
+		tasterWeiche1.addListener(new GpioPinListenerDigital() {
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				System.out.println(" --> GPIO Zustand: " + event.getPin() + " = " + event.getState());
@@ -43,7 +44,7 @@ public class TasterSnifferSignalWeiche implements Runnable {
 		/**
 		 * Weiche 2 warten auf Tasterdruck löst Toggle funktion bei Weiche aus
 		 */
-		GpioHandler.GPIOHANDLER.tasterWeiche2.addListener(new GpioPinListenerDigital() {
+		tasterWeiche2.addListener(new GpioPinListenerDigital() {
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				System.out.println(" --> GPIO Zustand: " + event.getPin() + " = " + event.getState());
@@ -58,7 +59,7 @@ public class TasterSnifferSignalWeiche implements Runnable {
 		/**
 		 * Weiche 3 warten auf Tasterdruck löst Toggle funktion bei Weiche aus
 		 */
-		GpioHandler.GPIOHANDLER.tasterWeiche3.addListener(new GpioPinListenerDigital() {
+		tasterWeiche3.addListener(new GpioPinListenerDigital() {
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				System.out.println(" --> GPIO Zustand: " + event.getPin() + " = " + event.getState());
@@ -70,7 +71,7 @@ public class TasterSnifferSignalWeiche implements Runnable {
 				}
 			}
 		});
-		GpioHandler.GPIOHANDLER.tasterWeiche3.addListener(new GpioPinListenerDigital() {
+		tasterWeiche3.addListener(new GpioPinListenerDigital() {
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				System.out.println(" --> GPIO Zustand: " + event.getPin() + " = " + event.getState());

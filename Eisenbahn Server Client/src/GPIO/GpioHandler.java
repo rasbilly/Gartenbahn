@@ -7,18 +7,13 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
-import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
-import com.pi4j.io.gpio.event.GpioPinListenerDigital;
+
 
 
 public class GpioHandler {
-	
-	private GpioHandler() {	}
-	
-	public static final GpioHandler INSTANCE = new GpioHandler();
-	
-	final GpioController gpio = GpioFactory.getInstance();
-		
+	static GpioController gpio = GpioFactory.getInstance();
+	 
+					
 	//SIGNAL
 	final GpioPinDigitalOutput SignalAN = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Signal AN", PinState.LOW);
 	final GpioPinDigitalOutput SignalAUS = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "Signal AUS", PinState.LOW);

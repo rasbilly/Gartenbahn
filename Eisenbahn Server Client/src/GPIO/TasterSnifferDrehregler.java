@@ -3,24 +3,33 @@ package GPIO;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
-public class TasterSnifferDrehregler implements Runnable {
+public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
+	
+	
+	public TasterSnifferDrehregler() {
+		super();  //gpio
+	}
+	
 
+	//TODO Verkünpfung zum Zug Objekt
+	
 	// var anlegen
 	int counter = 0;
 	boolean richtung;
-	int clk_Letzter = GpioHandler.INSTANCE.drehreglerEinsClk.getState().getValue();
+	int clk_Letzter = drehreglerEinsClk.getState().getValue();
 	int clk_Aktuell;
 	int helfer;
 
 	@Override
 	public void run() {
 
-		GpioHandler.INSTANCE.drehreglerEinsClk.addListener(new GpioPinListenerDigital() {
+		
+		drehreglerEinsClk.addListener(new GpioPinListenerDigital() {
 
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-				clk_Aktuell = GpioHandler.INSTANCE.drehreglerEinsClk.getState().getValue();
-				int dt = GpioHandler.INSTANCE.drehreglerEinsDT.getState().getValue();
+				clk_Aktuell = drehreglerEinsClk.getState().getValue();
+				int dt = drehreglerEinsDT.getState().getValue();
 
 				if (clk_Aktuell != clk_Letzter) {
 
@@ -51,6 +60,14 @@ public class TasterSnifferDrehregler implements Runnable {
 
 			}
 
+		});
+		drehreglerEinsTaster.addListener(new GpioPinListenerDigital() {
+			@Override
+			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+				counter = 0;
+				System.out.println("Stopp - Tempo: 0");
+				
+			}
 		});
 	}
 }

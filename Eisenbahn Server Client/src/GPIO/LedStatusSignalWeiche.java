@@ -1,5 +1,8 @@
 package GPIO;
 
-public class LedStatusSignalWeiche {
+public class LedStatusSignalWeiche extends GpioHandler{
 
+	public LedStatusSignalWeiche() {
+		super();
+	}
 }
