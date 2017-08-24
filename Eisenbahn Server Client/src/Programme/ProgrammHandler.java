@@ -2,20 +2,25 @@ package Programme;
 
 public class ProgrammHandler {
 	
+	P1 p1 = new P1();
+	P2 p2 = new P2();
+	P3 p3 = new P3();
+	
 	/**
 	 * Aktiviert das jeweilige Programm
 	 * @param p
 	 */
 	public void programmWaehlen(int p){
-		P1.INSTANCE.status = false;
-		P2.INSTANCE.status = false;
-		P3.INSTANCE.status = false;
+		
+		p1.status = false;
+		p2.status = false;
+		p3.status = false;
 		if(p == 1){
-			P1.INSTANCE.status = true;
+			p1.status = true;
 		}else if(p ==2){
-			P2.INSTANCE.status = true;
+			p2.status = true;
 		}else if(p == 3){
-			P3.INSTANCE.status = true;
+			p3.status = true;
 		}else{
 			System.err.println("Kein Programm gefunden");
 		}
@@ -28,11 +33,11 @@ public class ProgrammHandler {
 	 * @return 
 	 */
 	public String proStatusAbfrage(){
-		if(P1.INSTANCE.status==true){
+		if(p1.status==true){
 			return "Programm 1 Aktive";
-		}else if (P2.INSTANCE.status==true){
+		}else if (p2.status==true){
 			return"Programm 2 Aktive";
-		}else if (P3.INSTANCE.status==true){
+		}else if (p3.status==true){
 			return"Programm 3 Aktive";
 		}
 		return "Manuelle Fahrt";

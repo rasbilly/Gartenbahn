@@ -3,6 +3,9 @@ package GPIO;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
+import ServerHandler.Zug;
+import ServerHandler.ZugManager;
+
 public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 	
 	
@@ -10,9 +13,10 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 		super();  //gpio
 	}
 	
-
-	//TODO Verkünpfung zum Zug Objekt
+	//Regler dem Zug zuweisen
+	Zug zug =ZugManager.INSTANCE.findZugByName("Anna");
 	
+		
 	// var anlegen
 	int counter = 0;
 	boolean richtung;
@@ -53,6 +57,7 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 							}
 							System.out.println("Tempo: " + counter / 2);
 							helfer = counter;
+							zug.setTempo(counter/2);
 						}
 					}
 				}
@@ -67,6 +72,7 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 				counter = 0;
 				System.out.println("Stopp - Tempo: 0");
 				
+				zug.setTempo(0);
 			}
 		});
 	}

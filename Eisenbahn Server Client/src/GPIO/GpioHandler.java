@@ -43,8 +43,16 @@ public class GpioHandler {
 	final GpioPinDigitalInput drehreglerZweiTaster = gpio.provisionDigitalInputPin(RaspiPin.GPIO_10, PinPullResistance.PULL_DOWN);
 		
 	//TODO LED Statusanzeige
+	final GpioPinDigitalOutput faRiLedZugAnna = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "Weiche 3 Links", PinState.LOW);
+	final GpioPinDigitalOutput faRiLedZugZwei = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07, "Weiche 3 Rechts", PinState.LOW);
+	
 		
 	//TODO Ziffern der Tempoanzeige
+	
+	//TASTER Programme
+	final GpioPinDigitalInput programm1 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_09, PinPullResistance.PULL_DOWN);
+	final GpioPinDigitalInput programm2 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_10, PinPullResistance.PULL_DOWN);
+	final GpioPinDigitalInput programm3 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_11, PinPullResistance.PULL_DOWN);
 	
 	
 	

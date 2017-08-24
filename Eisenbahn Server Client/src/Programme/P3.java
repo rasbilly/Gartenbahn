@@ -1,8 +1,8 @@
 package Programme;
 
-public class P3 {
+public class P3 extends ProgrammHandler {
 
-	public static final P3 INSTANCE = new P3();
+	
 	boolean status = false;
 
 }
