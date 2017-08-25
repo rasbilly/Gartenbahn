@@ -3,18 +3,27 @@ package GPIO;
 import ServerHandler.Zug;
 import ServerHandler.ZugManager;
 
-public class LedStatusZug extends GpioHandler implements Runnable {
+public class LedStatusZug extends GpioHandler {
 
 	public LedStatusZug() {
 		super();
 	}
 
-	//TODO bisher nur für einen Zug
-	
+	// TODO bisher nur für einen Zug
+
 	// Regler dem Zug zuweisen
 	Zug zugAnna = ZugManager.INSTANCE.findZugByName("Anna");
 
-	public void statusLed() {
+	
+
+	public void statusLedZugAnna(int tempo) {
+		if (tempo < 0 && tempo > -10) {
+
+		} else if (tempo >= 0 && tempo < 10) {
+
+		} else {
+
+		}
 
 	}
 

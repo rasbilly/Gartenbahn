@@ -45,30 +45,45 @@ public class GpioHandler {
 	final GpioPinDigitalInput drehreglerZweiDT = gpio.provisionDigitalInputPin(RaspiPin.GPIO_10, PinPullResistance.PULL_DOWN);
 	final GpioPinDigitalInput drehreglerZweiTaster = gpio.provisionDigitalInputPin(RaspiPin.GPIO_10, PinPullResistance.PULL_DOWN);
 		
-	//TODO LED Statusanzeige
-	final GpioPinDigitalOutput faRiLedZugAnna = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "Weiche 3 Links", PinState.LOW);
-	final GpioPinDigitalOutput faRiLedZugZwei = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07, "Weiche 3 Rechts", PinState.LOW);
+	//LED Statusanzeige
+	final GpioPinDigitalOutput faRiLedZugAnna = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "Fahrtrichtung Anna", PinState.LOW);
+	final GpioPinDigitalOutput faRiLedZugZwei = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07, "Fahrtrichtung Zug 2", PinState.LOW);
+	
+	
+	//LED Weiche / Signal
+	final GpioPinDigitalOutput ledWeiche1Links = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "LED Weiche 1 Links", PinState.LOW);
+	final GpioPinDigitalOutput ledWeiche1Rechts = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "LED Weiche 1 Rechts", PinState.LOW);
+	final GpioPinDigitalOutput ledWeiche2Links = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07, "LED Weiche 2 Links", PinState.LOW);
+	final GpioPinDigitalOutput ledWeiche2Rechts = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07, "LED Weiche 2 Rechts", PinState.LOW);
+	final GpioPinDigitalOutput ledWeiche3Links = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "LED Weiche 3 Links", PinState.LOW);
+	final GpioPinDigitalOutput ledWeiche3Rechts = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "LED Weiche 3 Rechts", PinState.LOW);
+	final GpioPinDigitalOutput ledSignalOben = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07, "LED Signal Oben", PinState.LOW);
+	final GpioPinDigitalOutput ledSignalUnten = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07, "LED Signal Unten", PinState.LOW);
 	
 		
 	//TODO Ziffern der Tempoanzeige
+		//Zug 1
+	
+		//Zug 2
 	
 	//TASTER Programme
 	final GpioPinDigitalInput programm1 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_09, PinPullResistance.PULL_DOWN);
 	final GpioPinDigitalInput programm2 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_10, PinPullResistance.PULL_DOWN);
 	final GpioPinDigitalInput programm3 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_11, PinPullResistance.PULL_DOWN);
 	
+	
 	/**
 	 * Threads für Taster und andere eingaben erstellen
 	 */
 	public void threadErstellerEingang(){
 	
-	Thread tasterDrehregler = new Thread(new TasterSnifferDrehregler());
-	Thread tasterSignalWeiche = new Thread(new TasterSnifferSignalWeiche());
-	Thread tasterProgramme = new Thread(new TasterSnifferProgramme());
+		Thread tasterDrehregler = new Thread(new TasterSnifferDrehregler());
+		Thread tasterSignalWeiche = new Thread(new TasterSnifferSignalWeiche());
+		Thread tasterProgramme = new Thread(new TasterSnifferProgramme());
 	
-	tasterDrehregler.start();
-	tasterProgramme.start();
-	tasterSignalWeiche.start();
+		tasterDrehregler.start();
+		tasterProgramme.start();
+		tasterSignalWeiche.start();
 	}
 
 }
