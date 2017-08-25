@@ -13,6 +13,7 @@ public class SocketServer {
 
 	public static void main(String[] args) {
 		
+		System.out.println("Start Gartenbahn");
 		
 		//GPIO Pins aktivieren
 //		GpioHandler gp = new GpioHandler();
@@ -22,6 +23,7 @@ public class SocketServer {
 //			// TODO Auto-generated catch block
 //			e1.printStackTrace();
 //		}
+		System.out.println("GPIOs aktiviert");
 		
 		
 		

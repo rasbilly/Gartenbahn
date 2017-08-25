@@ -8,10 +8,13 @@ import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 
-
-
 public class GpioHandler {
+	
 	static GpioController gpio = GpioFactory.getInstance();
+	
+	public GpioHandler() {
+		threadErstellerEingang();
+	}
 	 
 					
 	//SIGNAL
@@ -54,8 +57,18 @@ public class GpioHandler {
 	final GpioPinDigitalInput programm2 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_10, PinPullResistance.PULL_DOWN);
 	final GpioPinDigitalInput programm3 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_11, PinPullResistance.PULL_DOWN);
 	
+	/**
+	 * Threads für Taster und andere eingaben erstellen
+	 */
+	public void threadErstellerEingang(){
 	
+	Thread tasterDrehregler = new Thread(new TasterSnifferDrehregler());
+	Thread tasterSignalWeiche = new Thread(new TasterSnifferSignalWeiche());
+	Thread tasterProgramme = new Thread(new TasterSnifferProgramme());
 	
-	
+	tasterDrehregler.start();
+	tasterProgramme.start();
+	tasterSignalWeiche.start();
+	}
 
 }
