@@ -1,5 +1,8 @@
 package GPIO;
 
+import com.pi4j.io.gpio.GpioPinDigitalInput;
+import com.pi4j.io.gpio.PinPullResistance;
+import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
@@ -8,12 +11,17 @@ public class TasterSnifferProgramme extends GpioHandler implements Runnable {
 	public TasterSnifferProgramme() {
 		super();
 	}
+	
+//	final GpioPinDigitalInput programm1 =	  gpio.provisionDigitalInputPin(RaspiPin.GPIO_30,	  PinPullResistance.PULL_DOWN); 
+//	  final GpioPinDigitalInput programm2 =	  gpio.provisionDigitalInputPin(RaspiPin.GPIO_30,	  PinPullResistance.PULL_DOWN); 
+//	  final GpioPinDigitalInput programm3 =	  gpio.provisionDigitalInputPin(RaspiPin.GPIO_30,	  PinPullResistance.PULL_DOWN);
+	 
 
 	@Override
 	public void run() {
-		/**
+	}		/**
 		 * Startet Programm 1
-		 */
+		 
 		programm1.addListener(new GpioPinListenerDigital() {
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
@@ -37,8 +45,8 @@ public class TasterSnifferProgramme extends GpioHandler implements Runnable {
 				}
 			}
 		});
-		/**
-		 */
+		
+
 		programm3.addListener(new GpioPinListenerDigital() {
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
@@ -59,6 +67,6 @@ public class TasterSnifferProgramme extends GpioHandler implements Runnable {
 				e.printStackTrace();
 			}
 		}
-
-	}
+*/
+//	}
 }

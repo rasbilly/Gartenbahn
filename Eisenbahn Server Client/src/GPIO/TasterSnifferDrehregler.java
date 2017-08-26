@@ -1,5 +1,8 @@
 package GPIO;
 
+import com.pi4j.io.gpio.GpioPinDigitalInput;
+import com.pi4j.io.gpio.PinPullResistance;
+import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
@@ -11,10 +14,21 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 	
 	public TasterSnifferDrehregler() {
 		super();  //gpio
+		
 	}
+	//Drehregler Eins
+	final GpioPinDigitalInput drehreglerEinsClk = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, PinPullResistance.PULL_DOWN);
+	final GpioPinDigitalInput drehreglerEinsDT = gpio.provisionDigitalInputPin(RaspiPin.GPIO_03, PinPullResistance.PULL_DOWN);
+	final GpioPinDigitalInput drehreglerEinsTaster =  gpio.provisionDigitalInputPin(RaspiPin.GPIO_30,PinPullResistance.PULL_DOWN); 
+	//Drehregler Zwei
+//	final GpioPinDigitalInput drehreglerZweiClk = gpio.provisionDigitalInputPin(RaspiPin.GPIO_30, PinPullResistance.PULL_DOWN); 
+//	final GpioPinDigitalInput drehreglerZweiDT = gpio.provisionDigitalInputPin(RaspiPin.GPIO_30, PinPullResistance.PULL_DOWN); 
+//	final GpioPinDigitalInput drehreglerZweiTaster = gpio.provisionDigitalInputPin(RaspiPin.GPIO_30, PinPullResistance.PULL_DOWN); 
+	 
+	
 	
 	//Regler dem Zug zuweisen
-	Zug zug =ZugManager.INSTANCE.findZugByName("Anna");
+	Zug zugAnna =ZugManager.INSTANCE.findZugByName("Anna");
 	
 		
 	// var anlegen
@@ -26,6 +40,7 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 
 	@Override
 	public void run() {
+		System.out.println("Thread Drehregler");
 
 		
 		drehreglerEinsClk.addListener(new GpioPinListenerDigital() {
@@ -34,7 +49,11 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				clk_Aktuell = drehreglerEinsClk.getState().getValue();
 				int dt = drehreglerEinsDT.getState().getValue();
-
+				try{
+				counter = zugAnna.getTempo();
+			}catch(Exception e){
+				System.err.println("! Zug '" +zugAnna.getZugId()+"' nicht Online! (getTempo)");
+			}
 				if (clk_Aktuell != clk_Letzter) {
 
 					if (dt != clk_Aktuell) {
@@ -57,7 +76,11 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 							}
 							System.out.println("Tempo: " + counter / 2);
 							helfer = counter;
-							zug.setTempo(counter/2);
+							try{
+							zugAnna.setTempo(counter/2);
+							}catch(Exception e){
+								System.err.println("! Zug '" +zugAnna.getZugId()+"' nicht Online! (setTempo)");
+							}
 						}
 					}
 				}
@@ -66,14 +89,17 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 			}
 
 		});
-		drehreglerEinsTaster.addListener(new GpioPinListenerDigital() {
+	/*	drehreglerEinsTaster.addListener(new GpioPinListenerDigital() {
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				counter = 0;
 				System.out.println("Stopp - Tempo: 0");
-				
+				try{
 				zug.setTempo(0);
+				}catch(Exception e){
+								System.err.println("! Zug '" +zugAnna.getZugId()+"' nicht Online! (setTempo(0))");
+							}
 			}
-		});
+		});*/
 	}
 }

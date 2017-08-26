@@ -9,20 +9,24 @@ import GPIO.GpioHandler;
  * Verwaltung der neuen Clients
  *
  */
-public class SocketServer {
+public class SocketServerMain {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
 		System.out.println("Start Gartenbahn");
 		
 		//GPIO Pins aktivieren
-//		GpioHandler gp = new GpioHandler();
-//		try {
-//			gp.gpio();
-//		} catch (InterruptedException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
+		try{
+		GpioHandler gp = new GpioHandler();
+		
+		Thread.sleep(1000);
+		System.out.println("aufgewacht");
+		gp.threadErstellerEingang();
+		}catch(Exception e){
+			
+			System.err.println("!-- main GPIO Fehler -- BEENDEN");
+			
+		}
 		System.out.println("GPIOs aktiviert");
 		
 		
@@ -57,7 +61,7 @@ public class SocketServer {
 				String zugIP = clientSocket.getInetAddress().toString();
 				
 				//IP in Name umwandeln
-				if(zugIP.equals("/192.168.178.45")) {
+				if(zugIP.equals("/192.168.1.33")) {
 					helferName="Anna";
 				}else if(zugIP.equals("/192.168.178.37")) {
 					helferName="reglerAnna";
@@ -85,7 +89,9 @@ public class SocketServer {
 
 			} catch (IOException e) {
 				System.out.println("!! - ServerSocket - .accept(); fehlgeschlagen");
+				serverSocket.close();
 			}
+			
 
 		}
 	}

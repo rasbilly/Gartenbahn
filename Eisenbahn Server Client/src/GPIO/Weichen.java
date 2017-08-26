@@ -1,15 +1,28 @@
 package GPIO;
 
+import com.pi4j.io.gpio.GpioPinDigitalOutput;
+import com.pi4j.io.gpio.PinState;
+import com.pi4j.io.gpio.RaspiPin;
+
 public class Weichen extends GpioHandler{
 	
 	public Weichen() {
 		super();
 	}
+	
+	final GpioPinDigitalOutput weiche1Links = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_21, "Weiche 1 Links", PinState.HIGH);
+	final GpioPinDigitalOutput weiche1Rechts = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_22, "Weiche 1 Rechts", PinState.HIGH);
+	final GpioPinDigitalOutput weiche2Links = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_23, "Weiche 2 Links", PinState.HIGH);
+	final GpioPinDigitalOutput weiche2Rechts = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_24, "Weiche 2 Rechts", PinState.HIGH);
+	//final GpioPinDigitalOutput weiche3Links = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_25, "Weiche 3 Links", PinState.HIGH);
+	//final GpioPinDigitalOutput weiche3Rechts = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_26, "Weiche 3 Rechts", PinState.LOW);
+	
+	
 	public static final Weichen WEICHEN = new Weichen();
 	
-	private char statusWeiche1;
-	private char statusWeiche2;
-	private char statusWeiche3;
+	private char statusWeiche1 = 'r';
+	private char statusWeiche2 = 'r';
+	private char statusWeiche3 = 'r';
 
 	/**
 	 * Pins steuern Schaltbox an und überbrücken den Taster
@@ -19,18 +32,21 @@ public class Weichen extends GpioHandler{
 	 * @param c
 	 * @throws InterruptedException
 	 */
+	
 	public void schalteWeiche1(char c) throws InterruptedException {
 		if (c == 'r') {
-			weiche1Rechts.high();
-			Thread.sleep(100);
 			weiche1Rechts.low();
+			Thread.sleep(100);
+			weiche1Rechts.high();
 			statusWeiche1 = 'r';
+			System.out.println("Weiche 1 Rechts");
 
 		} else if (c == 'l') {
-			weiche1Links.high();
-			Thread.sleep(100);
 			weiche1Links.low();
+			Thread.sleep(100);
+			weiche1Links.high();
 			statusWeiche1 = 'l';
+			System.out.println("Weiche 1 Links");
 
 		} else if (c == 't') {
 			if (statusWeiche1 == 'r') {
@@ -38,24 +54,25 @@ public class Weichen extends GpioHandler{
 			} else if (statusWeiche1 == 'l') {
 				schalteWeiche1('r');
 			} else {
-				System.err.println("Weiche 1 - Fehler Toggle");
+				System.err.println("Weiche 1 - Fehler Toggle "+ c);
 			}
 		} else {
 			System.err.println("Weiche 1 - Fehlerhafte Stellung");
 		}
+		
 	}
 
 	public void schalteWeiche2(char c) throws InterruptedException {
 		if (c == 'r') {
-			weiche2Rechts.high();
-			Thread.sleep(100);
 			weiche2Rechts.low();
+			Thread.sleep(100);
+			weiche2Rechts.high();
 			statusWeiche2 = 'r';
 
 		} else if (c == 'l') {
-			weiche2Links.high();
-			Thread.sleep(100);
 			weiche2Links.low();
+			Thread.sleep(100);
+			weiche2Links.high();
 			statusWeiche2 = 'l';
 
 		} else if (c == 't') {
@@ -69,10 +86,11 @@ public class Weichen extends GpioHandler{
 		} else {
 			System.err.println("Weiche 2 - Fehlerhafte Stellung");
 		}
+		System.out.println("Weiche 2 geschaltet");
 	}
 
 	public void schalteWeiche3(char c) throws InterruptedException {
-		if (c == 'r') {
+	/*	if (c == 'r') {
 			weiche3Rechts.high();
 			Thread.sleep(100);
 			weiche3Rechts.low();
@@ -94,7 +112,7 @@ public class Weichen extends GpioHandler{
 			}
 		} else {
 			System.err.println("Weiche 3 - Fehlerhafte Stellung");
-		}
+		}*/
 	}
 
 	public char getStatusWeiche1() {
