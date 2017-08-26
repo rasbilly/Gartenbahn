@@ -35,8 +35,8 @@ long entfernung = 0; //Messung
 WiFiClient client;
 //WLAN
 
-const char* ssid     = "SSID";
-const char* password = "PW";
+const char* ssid     = "FRITZ!Box Fon WLAN 7390";
+const char* password = "8210583489321487";
 //Sever
 const uint16_t port = 602;  // Port des Servers
 const char * host = "IP";  // IP des Servers
@@ -96,7 +96,7 @@ void setup() {
   client.print("#");
   client.println("0");
   client.flush();
-  
+
 }
 
 int zaehler = 0;
@@ -115,13 +115,17 @@ void loop() {
   if (client.available()) {
     String line = client.readStringUntil('\r');
     Serial.print("Empfangen: "); Serial.println(line);
+    if ( line.startsWith("heartbeat") {
+      client.println("ichLebe");
+      client.flush;
+    }
     if (line.startsWith("t")) {
-      String f = line.substring(1);
+    String f = line.substring(1);
       int tt = f.toInt();
       zugSteuerung(tt);
     }
     if (line.startsWith("Ende")) {
-      client.println("bye bye");
+    client.println("bye bye");
       client.flush();
       client.stop();
     }
@@ -243,7 +247,40 @@ void rfid() {
     mfrc522.PICC_HaltA(); // Stop reading
     Serial.print("Tag: "); //Serial.println(uidTag);  //ausgabe im Seriellen Monitor
     Serial.println(i);
-    uidTag = i;
+    Serial.println("Umwandeln... ");
+    if (i == 383) {
+      uidTag = 1;
+    } else if (i == 342) {
+      uidTag = 2;
+    } else if (i == 473) {
+      uidTag = 3;
+    } else if (i == 403) {
+      uidTag = 4;
+    } else if (i == 388) {
+      uidTag = 5;
+    } else if (i == 731) {
+      uidTag = 6;
+    } else if (i == 537) {
+      uidTag = 7;
+    } else if (i == 499) {
+      uidTag = 8;
+    } else if (i == 758) {
+      uidTag = 9;
+    } else if (i == 491) {
+      uidTag = 10;
+    } else if (i == 571) {
+      uidTag = 11;
+    } else if (i == 566) {
+      uidTag = 12;
+    } else if (i == 516) {
+      uidTag = 13;
+    } else if (i == 620) {
+      uidTag = 14;
+    } else if (i == 515) {
+      uidTag = 15;
+    }
+    Serial.print("Wert zum Übertragen: ");
+    Serial.println(uidTag);
 
     client.print("p");
     client.print("#");
