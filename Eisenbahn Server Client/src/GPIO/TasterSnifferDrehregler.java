@@ -10,96 +10,119 @@ import ServerHandler.Zug;
 import ServerHandler.ZugManager;
 
 public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
-	
-	
+
 	public TasterSnifferDrehregler() {
-		super();  //gpio
-		
+		super(); // gpio
+
 	}
-	//Drehregler Eins
-	final GpioPinDigitalInput drehreglerEinsClk = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, PinPullResistance.PULL_DOWN);
-	final GpioPinDigitalInput drehreglerEinsDT = gpio.provisionDigitalInputPin(RaspiPin.GPIO_03, PinPullResistance.PULL_DOWN);
-	final GpioPinDigitalInput drehreglerEinsTaster =  gpio.provisionDigitalInputPin(RaspiPin.GPIO_30,PinPullResistance.PULL_DOWN); 
-	//Drehregler Zwei
-//	final GpioPinDigitalInput drehreglerZweiClk = gpio.provisionDigitalInputPin(RaspiPin.GPIO_30, PinPullResistance.PULL_DOWN); 
-//	final GpioPinDigitalInput drehreglerZweiDT = gpio.provisionDigitalInputPin(RaspiPin.GPIO_30, PinPullResistance.PULL_DOWN); 
-//	final GpioPinDigitalInput drehreglerZweiTaster = gpio.provisionDigitalInputPin(RaspiPin.GPIO_30, PinPullResistance.PULL_DOWN); 
-	 
-	
-	
-	//Regler dem Zug zuweisen
-	Zug zugAnna =ZugManager.INSTANCE.findZugByName("Anna");
-	
-		
+
+	// Drehregler Eins
+	final GpioPinDigitalInput drehreglerEinsClk = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02,
+			PinPullResistance.PULL_DOWN);
+	final GpioPinDigitalInput drehreglerEinsDT = gpio.provisionDigitalInputPin(RaspiPin.GPIO_03,
+			PinPullResistance.PULL_DOWN);
+	final GpioPinDigitalInput drehreglerEinsTaster = gpio.provisionDigitalInputPin(RaspiPin.GPIO_30,
+			PinPullResistance.PULL_DOWN);
+	// Drehregler Zwei
+	// final GpioPinDigitalInput drehreglerZweiClk =
+	// gpio.provisionDigitalInputPin(RaspiPin.GPIO_30, PinPullResistance.PULL_DOWN);
+	// final GpioPinDigitalInput drehreglerZweiDT =
+	// gpio.provisionDigitalInputPin(RaspiPin.GPIO_30, PinPullResistance.PULL_DOWN);
+	// final GpioPinDigitalInput drehreglerZweiTaster =
+	// gpio.provisionDigitalInputPin(RaspiPin.GPIO_30, PinPullResistance.PULL_DOWN);
+
+	// Regler dem Zug zuweisen
+	Zug zugAnna;
+
 	// var anlegen
 	int counter = 0;
-	boolean richtung;
-	int clk_Letzter = drehreglerEinsClk.getState().getValue();
-	int clk_Aktuell;
-	int helfer;
 
 	@Override
 	public void run() {
-		System.out.println("Thread Drehregler");
 
-		
+		/**
+		 * Wartet auf eingabe vom Drehregler und verändert das Tempo
+		 */
 		drehreglerEinsClk.addListener(new GpioPinListenerDigital() {
+			int clk_Aktuell;
+			int clk_Letzter = drehreglerEinsClk.getState().getValue();
 
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-				clk_Aktuell = drehreglerEinsClk.getState().getValue();
-				int dt = drehreglerEinsDT.getState().getValue();
-				try{
-				counter = zugAnna.getTempo();
-			}catch(Exception e){
-				System.err.println("! Zug '" +zugAnna.getZugId()+"' nicht Online! (getTempo)");
-			}
-				if (clk_Aktuell != clk_Letzter) {
+				zugAnna = ZugManager.INSTANCE.findZugByName("Anna");
 
-					if (dt != clk_Aktuell) {
-						if (counter > -18) {
-							counter--;
-						}
-					} else {
-						if (counter < 18) {
-							counter++;
-						}
-					}
-					if (counter % 2 == 0 || counter == 0) {
-						if (helfer != counter) {
-							if (counter > 0) {
-								System.out.println("Vorwärts - ");
-							} else if (counter < 0) {
-								System.out.println("Rückwärts - ");
-							} else if (counter == 0) {
-								System.out.println("Stopp - ");
+				if (zugAnna != null) { // Prüfen ob Zug "Online"
+					clk_Aktuell = drehreglerEinsClk.getState().getValue();
+					int dt = drehreglerEinsDT.getState().getValue();
+					counter = zugAnna.getTempo();
+
+					if (clk_Aktuell != clk_Letzter) {
+						if (dt != clk_Aktuell) {
+							if (counter > -10) {
+								counter--;
 							}
-							System.out.println("Tempo: " + counter / 2);
-							helfer = counter;
-							try{
-							zugAnna.setTempo(counter/2);
-							}catch(Exception e){
-								System.err.println("! Zug '" +zugAnna.getZugId()+"' nicht Online! (setTempo)");
+						} else {
+							if (counter < 10) {
+								counter++;
 							}
 						}
+						drehreglerausgabe(zugAnna, counter);
+						sendeReglerAnZug(zugAnna, counter / 2);
 					}
+				} else if (zugAnna == null) {
+					System.out.println("! Zug 'Anna' nicht Online! - null ");
 				}
 				clk_Letzter = clk_Aktuell;
 
 			}
 
 		});
-	/*	drehreglerEinsTaster.addListener(new GpioPinListenerDigital() {
+
+		/**
+		 * Wenn taster gedrückt, dann wird das Tempo vom Zug auf 0 gesetzt
+		 */
+		drehreglerEinsTaster.addListener(new GpioPinListenerDigital() {
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				counter = 0;
-				System.out.println("Stopp - Tempo: 0");
-				try{
-				zug.setTempo(0);
-				}catch(Exception e){
-								System.err.println("! Zug '" +zugAnna.getZugId()+"' nicht Online! (setTempo(0))");
-							}
+				drehreglerausgabe(zugAnna, counter);
+				sendeReglerAnZug(zugAnna, counter);
 			}
-		});*/
+		});
+
 	}
+	
+	/**
+	 * Gibt das neue Tempo auf der Console aus
+	 * 
+	 * @param zug
+	 * @param tempo
+	 */
+	public void drehreglerausgabe(Zug zug, int tempo) {
+		int helfer = tempo;
+		if (tempo % 2 == 0 || tempo == 0) {
+			if (helfer != tempo) {
+				System.out.print(zug.getZugId());
+				if (tempo > 0) {
+					System.out.print(" - Vorwärts - ");
+				} else if (tempo < 0) {
+					System.out.print(" - Rückwärts - ");
+				} else if (tempo == 0) {
+					System.out.print(" - Stopp - ");
+				}
+				System.out.println("Tempo: " + tempo / 2);
+			}
+		}
+	}
+
+	/**
+	 * Sendet neues Tempo an den Zug
+	 * 
+	 * @param zug
+	 * @param tempo
+	 */
+	public void sendeReglerAnZug(Zug zug, int tempo) {
+		zug.setTempo(tempo);
+	}
+
 }
