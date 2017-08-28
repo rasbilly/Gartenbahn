@@ -9,7 +9,7 @@ public class Zug extends Device{
 
 	private String zugId;
 	private int position;
-	private int tempo;
+	private int tempo=0;
 	private Socket clientSocket;
 
 	public Zug(String zugId, Socket clientSocket) {
@@ -61,7 +61,7 @@ public class Zug extends Device{
 
 	public void setTempo(int tempo) {
 		this.tempo = tempo;
-		//System.out.println(zugID+" Tempo SET: " + tempo);
+		System.out.println(zugId+" Tempo SET: " + tempo);
 	}
 
 
