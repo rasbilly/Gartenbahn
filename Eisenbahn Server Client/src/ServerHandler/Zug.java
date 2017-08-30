@@ -61,7 +61,7 @@ public class Zug extends Device{
 
 	public void setTempo(int tempo) {
 		this.tempo = tempo;
-		System.out.println(zugId+" Tempo SET: " + tempo);
+		//System.out.println(zugId+" Tempo SET: " + tempo);
 	}
 
 
