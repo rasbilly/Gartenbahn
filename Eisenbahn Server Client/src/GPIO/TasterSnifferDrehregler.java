@@ -74,14 +74,16 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 							}
 						}
 					}
-					int helfer = counter;
+//					int helfer = counter;
+//					System.out.println("counter: " + counter);
+//					System.out.println("helfer: "+helfer);
 					// Ruft die Methoden nur auf wenn der counter durch 2
 					// teilbar ist
 					if (counter % 2 == 0 || counter == 0) {
-						if (helfer != counter) {
+						//if (helfer != counter) {
 							sendeReglerAnZug(zugAnna, counter);
 							drehreglerausgabe(zugAnna, counter);
-						}
+						//}
 					}
 					clk_Letzter = clk_Aktuell;
 				} else if (zugAnna == null) {
