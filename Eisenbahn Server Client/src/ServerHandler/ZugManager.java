@@ -4,6 +4,11 @@ import java.util.Map;
 
 public class ZugManager {
 	
+	public Map<String, Zug> getZugMap() {
+		return zugMap;
+	}
+
+
 	private ZugManager() {
 	}
 
@@ -59,5 +64,7 @@ public class ZugManager {
 		}
 		return null;
 	}
+	
+
 
 }
