@@ -115,9 +115,9 @@ void loop() {
   if (client.available()) {
     String line = client.readStringUntil('\r');
     Serial.print("Empfangen: "); Serial.println(line);
-    if ( line.startsWith("heartbeat") {
+    if ( line.startsWith("heartbeat")) {
       client.println("ichLebe");
-      client.flush;
+      client.flush();
     }
     if (line.startsWith("t")) {
     String f = line.substring(1);
