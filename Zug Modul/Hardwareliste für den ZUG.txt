@@ -1,0 +1,29 @@
+Hardwareliste für den ZUG
+
+
+
+Kopf der Steuerung
+- WeMos D1 MINI – ESP8266
+
+
+Vor und Rückwärtsfahrten wechsler
+- 2-Kanal Relais Modul 5V
+
+
+Spannungswandler zum 'drosseln' auf 5V
+- LM2596 1.23-30V DC DC
+
+
+Entfernungsmessung 
+- HC-SR04 Ultraschall Sensor
+
+
+Transistor zum Steuern des Tempos
+- IRL3803
+- Widerstand zur Ansteuerung
+
+
+Sonstiges:
+- Kabel
+- Lochrasterplatte
+- Mini Kühlkörper für Transistor
