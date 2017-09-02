@@ -38,7 +38,7 @@ WiFiClient client;
 const char* ssid     = "SSID";
 const char* password = "PW";
 //Sever
-const uint16_t port = 602;  // Port des Servers
+const uint16_t port = 603;  // Port des Servers
 const char * host = "IP";  // IP des Servers
 
 
