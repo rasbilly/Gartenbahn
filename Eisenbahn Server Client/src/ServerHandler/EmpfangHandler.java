@@ -15,7 +15,6 @@ public class EmpfangHandler implements Runnable {
 		while (true) {
 			String s = device.empfangeDaten();
 			String[] splits = s.split("#");
-			//System.out.println(s);
 			Command command = getCommandoFromString(splits[0]);
 
 			switch (command) {
@@ -40,6 +39,11 @@ public class EmpfangHandler implements Runnable {
 					Zug zug = (Zug) device;
 					int i = Integer.parseInt(splits[1]); 
 					zug.setPosition(i);
+					break;
+					
+				case HEARTBEAT:
+					zug = (Zug) device;
+					System.out.println(zug.getId()+": "+splits[1]);
 					break;
 					
 				case REQUEST_TEMPO:
@@ -69,6 +73,8 @@ public class EmpfangHandler implements Runnable {
 				return Command.POSITION;
 			case "r":
 				return Command.REQUEST_TEMPO;
+			case "h":
+				return Command.HEARTBEAT;
 			default:
 				return Command.TEMPO;
 		}
@@ -77,6 +83,7 @@ public class EmpfangHandler implements Runnable {
 	enum Command {
 		TEMPO,
 		POSITION,
-		REQUEST_TEMPO;
+		REQUEST_TEMPO,
+		HEARTBEAT;
 	}
 }

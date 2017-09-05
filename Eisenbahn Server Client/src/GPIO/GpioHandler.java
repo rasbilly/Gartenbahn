@@ -16,20 +16,6 @@ public class GpioHandler {
 
 	static GpioController gpio = GpioFactory.getInstance();
 
-
-	  //Drehregler 
-	
-	  //LED Statusanzeige 
-	  
-	  
-	  //LED Weiche / Signal 
-	 
-	  
-	  //TODO Ziffern der Tempoanzeige //Zug 1
-	  
-	  //Zug 2
-	  
-	  //TASTER Programme 
 	  
 	
 

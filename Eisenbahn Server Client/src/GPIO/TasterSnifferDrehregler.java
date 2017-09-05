@@ -39,7 +39,7 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 	Zug zugAnna;
 
 	// var anlegen
-	int counter = 0;
+	int counter;
 	int helfer;
 	int clk_Aktuell;
 	int clk_Letzter = drehreglerEinsClk.getState().getValue();
@@ -48,10 +48,9 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 	public void run() {
 
 		/**
-		 * Wartet auf eingabe vom Drehregler und verändert das Tempo. Min -5;
-		 * Stopp 0; Max 5; Da der Drehregler zwischen den Spürbaren Rastungen
-		 * noch einen Zwischenschritt hat, wird dieser mit "counter % 2 == 0 "
-		 * Übersprungen.
+		 * Wartet auf eingabe vom Drehregler und verändert das Tempo. Min -5; Stopp 0;
+		 * Max 5; Da der Drehregler zwischen den Spürbaren Rastungen noch einen
+		 * Zwischenschritt hat, wird dieser mit "counter % 2 == 0 " Übersprungen.
 		 */
 		drehreglerEinsClk.addListener(new GpioPinListenerDigital() {
 
@@ -60,10 +59,13 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 				zugAnna = ZugManager.INSTANCE.findZugByName("Anna");
 
 				if (zugAnna != null) { // Prüfen ob Zug "Online"
-					
+
 					clk_Aktuell = drehreglerEinsClk.getState().getValue();
 					int dt = drehreglerEinsDT.getState().getValue();
-					// counter = zugAnna.getTempo();
+					if (counter % 2 == 0 || counter == 0) {
+						counter = 2*zugAnna.getTempo();
+					}
+
 					if (clk_Aktuell != clk_Letzter) {
 						if (dt != clk_Aktuell) {
 							if (counter > -10) {
@@ -76,34 +78,42 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 						}
 					}
 					
-					
 					// Ruft die Methoden nur auf wenn der counter durch 2
 					// teilbar ist
-					//TODO Drehmomente beim Taster beachten!
+					// TODO Drehmomente beim Taster beachten!
 					if (counter % 2 == 0 || counter == 0) {
-						if (helfer != counter) { //verhindert senden des selben Tempos 
+						if (helfer != counter) { // verhindert senden des selben Tempos
 							sendeReglerAnZug(zugAnna, counter);
 							drehreglerausgabe(zugAnna, counter);
+							try {
+								Thread.sleep(150);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							helfer=counter;
+							
 						}
 					}
 					clk_Letzter = clk_Aktuell;
 				} else if (zugAnna == null) {
 					System.out.println("! Zug 'Anna' nicht Online! - null ");
 				}
+
 			}
 		});
 
 		/**
 		 * Wartet auf Tasterdruck, dann wird das Tempo vom Zug auf 0 gesetzt
 		 */
-//		drehreglerEinsTaster.addListener(new GpioPinListenerDigital() {
-//			@Override
-//			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-//				counter = 0;
-//				drehreglerausgabe(zugAnna, counter);
-//				sendeReglerAnZug(zugAnna, counter);
-//			}
-//		});
+		// drehreglerEinsTaster.addListener(new GpioPinListenerDigital() {
+		// @Override
+		// public void
+		// handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+		// counter = 0;
+		// drehreglerausgabe(zugAnna, counter);
+		// sendeReglerAnZug(zugAnna, counter);
+		// }
+		// });
 
 	}
 
@@ -134,8 +144,7 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 	public void sendeReglerAnZug(Zug zug, int tempo) {
 		zug.setTempo(tempo / 2);
 		zug.sendeDaten("t" + tempo / 2);
-		//zug.sendeDaten(zug.getTempoKommando());
-		System.out.println("sende Regler an Zug: " + tempo / 2);
+		// zug.sendeDaten(zug.getTempoKommando());
 	}
 
 }
