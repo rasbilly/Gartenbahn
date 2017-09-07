@@ -38,7 +38,7 @@ public class SocketServerMain {
 
 		System.out.println("Gartenbahn Server gestartet! mit IP: " + serverSocket.getLocalSocketAddress().toString());
 
-		// Thread zum einlesen von der Konsole (NUR ZUM PROBEBETRIEB)
+		// Thread zum einlesen von der Konsole 
 		Thread senden = new Thread(new ConsoleEinlesen());
 		senden.start();
 
