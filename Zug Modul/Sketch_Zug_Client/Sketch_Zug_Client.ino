@@ -1,10 +1,10 @@
 
 /*
    noch zu erledigen:
-      Kommentar: lib-> rfidmaster->MFRC522.cpp -> PCD_WriteRegister(RFCfgReg, (0x07<<4)); // Set Rx Gain to max // Hinzugefuegt 23.04.17 tobias
+      Kommentar: lib-> rfidmaster->MFRC522.cpp -> In der Methode PCD_Init() vor PCD_AntennaOn() --> PCD_WriteRegister(RFCfgReg, (0x07<<4)); einfÃ¼gen  // Set Rx Gain to max 111 48 dB HEX = 0x07 // Hinzugefuegt 23.04.17 tobias
     erhÃ¶rt die Antennenleistung auf Max
     
-  //Datei -> Voreinstellungen -> Zusätzliche Boardverwalter-URLs: 
+  //Datei -> Voreinstellungen -> Zusï¿½tzliche Boardverwalter-URLs: 
     http://arduino.esp8266.com/stable/package_esp8266com_index.json
     
     
@@ -21,7 +21,7 @@
 #define SS_PIN 15 				// RFID
 #define RST_PIN 16 				// RFID
 MFRC522 mfrc522(SS_PIN, RST_PIN);  // RFID
-#define relaisPin 5 			// D1 Relais für Fahrtrichtungsänderung
+#define relaisPin 5 			// D1 Relais fï¿½r Fahrtrichtungsï¿½nderung
 #define tempoPin 0  			// D3 Transistor Tempo regulieren
 #define trigger 2 				// D4 Ultraschall Sensor Trigger
 #define echo 4  				// D2 Ultraschall Sensor Echo
@@ -100,7 +100,7 @@ int zaehler = 0; //Hilfsvariabel, damit die Ultraschallmessung nicht in jedem sc
 void loop() {
   zaehler = zaehler + 1;
   delay(1);
-  if (tempo > 0) { //Wenn Zug still steht, dann wird keine Ultraschallmessung durchgefürt
+  if (tempo > 0) { //Wenn Zug still steht, dann wird keine Ultraschallmessung durchgefï¿½rt
     if (zaehler > 25) { // um verzoegerungen zu vermeiden
       abstandMessung();
       zaehler = 0;
@@ -164,7 +164,7 @@ void setTempo(int t) {
 
 
 void abstandMessung() {
-  messen(); // Messung ausführen
+  messen(); // Messung ausfï¿½hren
   if (entfernung >= 30 || entfernung <= 0) {
     Serial.print("-");
   } else {
@@ -214,7 +214,7 @@ void zugSteuerung(int fahrt) {
      - Ergebnis mal Variable fahrt
   */
 
-  if (fahrt >= 1 && fahrt <= 10 ) { 				// Vorwärts
+  if (fahrt >= 1 && fahrt <= 10 ) { 				// Vorwï¿½rts
     digitalWrite(relaisPin, HIGH);
     setTempo(fahrt);
     analogWrite(tempoPin, (130 + (fahrt * 178)));
@@ -223,7 +223,7 @@ void zugSteuerung(int fahrt) {
     analogWrite(tempoPin, 0);
     setTempo(fahrt);
 
-  } else if (fahrt <= -1 && fahrt >= -10 ) {		// Rückwärts
+  } else if (fahrt <= -1 && fahrt >= -10 ) {		// Rï¿½ckwï¿½rts
     digitalWrite(relaisPin, LOW);
     analogWrite(tempoPin, (130 + (fahrt * -178)));
     setTempo(fahrt);
