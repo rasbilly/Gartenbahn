@@ -3,7 +3,6 @@ package ServerHandler;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-
 import GPIO.GpioHandler;
 
 /**
@@ -15,17 +14,25 @@ public class SocketServerMain {
 
 	public static void main(String[] args) throws IOException {
 
-		System.out.println("Start Gartenbahn");
+		System.out.println("Start Gartenbahn\n");
 
 		// GPIO Pins aktivieren
 		try {
 			GpioHandler gp = new GpioHandler();
-			Thread.sleep(200);
+			Thread.sleep(400);
+
+			gp.portExpanderErsteller();
+			System.out.println("Port-Expander erfolgreich erstellt.");
+			Thread.sleep(400);
+
 			gp.threadErstellerEingang();
+			System.out.println("Threads erfolgreich erstellt.");
+
 		} catch (Exception e) {
 			System.err.println("!-- main GPIO Fehler -- BEENDEN");
 		}
-		System.out.println("GPIOs aktiviert");
+
+		System.out.println("GPIOs erfolgreich aktiviert. \n\n");
 
 		ServerSocket serverSocket = null;
 
@@ -38,9 +45,9 @@ public class SocketServerMain {
 
 		System.out.println("Gartenbahn Server gestartet! mit IP: " + serverSocket.getLocalSocketAddress().toString());
 
-		// Thread zum einlesen von der Konsole 
-		Thread senden = new Thread(new ConsoleEinlesen());
-		senden.start();
+		// Thread zum einlesen von der Konsole
+		Thread consoleEinlesen = new Thread(new ConsoleEinlesen());
+		consoleEinlesen.start();
 
 		String helferName;
 
@@ -57,9 +64,9 @@ public class SocketServerMain {
 				String zugIP = clientSocket.getInetAddress().toString();
 
 				// IP in Name umwandeln
-				if (zugIP.equals("/192.168.178.45")) {
+				if (zugIP.equals("/192.168.178.37")) {
 					helferName = "Anna";
-				} else if (zugIP.equals("/192.168.178.37")) {
+				} else if (zugIP.equals("/192.168.178.44")) {
 					helferName = "reglerAnna";
 				} else {
 					helferName = "zugIP";

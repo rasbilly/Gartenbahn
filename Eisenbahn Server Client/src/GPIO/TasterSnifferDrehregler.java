@@ -1,10 +1,12 @@
 package GPIO;
 
+import com.pi4j.gpio.extension.mcp.MCP23017Pin;
 import com.pi4j.io.gpio.GpioPinDigitalInput;
 import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
+
 
 import ServerHandler.Zug;
 import ServerHandler.ZugManager;
@@ -12,28 +14,25 @@ import ServerHandler.ZugManager;
 public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 
 	public TasterSnifferDrehregler() {
-		super(); // gpio
+	
 
 	}
 
 	// Drehregler Eins
+
+//	static final GpioPinDigitalInput drehreglerEinsClk = gpio.provisionDigitalInputPin(steuerungZug1,
+//			MCP23017Pin.GPIO_A3, "CLK Drehknopf");
+//	static final GpioPinDigitalInput drehreglerEinsDT = gpio.provisionDigitalInputPin(steuerungZug1,
+//			MCP23017Pin.GPIO_A4, "DT Drehknopf");
+	static final GpioPinDigitalInput drehreglerEinsTaster = gpio.provisionDigitalInputPin(steuerungZug1,
+			MCP23017Pin.GPIO_A5, "Button Drehknopf",PinPullResistance.PULL_UP);
+	
 	final GpioPinDigitalInput drehreglerEinsClk = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02,
 			PinPullResistance.PULL_DOWN);
 	final GpioPinDigitalInput drehreglerEinsDT = gpio.provisionDigitalInputPin(RaspiPin.GPIO_03,
 			PinPullResistance.PULL_DOWN);
-	// final GpioPinDigitalInput drehreglerEinsTaster =
-	// gpio.provisionDigitalInputPin(RaspiPin.GPIO_30,
-	// PinPullResistance.PULL_DOWN);
-	// Drehregler Zwei
-	// final GpioPinDigitalInput drehreglerZweiClk =
-	// gpio.provisionDigitalInputPin(RaspiPin.GPIO_30,
-	// PinPullResistance.PULL_DOWN);
-	// final GpioPinDigitalInput drehreglerZweiDT =
-	// gpio.provisionDigitalInputPin(RaspiPin.GPIO_30,
-	// PinPullResistance.PULL_DOWN);
-	// final GpioPinDigitalInput drehreglerZweiTaster =
-	// gpio.provisionDigitalInputPin(RaspiPin.GPIO_30,
-	// PinPullResistance.PULL_DOWN);
+//	final GpioPinDigitalInput drehreglerEinsTaster = gpio.provisionDigitalInputPin(RaspiPin.GPIO_04,
+//			PinPullResistance.PULL_UP);
 
 	// Regler dem Zug zuweisen
 	Zug zugAnna;
@@ -56,6 +55,7 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+				
 				zugAnna = ZugManager.INSTANCE.findZugByName("Anna");
 
 				if (zugAnna != null) { // Prüfen ob Zug "Online"
@@ -63,7 +63,7 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 					clk_Aktuell = drehreglerEinsClk.getState().getValue();
 					int dt = drehreglerEinsDT.getState().getValue();
 					if (counter % 2 == 0 || counter == 0) {
-						counter = 2*zugAnna.getTempo();
+						 counter = 2*zugAnna.getTempo(); //TODO Anzeige kommt durcheinander bei schnellen Drehungen..timestamp ??
 					}
 
 					if (clk_Aktuell != clk_Letzter) {
@@ -77,7 +77,7 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 							}
 						}
 					}
-					
+
 					// Ruft die Methoden nur auf wenn der counter durch 2
 					// teilbar ist
 					// TODO Drehmomente beim Taster beachten!
@@ -90,8 +90,7 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 							} catch (InterruptedException e) {
 								e.printStackTrace();
 							}
-							helfer=counter;
-							
+							helfer = counter;
 						}
 					}
 					clk_Letzter = clk_Aktuell;
@@ -104,16 +103,18 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 
 		/**
 		 * Wartet auf Tasterdruck, dann wird das Tempo vom Zug auf 0 gesetzt
+		 * Pull_UP
 		 */
-		// drehreglerEinsTaster.addListener(new GpioPinListenerDigital() {
-		// @Override
-		// public void
-		// handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-		// counter = 0;
-		// drehreglerausgabe(zugAnna, counter);
-		// sendeReglerAnZug(zugAnna, counter);
-		// }
-		// });
+		drehreglerEinsTaster.addListener(new GpioPinListenerDigital() {
+			@Override
+			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+				if (zugAnna != null) {
+				counter = 0;
+				drehreglerausgabe(zugAnna, counter);
+				sendeReglerAnZug(zugAnna, counter);
+				}
+			}
+		});
 
 	}
 
