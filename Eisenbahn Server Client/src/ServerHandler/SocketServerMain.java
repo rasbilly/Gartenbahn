@@ -48,6 +48,7 @@ public class SocketServerMain {
 		// Thread zum einlesen von der Konsole
 		Thread consoleEinlesen = new Thread(new ConsoleEinlesen());
 		consoleEinlesen.start();
+		
 
 		String helferName;
 
@@ -82,11 +83,18 @@ public class SocketServerMain {
 					// Zug connected gerade
 					connectedDevice = new Zug(helferName, clientSocket);
 					ZugManager.INSTANCE.registerZug((Zug) connectedDevice);
+					
+					//Heartbeat
+					Thread heartbeat = new Thread(new Heartbeat((Zug) connectedDevice));
+					heartbeat.start();
+					System.out.println("Heartbeat erfolgreich gestartet.");
 				}
 
 				// Thread erstellen und zug übergeben
 				Thread threadHandler = new Thread(new EmpfangHandler(connectedDevice));
 				threadHandler.start();
+				
+				
 
 				System.out.println(
 						"ServerSocket - Verbindung zum Client: " + zugIP + " (" + helferName + ") hergestellt");
