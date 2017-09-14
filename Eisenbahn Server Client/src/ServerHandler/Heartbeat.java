@@ -22,6 +22,8 @@ public class Heartbeat implements Runnable {
 			
 			
 			
+			
+			
 			zug.sendeDaten("heartbeat");	
 			
 		}
