@@ -10,7 +10,11 @@ public class EmpfangHandler implements Runnable {
 
 	@Override
 	public void run() {
-	
+		//TODO hier keine Unterscheidung zwischen regler und zug 
+		Thread heartbeat = new Thread(new Heartbeat((Zug) device));
+		heartbeat.start();
+		System.out.println("Heartbeat erfolgreich gestartet für "+device.getId());
+			
 		// EMPFANGEN
 		while (true) {
 			String s = device.empfangeDaten();
@@ -43,7 +47,9 @@ public class EmpfangHandler implements Runnable {
 					
 				case HEARTBEAT:
 					zug = (Zug) device;
-					System.out.println(zug.getId()+": "+splits[1]);
+					zug.setAlive(true);
+					zug.aliveHelper = true;
+					//System.out.println(zug.getId()+": "+splits[1]);
 					break;
 					
 				case REQUEST_TEMPO:

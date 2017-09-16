@@ -1,8 +1,10 @@
 package ServerHandler;
 
+
 public class Heartbeat implements Runnable {
 
 	Zug zug;
+	int helfer = 0;
 
 	public Heartbeat(Zug zug) {
 		this.zug = zug;
@@ -10,29 +12,58 @@ public class Heartbeat implements Runnable {
 
 	@Override
 	public void run() {
-		
-		long timeStart = System.currentTimeMillis(); 
-		long timeEnd = 0;
-		
-		System.out.println("start " + timeStart);
-		
-		while((timeEnd-timeStart) < 10000) {
-			
-			timeEnd = System.currentTimeMillis(); 
-			
-			
-			
-			
-			
-			zug.sendeDaten("heartbeat");	
-			
+
+		warten(5000);
+
+		long timeStart = System.currentTimeMillis();
+
+		while (true) {
+
+			zug.sendeDaten("heartbeat");
+			zug.aliveHelper = false;
+
+					
+			while ((System.currentTimeMillis() - timeStart) < 1000) {
+				
+
+				if (zug.aliveHelper == true) {
+					helfer = 0;
+					warten(4000);
+					break;
+				}
+
+			}
+			timeStart = System.currentTimeMillis();
+
+			if (zug.aliveHelper == false) {
+				if (helfer < 5) {
+					System.out.println(zug.getId() + " Helfer: " + helfer);
+					try {
+						zug.sendeDaten("heartbeat");
+					} catch (Exception e) {
+						System.out.println("konte nicht gesendet werden");
+					}
+					helfer++;
+				} else if (helfer == 5) {
+
+					zug.setAlive(false);
+					System.out.println("zug tot!!!!");
+					ZugManager.INSTANCE.zugMap.remove(zug.getId(), zug);
+
+					Thread.currentThread().interrupt();
+					break;
+				}
+			}
 		}
-			
 
-		
-				
+	}
 
-				
+	public void warten(int i) {
+		try {
+			Thread.sleep(i);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

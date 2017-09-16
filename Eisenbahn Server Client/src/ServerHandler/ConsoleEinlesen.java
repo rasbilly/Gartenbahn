@@ -1,4 +1,5 @@
 package ServerHandler;
+
 import java.util.Scanner;
 
 public class ConsoleEinlesen implements Runnable {
@@ -17,14 +18,23 @@ public class ConsoleEinlesen implements Runnable {
 		while (true) {
 			input = scanner.nextLine();
 			if (input != null) {
-				processConsoleCommand(input);
+				if (input.equals("liste")) { // TODO
+					System.out.println("------------------ LISTE -----------------------------");
+					for (Zug s : ZugManager.INSTANCE.zugMap.values()) {
+
+						System.out.println(s.getId());
+					}
+					System.out.println("----------------- Ende Liste --------------------");
+				} else {
+					processConsoleCommand(input);
+				}
 			}
 		}
 	}
 
 	/**
-	 * splittet die Eingabe in den Zug Name und den Befehl. Sucht zum Zug Name
-	 * das passende zug Objekt. Zug mit befehl weitergeben
+	 * splittet die Eingabe in den Zug Name und den Befehl. Sucht zum Zug Name das
+	 * passende zug Objekt. Zug mit befehl weitergeben
 	 * 
 	 * @param command
 	 *            // zb. Anna;t1

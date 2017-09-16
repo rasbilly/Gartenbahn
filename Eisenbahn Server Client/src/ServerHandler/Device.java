@@ -27,7 +27,7 @@ public class Device {
 			return in.readLine();
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.err.println("!! - Kann Buffet in nicht lesen");
+			System.err.println("!! - Kann Buffet in nicht lesen" + id);
 		}
 		return null;
 	}

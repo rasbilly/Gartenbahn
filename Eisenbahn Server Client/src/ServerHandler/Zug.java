@@ -9,7 +9,9 @@ public class Zug extends Device{
 
 	private String zugId;
 	private int position;
-	private int tempo=0;
+	private int tempo;
+	private boolean alive = true;
+	public boolean aliveHelper;
 	private Socket clientSocket;
 
 	public Zug(String zugId, Socket clientSocket) {
@@ -27,8 +29,20 @@ public class Zug extends Device{
 			
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.err.println("!! - Buffet konnte nicht erstellt werden! ");
+			System.err.println("!! - Buffet konnte nicht erstellt werden! " + zugId);
 		}
+	}
+
+
+
+	public boolean isAlive() {
+		return alive;
+	}
+
+
+
+	public void setAlive(boolean alive) {
+		this.alive = alive;
 	}
 
 

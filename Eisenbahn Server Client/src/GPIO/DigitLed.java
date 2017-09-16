@@ -15,9 +15,14 @@ public class DigitLed extends LedStatusZugHandler implements Runnable {
 			if (zugAnna == null) {
 				resetDigit1();
 				zugAnna = ZugManager.INSTANCE.findZugByName("Anna");
+				
 			} else if (zugAnna != null) {
-				if (tempoAnna != zugAnna.getTempo()) {
+				if (zugAnna.isAlive() == false) {
+					resetDigit1();
+					zugAnna = ZugManager.INSTANCE.findZugByName("Anna");
+				} else if (tempoAnna != zugAnna.getTempo() && (zugAnna.isAlive() == true)) {
 					tempoAnna = zugAnna.getTempo();
+					System.out.println("Zahl ausgeben: "+ tempoAnna);
 					zahlAusgeben1(tempoAnna);
 				}
 			}

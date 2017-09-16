@@ -67,10 +67,10 @@ public class SocketServerMain {
 				// IP in Name umwandeln
 				if (zugIP.equals("/192.168.178.37")) {
 					helferName = "Anna";
-				} else if (zugIP.equals("/192.168.178.44")) {
-					helferName = "reglerAnna";
+				} else if (zugIP.equals("/192.168.178.47")) {
+					helferName = "Roland";
 				} else {
-					helferName = "zugIP";
+					helferName = zugIP;
 				}
 
 				Device connectedDevice;
@@ -84,10 +84,10 @@ public class SocketServerMain {
 					connectedDevice = new Zug(helferName, clientSocket);
 					ZugManager.INSTANCE.registerZug((Zug) connectedDevice);
 					
-					//Heartbeat
-					Thread heartbeat = new Thread(new Heartbeat((Zug) connectedDevice));
-					heartbeat.start();
-					System.out.println("Heartbeat erfolgreich gestartet.");
+//					//Heartbeat
+//					Thread heartbeat = new Thread(new Heartbeat((Zug) connectedDevice));
+//					heartbeat.start();
+//					System.out.println("Heartbeat erfolgreich gestartet.");
 				}
 
 				// Thread erstellen und zug übergeben
