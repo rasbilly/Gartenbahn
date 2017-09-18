@@ -28,6 +28,7 @@ public class ZugManager {
 	public void registerZug(Zug zug) {
 		// Wenn es den ZugName schon gibt, dann
 		if (zugMap.containsKey(zug.getZugId())) {
+			//TODO holt altes tempo nicht mehr
 			// hole altes Tempo und Position
 			zug.setTempo(zugMap.get(zug.getZugId()).getTempo());
 			zug.setPosition(zugMap.get(zug.getZugId()).getPosition());

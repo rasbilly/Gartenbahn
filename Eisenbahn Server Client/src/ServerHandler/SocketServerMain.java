@@ -1,6 +1,7 @@
 package ServerHandler;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import GPIO.GpioHandler;
@@ -19,20 +20,18 @@ public class SocketServerMain {
 		// GPIO Pins aktivieren
 		try {
 			GpioHandler gp = new GpioHandler();
-			Thread.sleep(400);
+			Thread.sleep(200);
 
 			gp.portExpanderErsteller();
-			System.out.println("Port-Expander erfolgreich erstellt.");
-			Thread.sleep(400);
+			Thread.sleep(200);
 
 			gp.threadErstellerEingang();
-			System.out.println("Threads erfolgreich erstellt.");
 
 		} catch (Exception e) {
-			System.err.println("!-- main GPIO Fehler -- BEENDEN");
+			System.out.println("!-- main GPIO Fehler -- BEENDEN");
 		}
 
-		System.out.println("GPIOs erfolgreich aktiviert. \n\n");
+		System.out.println("GPIOs erfolgreich aktiviert. \n");
 
 		ServerSocket serverSocket = null;
 
@@ -43,12 +42,12 @@ public class SocketServerMain {
 			System.out.println("!! - ServerSocket -Port schlug fehl: " + e.getMessage());
 		}
 
-		System.out.println("Gartenbahn Server gestartet! mit IP: " + serverSocket.getLocalSocketAddress().toString());
+		System.out.println("Gartenbahn Server gestartet! mit Port: " + serverSocket.getLocalPort() + " ,IP-Adresse: "+ InetAddress.getLocalHost()+"\n");
+
 
 		// Thread zum einlesen von der Konsole
 		Thread consoleEinlesen = new Thread(new ConsoleEinlesen());
 		consoleEinlesen.start();
-		
 
 		String helferName;
 
@@ -58,7 +57,7 @@ public class SocketServerMain {
 
 				// Client akzeptieren
 
-				System.out.println("ServerSocket -  warten..");
+				System.out.println("ServerSocket -  warten auf Client..");
 				Socket clientSocket = serverSocket.accept();
 
 				// Zug bestimmen und id festlegen
@@ -83,21 +82,19 @@ public class SocketServerMain {
 					// Zug connected gerade
 					connectedDevice = new Zug(helferName, clientSocket);
 					ZugManager.INSTANCE.registerZug((Zug) connectedDevice);
-					
-//					//Heartbeat
-//					Thread heartbeat = new Thread(new Heartbeat((Zug) connectedDevice));
-//					heartbeat.start();
-//					System.out.println("Heartbeat erfolgreich gestartet.");
+
+					// //Heartbeat
+					// Thread heartbeat = new Thread(new Heartbeat((Zug) connectedDevice));
+					// heartbeat.start();
+					// System.out.println("Heartbeat erfolgreich gestartet.");
 				}
 
 				// Thread erstellen und zug übergeben
 				Thread threadHandler = new Thread(new EmpfangHandler(connectedDevice));
 				threadHandler.start();
-				
-				
 
 				System.out.println(
-						"ServerSocket - Verbindung zum Client: " + zugIP + " (" + helferName + ") hergestellt");
+						"ServerSocket - Verbindung zum Client: " + zugIP + " (" + helferName + ") hergestellt \n");
 
 			} catch (IOException e) {
 				System.out.println("!! - ServerSocket - .accept(); fehlgeschlagen");

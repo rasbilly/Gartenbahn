@@ -23,7 +23,7 @@ public class Heartbeat implements Runnable {
 			zug.aliveHelper = false;
 
 					
-			while ((System.currentTimeMillis() - timeStart) < 1000) {
+			while ((System.currentTimeMillis() - timeStart) < 1500) {
 				
 
 				if (zug.aliveHelper == true) {
@@ -37,17 +37,17 @@ public class Heartbeat implements Runnable {
 
 			if (zug.aliveHelper == false) {
 				if (helfer < 5) {
-					System.out.println(zug.getId() + " Helfer: " + helfer);
+					System.out.println(zug.getId() + " Verbindung verloren! Neuversuch: " + helfer);
 					try {
 						zug.sendeDaten("heartbeat");
 					} catch (Exception e) {
-						System.out.println("konte nicht gesendet werden");
+						System.out.println(zug.getId()+" -- konte nicht gesendet werden");
 					}
 					helfer++;
 				} else if (helfer == 5) {
 
 					zug.setAlive(false);
-					System.out.println("zug tot!!!!");
+					System.out.println("!! " +zug.getId()+"ist tot !!");
 					ZugManager.INSTANCE.zugMap.remove(zug.getId(), zug);
 
 					Thread.currentThread().interrupt();

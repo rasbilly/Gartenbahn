@@ -22,7 +22,6 @@ public class DigitLed extends LedStatusZugHandler implements Runnable {
 					zugAnna = ZugManager.INSTANCE.findZugByName("Anna");
 				} else if (tempoAnna != zugAnna.getTempo() && (zugAnna.isAlive() == true)) {
 					tempoAnna = zugAnna.getTempo();
-					System.out.println("Zahl ausgeben: "+ tempoAnna);
 					zahlAusgeben1(tempoAnna);
 				}
 			}

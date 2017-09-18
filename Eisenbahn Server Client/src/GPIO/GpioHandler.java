@@ -27,7 +27,7 @@ public class GpioHandler {
 		steuerungZug1 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x20);
 //		steuerungZug2 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x21);
 //		steuerungZug3 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x22);
-//		weiSig = new MCP23017GpioProvider(I2CBus.BUS_1, 0x23);
+		weiSig = new MCP23017GpioProvider(I2CBus.BUS_1, 0x23);
 //		lcdRelay = new MCP23017GpioProvider(I2CBus.BUS_1, 0x24);
 
 	}
@@ -41,7 +41,7 @@ public class GpioHandler {
 			
 
 			Thread tasterDrehregler = new Thread(new TasterSnifferDrehregler());
-			//Thread tasterSignalWeiche = new Thread(new TasterSnifferSignalWeiche());
+			Thread tasterSignalWeiche = new Thread(new TasterSnifferSignalWeiche());
 			//Thread tasterProgramme = new Thread(new TasterSnifferProgramme());
 			
 			LedStatusZugHandler lsh = new LedStatusZugHandler();
@@ -53,7 +53,7 @@ public class GpioHandler {
 
 			tasterDrehregler.start();
 			// tasterProgramme.start();
-		//	tasterSignalWeiche.start();
+			tasterSignalWeiche.start();
 
 		} catch (Exception r) {
 			r.printStackTrace();

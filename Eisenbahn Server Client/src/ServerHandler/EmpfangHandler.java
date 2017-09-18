@@ -10,7 +10,7 @@ public class EmpfangHandler implements Runnable {
 
 	@Override
 	public void run() {
-		//TODO hier keine Unterscheidung zwischen regler und zug 
+		//TODO hier keine Unterscheidung zwischen regler und zug ODER im Socket Server
 		Thread heartbeat = new Thread(new Heartbeat((Zug) device));
 		heartbeat.start();
 		System.out.println("Heartbeat erfolgreich gestartet für "+device.getId());
@@ -31,7 +31,6 @@ public class EmpfangHandler implements Runnable {
 						Regler regler = (Regler) device;
 						int tempo = Integer.parseInt(splits[1]);
 						regler.getZug().setTempo(tempo);
-						System.out.println("Dreh: " + tempo);
 						System.out.println("Dreh: " + regler.getZug().getTempo());
 						//Senden
 						ZugManager.INSTANCE.sendeAnZug(regler.getZug(), regler.getZug().getTempoKommando());
@@ -49,16 +48,13 @@ public class EmpfangHandler implements Runnable {
 					zug = (Zug) device;
 					zug.setAlive(true);
 					zug.aliveHelper = true;
-					//System.out.println(zug.getId()+": "+splits[1]);
 					break;
 					
 				case REQUEST_TEMPO:
 					zug = (Zug) device;
-					System.out.println("Dreh: " + zug.getTempo());
 					//Senden
-					ZugManager.INSTANCE.sendeAnZug(zug, zug.getTempoKommando());
-					ZugManager.INSTANCE.sendeAnZug(zug, zug.getTempoKommando());			
-					System.out.println("Tempoabfrage vom Client - gesendetes Tempo: " + zug.getTempo());
+					System.out.println("Tempoabfrage von " + zug.getId());
+					ZugManager.INSTANCE.sendeAnZug(zug, zug.getTempoKommando());	
 					break;
 					
 				default:

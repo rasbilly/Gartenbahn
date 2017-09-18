@@ -2,10 +2,7 @@ package GPIO;
 
 import com.pi4j.gpio.extension.mcp.MCP23017Pin;
 import com.pi4j.io.gpio.GpioPinDigitalInput;
-import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinPullResistance;
-import com.pi4j.io.gpio.PinState;
-import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
@@ -15,25 +12,14 @@ public class TasterSnifferSignalWeiche extends GpioHandler implements Runnable {
 		super();
 	}
 
-	final GpioPinDigitalInput tasterSignal = gpio.provisionDigitalInputPin(RaspiPin.GPIO_04,
-			PinPullResistance.PULL_DOWN);
-	final GpioPinDigitalInput tasterWeiche1 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_05,
-			PinPullResistance.PULL_DOWN);
-	final GpioPinDigitalInput tasterWeiche2 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_06,
-			PinPullResistance.PULL_DOWN);
-	// final GpioPinDigitalInput tasterWeiche3 =
-	// gpio.provisionDigitalInputPin(RaspiPin.GPIO_30,
-	// PinPullResistance.PULL_DOWN);
 	
 	//0x23 A	
-		final GpioPinDigitalInput buttonLcsSwitch = gpio.provisionDigitalInputPin(weiSig, MCP23017Pin.GPIO_A0, "Button LCD Switch");
-		final GpioPinDigitalOutput LedWeiche1L = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A1, "Weiche 1 Links", PinState.LOW);
-		final GpioPinDigitalOutput LedWeiche1R = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A2, "Weiche 1 Rechts", PinState.LOW);
-		final GpioPinDigitalOutput LedWeiche2L = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A3, "Weiche 2 Links", PinState.LOW);
-		final GpioPinDigitalOutput LedWeiche2R = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A4, "Weiche 2 Rechts", PinState.LOW);
-		final GpioPinDigitalOutput LedWeiche3L = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A5, "Weiche 3 Links", PinState.LOW);
-		final GpioPinDigitalOutput LedWeiche3R = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A6, "Weiche 3 Rechts", PinState.LOW);
-		final GpioPinDigitalOutput LedSignal = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A7, "Led Signal", PinState.LOW);
+		final GpioPinDigitalInput buttonSignal = gpio.provisionDigitalInputPin(weiSig, MCP23017Pin.GPIO_B0,PinPullResistance.PULL_UP);
+		final GpioPinDigitalInput buttonW1 = gpio.provisionDigitalInputPin(weiSig, MCP23017Pin.GPIO_B1,PinPullResistance.PULL_UP);
+		final GpioPinDigitalInput buttonW2 = gpio.provisionDigitalInputPin(weiSig, MCP23017Pin.GPIO_B2,PinPullResistance.PULL_UP);
+		final GpioPinDigitalInput buttonW3 = gpio.provisionDigitalInputPin(weiSig, MCP23017Pin.GPIO_B3,PinPullResistance.PULL_UP);
+
+		
 
 	@Override
 	public void run() {
@@ -41,13 +27,13 @@ public class TasterSnifferSignalWeiche extends GpioHandler implements Runnable {
 		/**
 		 * Signal warten auf Tasterdruck löst Toggle funktion bei Weiche aus
 		 */
-		tasterSignal.addListener(new GpioPinListenerDigital() {
+		buttonSignal.addListener(new GpioPinListenerDigital() {
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 
 				try {
-					if (tasterSignal.isHigh()) {
-						System.out.println(" --> Signal : " + event.getPin() + " = " + event.getState());
+					if (buttonSignal.isHigh()) {
+						//System.out.println(" --> Signal : " + event.getPin() + " = " + event.getState());
 						Signal.SIGNAL.schalteSignal('t');
 						Thread.sleep(1000);
 					}
@@ -59,13 +45,13 @@ public class TasterSnifferSignalWeiche extends GpioHandler implements Runnable {
 		/**
 		 * Weiche 1 warten auf Tasterdruck löst Toggle funktion bei Weiche aus
 		 */
-		tasterWeiche1.addListener(new GpioPinListenerDigital() {
+		buttonW1.addListener(new GpioPinListenerDigital() {
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 
 				try {
-					if (tasterWeiche1.isHigh()) {
-						System.out.println(" --> Weiche 1: " + event.getPin() + " = " + event.getState());
+					if (buttonW1.isHigh()) {
+						//System.out.println(" --> Weiche 1: " + event.getPin() + " = " + event.getState());
 						Weichen.WEICHEN.schalteWeiche1('t');
 						Thread.sleep(1000);
 					}
@@ -77,12 +63,12 @@ public class TasterSnifferSignalWeiche extends GpioHandler implements Runnable {
 		/**
 		 * Weiche 2 warten auf Tasterdruck löst Toggle funktion bei Weiche aus
 		 */
-		tasterWeiche2.addListener(new GpioPinListenerDigital() {
+		buttonW2.addListener(new GpioPinListenerDigital() {
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				try {
-					if (tasterWeiche2.isHigh()) {
-						System.out.println(" --> Weiche 2: " + event.getPin() + " = " + event.getState());
+					if (buttonW2.isHigh()) {
+						//System.out.println(" --> Weiche 2: " + event.getPin() + " = " + event.getState());
 						Weichen.WEICHEN.schalteWeiche2('t');
 						Thread.sleep(1000);
 					}
