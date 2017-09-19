@@ -3,17 +3,18 @@ package GPIO;
 import com.pi4j.gpio.extension.mcp.MCP23017Pin;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinState;
-import com.pi4j.io.gpio.RaspiPin;
 
 public class Signal extends GpioHandler {
 	
 	public Signal() {
 		super();
 	}
-	final GpioPinDigitalOutput SignalAN = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_25, "Signal AN Relay", PinState.HIGH);
-	final GpioPinDigitalOutput SignalAUS = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_26, "Signal AUS Relay", PinState.HIGH);
 	
 	//0x23 A	
+	//RELAY SIGNAL
+	final GpioPinDigitalOutput SignalAN = gpio.provisionDigitalOutputPin(lcdRelay, MCP23017Pin.GPIO_B0, "Signal AN Relay", PinState.HIGH);
+	final GpioPinDigitalOutput SignalAUS = gpio.provisionDigitalOutputPin(lcdRelay, MCP23017Pin.GPIO_B1, "Signal AUS Relay", PinState.HIGH);
+	//LED SIGNAL
 	final GpioPinDigitalOutput ledSignalAn = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A6, "Led Signal An", PinState.LOW);
 	final GpioPinDigitalOutput ledSignalAus = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A7, "Led Signal Aus", PinState.LOW);
 	

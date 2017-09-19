@@ -2,6 +2,9 @@ package ServerHandler;
 
 import java.util.Scanner;
 
+import GPIO.Signal;
+import GPIO.Weichen;
+
 public class ConsoleEinlesen implements Runnable {
 
 	public ConsoleEinlesen() {
@@ -25,10 +28,47 @@ public class ConsoleEinlesen implements Runnable {
 						System.out.println(s.getId());
 					}
 					System.out.println("----------------- Ende Liste --------------------");
+				} else if (input.startsWith("Weiche")) {
+					try {
+						processConsoleCommandWeiche(input);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				} else if (input.startsWith("Signal")) {
+					String[] split = input.split(";");
+					char s = split[1].charAt(0);
+					if (s == 's' || s == 'g') {
+						try {
+							Signal.SIGNAL.schalteSignal(s);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					} else {
+						System.out.println("!!Fehler -- Signal muss s oder g sein!");
+					}
+
 				} else {
 					processConsoleCommand(input);
 				}
 			}
+		}
+	}
+
+	private void processConsoleCommandWeiche(String command) throws InterruptedException {
+		String[] split = command.split(";");
+		char s = split[1].charAt(0);
+		if (s == 'r' || s == 'l') {
+			if (command.startsWith("Weiche1")) {
+				Weichen.WEICHEN.schalteWeiche1(s);
+			} else if (command.startsWith("Weiche2")) {
+				Weichen.WEICHEN.schalteWeiche2(s);
+			} else if (command.startsWith("Weiche3")) {
+				Weichen.WEICHEN.schalteWeiche3(s);
+			} else {
+				System.out.println("!!Fehler -- Diese Weiche existiert nicht!");
+			}
+		} else {
+			System.out.println("!!Fehler -- Weiche kann nicht auf '" + s + "' gestellt werden! ");
 		}
 	}
 

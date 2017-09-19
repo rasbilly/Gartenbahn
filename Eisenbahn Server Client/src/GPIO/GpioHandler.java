@@ -11,7 +11,7 @@ import com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException;
 public class GpioHandler {
 
 	public GpioHandler() {
-		System.out.println("GPIO Handler");
+		//System.out.println("GPIO Handler");
 	}
 
 	static GpioController gpio = GpioFactory.getInstance();
@@ -25,10 +25,9 @@ public class GpioHandler {
 	public void portExpanderErsteller() throws UnsupportedBusNumberException, IOException {
 
 		steuerungZug1 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x20);
-//		steuerungZug2 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x21);
-//		steuerungZug3 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x22);
+		// steuerungZug2 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x21);
+		lcdRelay = new MCP23017GpioProvider(I2CBus.BUS_1, 0x22);
 		weiSig = new MCP23017GpioProvider(I2CBus.BUS_1, 0x23);
-//		lcdRelay = new MCP23017GpioProvider(I2CBus.BUS_1, 0x24);
 
 	}
 
@@ -38,15 +37,12 @@ public class GpioHandler {
 	public void threadErstellerEingang() {
 		System.out.println("Threads erstellen");
 		try {
-			
 
 			Thread tasterDrehregler = new Thread(new TasterSnifferDrehregler());
 			Thread tasterSignalWeiche = new Thread(new TasterSnifferSignalWeiche());
-			//Thread tasterProgramme = new Thread(new TasterSnifferProgramme());
-			
-			LedStatusZugHandler lsh = new LedStatusZugHandler();
+			// Thread tasterProgramme = new Thread(new TasterSnifferProgramme());
 
-			
+			LedStatusZugHandler lsh = new LedStatusZugHandler();
 
 			Thread.sleep(500);
 			lsh.sch();

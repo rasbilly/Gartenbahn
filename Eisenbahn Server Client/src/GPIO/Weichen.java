@@ -4,45 +4,56 @@ import com.pi4j.gpio.extension.mcp.MCP23017Pin;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 
 import com.pi4j.io.gpio.PinState;
-import com.pi4j.io.gpio.RaspiPin;
 
-public class Weichen extends GpioHandler{
-	
+public class Weichen extends GpioHandler {
+
 	public Weichen() {
 		super();
 	}
+	// 0x23 A
 	
-	final GpioPinDigitalOutput weiche1Links = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_21, "Weiche 1 Links", PinState.HIGH);
-	final GpioPinDigitalOutput weiche1Rechts = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_22, "Weiche 1 Rechts", PinState.HIGH);
-	final GpioPinDigitalOutput weiche2Links = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_23, "Weiche 2 Links", PinState.HIGH);
-	final GpioPinDigitalOutput weiche2Rechts = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_24, "Weiche 2 Rechts", PinState.HIGH);
-	//final GpioPinDigitalOutput weiche3Links = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_25, "Weiche 3 Links", PinState.HIGH);
-	//final GpioPinDigitalOutput weiche3Rechts = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_26, "Weiche 3 Rechts", PinState.LOW);
-	
-	//0x23 A	
-	final GpioPinDigitalOutput ledWeiche1L = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A0, "Weiche 1 Links", PinState.LOW);
-	final GpioPinDigitalOutput ledWeiche1R = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A1, "Weiche 1 Rechts", PinState.LOW);
-	final GpioPinDigitalOutput ledWeiche2L = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A2, "Weiche 2 Links", PinState.LOW);
-	final GpioPinDigitalOutput ledWeiche2R = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A3, "Weiche 2 Rechts", PinState.LOW);
-	final GpioPinDigitalOutput ledWeiche3L = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A4, "Weiche 3 Links", PinState.LOW);
-	final GpioPinDigitalOutput ledWeiche3R = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A5, "Weiche 3 Rechts", PinState.LOW);
+	//RELAY WEICHEN
+	final GpioPinDigitalOutput weiche1Links = gpio.provisionDigitalOutputPin(lcdRelay, MCP23017Pin.GPIO_B2,
+			"Weiche 1 Links", PinState.HIGH);
+	final GpioPinDigitalOutput weiche1Rechts = gpio.provisionDigitalOutputPin(lcdRelay, MCP23017Pin.GPIO_B3,
+			"Weiche 1 Rechts", PinState.HIGH);
+	final GpioPinDigitalOutput weiche2Links = gpio.provisionDigitalOutputPin(lcdRelay, MCP23017Pin.GPIO_B4,
+			"Weiche 2 Links", PinState.HIGH);
+	final GpioPinDigitalOutput weiche2Rechts = gpio.provisionDigitalOutputPin(lcdRelay, MCP23017Pin.GPIO_B5,
+			"Weiche 2 Rechts", PinState.HIGH);
+	final GpioPinDigitalOutput weiche3Links = gpio.provisionDigitalOutputPin(lcdRelay, MCP23017Pin.GPIO_B6,
+			"Weiche 2 Links", PinState.HIGH);
+	final GpioPinDigitalOutput weiche3Rechts = gpio.provisionDigitalOutputPin(lcdRelay, MCP23017Pin.GPIO_B7,
+			"Weiche 2 Rechts", PinState.HIGH);
 
-	
+	//LED WEICHEN
+	final GpioPinDigitalOutput ledWeiche1L = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A0,
+			"Weiche 1 Links", PinState.LOW);
+	final GpioPinDigitalOutput ledWeiche1R = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A1,
+			"Weiche 1 Rechts", PinState.LOW);
+	final GpioPinDigitalOutput ledWeiche2L = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A2,
+			"Weiche 2 Links", PinState.LOW);
+	final GpioPinDigitalOutput ledWeiche2R = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A3,
+			"Weiche 2 Rechts", PinState.LOW);
+	final GpioPinDigitalOutput ledWeiche3L = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A4,
+			"Weiche 3 Links", PinState.LOW);
+	final GpioPinDigitalOutput ledWeiche3R = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A5,
+			"Weiche 3 Rechts", PinState.LOW);
+
 	public static final Weichen WEICHEN = new Weichen();
-	
+
 	private char statusWeiche1 = 'r';
 	private char statusWeiche2 = 'r';
 	private char statusWeiche3 = 'r';
 
 	/**
-	 * Pins steuern Schaltbox an und überbrücken den Taster
-	 * r = rechts
-	 * l = linksv
-	 * t = toogle
+	 * Pins steuern Schaltbox an und überbrücken den Taster r = rechts l = linksv t
+	 * = toogle
+	 * 
 	 * @param c
 	 * @throws InterruptedException
 	 */
-	
+
 	public void schalteWeiche1(char c) throws InterruptedException {
 		if (c == 'r') {
 			ledWeiche1L.low();
@@ -68,12 +79,12 @@ public class Weichen extends GpioHandler{
 			} else if (statusWeiche1 == 'l') {
 				schalteWeiche1('r');
 			} else {
-				System.err.println("Weiche 1 - Fehler Toggle "+ c);
+				System.err.println("Weiche 1 - Fehler Toggle " + c);
 			}
 		} else {
 			System.err.println("Weiche 1 - Fehlerhafte Stellung");
 		}
-		
+
 	}
 
 	public void schalteWeiche2(char c) throws InterruptedException {
@@ -109,8 +120,8 @@ public class Weichen extends GpioHandler{
 	}
 
 	public void schalteWeiche3(char c) throws InterruptedException {
-	/*	if (c == 'r') {
-	 * ledWeiche3L.low();
+		if (c == 'r') {
+			ledWeiche3L.low();
 			ledWeiche3R.high();
 			weiche3Rechts.high();
 			Thread.sleep(100);
@@ -118,6 +129,8 @@ public class Weichen extends GpioHandler{
 			statusWeiche3 = 'r';
 
 		} else if (c == 'l') {
+			ledWeiche3L.high();
+			ledWeiche3R.low();
 			weiche3Links.high();
 			Thread.sleep(100);
 			weiche3Links.low();
@@ -133,7 +146,7 @@ public class Weichen extends GpioHandler{
 			}
 		} else {
 			System.err.println("Weiche 3 - Fehlerhafte Stellung");
-		}*/
+		}
 	}
 
 	public char getStatusWeiche1() {
