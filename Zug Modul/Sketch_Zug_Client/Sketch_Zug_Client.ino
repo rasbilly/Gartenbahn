@@ -42,9 +42,19 @@ const char * host = "IP";  		// IP des Servers
 
 
 
+
 void setup() {
+  pinMode(relaisPin, OUTPUT);
+  pinMode(tempoPin, OUTPUT);
+  pinMode(trigger, OUTPUT);
+  pinMode(echo, INPUT);
+
+  analogWrite(tempoPin, 0);
+
   Serial.begin(115200); //Verbindung zum PC aufbauen //Im Seriellen Monitor auf selben Port achten
   SPI.begin();
+
+
 
   //WLAN Verbinden
   WiFi.begin(ssid, password);
@@ -67,9 +77,9 @@ void setup() {
     Serial.print("IP-Adresse: ");
     Serial.println(WiFi.localIP());
   }
-  delay(20);
+  delay(30);
 
-  // Kein While , damit im falle keiner Verbindung die Automatische bremse (abstandsMessung) greift.
+  // Kein While , damit im falle keiner Verbindung die Automatische bremse (abstandMessung) greift.
   client.connect(host, port);
   if (client.connected()) {
     Serial.println("Verbunden mit Host");
@@ -77,17 +87,15 @@ void setup() {
     Serial.println("Verbindung zum Host fehlgeschlagen");
   }
 
-//Pins definieren
-  mfrc522.PCD_Init(); 				
-  pinMode(relaisPin, OUTPUT);		
-  pinMode(tempoPin, OUTPUT);		
-  pinMode(trigger, OUTPUT);			
-  pinMode(echo, INPUT);				
+
+  //RFID
+  mfrc522.PCD_Init();
+
+
 
   Serial.println("LOS");
-  delay(20);
-  
-//Tempo Request "r" vom Server. fragt das letzt gemeldete Tempo ab  
+
+  delay(250);
   client.print("r");
   client.print("#");
   client.println("0");
@@ -95,52 +103,49 @@ void setup() {
 
 }
 
-int zaehler = 0; //Hilfsvariabel, damit die Ultraschallmessung nicht in jedem schleifendurchlauf stattfindet.
+int zaehler = 0;
 
 void loop() {
   zaehler = zaehler + 1;
   delay(1);
-  if (tempo > 0) { //Wenn Zug still steht, dann wird keine Ultraschallmessung durchgef�rt
-    if (zaehler > 25) { // um verzoegerungen zu vermeiden
+  if (tempo > 0) {
+    if (zaehler > 25) { // um verzögerungen zu vermeiden
       abstandMessung();
       zaehler = 0;
     }
   }
-  rfid();
+  // rfid();
 
-// Daten (Text) vom Server Empfangen
   if (client.available()) {
     String line = client.readStringUntil('\r');
     Serial.print("Empfangen: "); Serial.println(line);
-    
-    if ( line.startsWith("heartbeat")) { // Lebenszeichen abfragen
+    if ( line.startsWith("heartbeat")) {
       client.println("ichLebe");
       client.flush();
     }
-    if (line.startsWith("t")) { 	// neues Tempo Senden
-    String f = line.substring(1);
+    if (line.startsWith("t")) {
+      String f = line.substring(1);
       int tt = f.toInt();
       zugSteuerung(tt);
     }
-    if (line.startsWith("Ende")) {	// Kontrolliertes Beenden
-    client.println("bye bye");
+    if (line.startsWith("Ende")) {
+      client.println("bye bye");
       client.flush();
       client.stop();
     }
   }
-  
-// Bei verbindungsverlust
-  if (!client.connected()) { 
+
+  if (!client.connected()) {
     Serial.println("ENDE");
     if (!client.connect(host, port)) {
       Serial.println("connection failed");
-      delay(50);
+      delay(80);
       return;
     }
     if (client.connected()) {
       Serial.println("Verbunden");
-      delay(50);
-      client.print("r"); // letztes Tempo abfragen
+      delay(100);
+      client.print("r");
       client.print("#");
       client.println("0");
       client.flush();
@@ -149,12 +154,16 @@ void loop() {
 }
 
 
-//neues Tempo an Server senden
+
 void setTempo(int t) {
+  //client.print("tempo "); client.println(t);
+  //client.flush();
+
   client.print("t");
   client.print("#");
   client.println(t);
   client.flush();
+
 
   Serial.print("tempo "); Serial.println(t);
   tempo = t;
@@ -164,18 +173,18 @@ void setTempo(int t) {
 
 
 void abstandMessung() {
-  messen(); // Messung ausf�hren
-  if (entfernung >= 30 || entfernung <= 0) {
+  messen();
+  if (entfernung >= 40 || entfernung <= 0) {
     Serial.print("-");
   } else {
     Serial.print("Erste Messung: "); Serial.print(entfernung); Serial.println(" cm");
     delay(1);
-    messen(); // Kontroll Messungs
+    messen();
     //Langsamer fahren
-    if (entfernung <= 28 && entfernung > 13) {
+    if (entfernung <= 35 && entfernung > 20) {
       Serial.println(""); Serial.print("!!   LANGSAMER   !! : "); Serial.print(entfernung); Serial.println(" cm"); Serial.println("");
       if (tempo >= 2) {
-        zugSteuerung(tempo - 2);
+        zugSteuerung(tempo - 1);
         setTempo(tempo);
       }
       else if (tempo <= 1) {
@@ -183,11 +192,11 @@ void abstandMessung() {
       }
     }
     //Einggreifen STOPP
-    else if (entfernung <= 13 && entfernung >= 0) {
+    else if (entfernung <= 20 && entfernung >= 0) {
       Serial.println(""); Serial.print("!!   STOPP  !! : "); Serial.print(entfernung); Serial.println(" cm"); Serial.println("");
       zugSteuerung(0);
     }
-    else if (entfernung >= 10 || entfernung <= 0) {
+    else if (entfernung >= 40 || entfernung <= 0) {
       Serial.println("Doch nicht");
     }
   }
@@ -201,29 +210,31 @@ long messen() {
   digitalWrite(trigger, LOW);
   dauer = pulseIn(echo, HIGH);
   entfernung = (dauer / 2) * 0.03432;
+  Serial.println(entfernung);
   return entfernung;
+
 }
 
 void zugSteuerung(int fahrt) {
 
   /*Berechnung:
      - Tansistor von 0 bis 1024
-     - Zug Start bei 130
-     - Rest 894
-     - Rest / 5 = 178,8
+     - Zug Start bei 110
+     - Rest 914
+     - Rest / 10 = 91,4
      - Ergebnis mal Variable fahrt
   */
 
-  if (fahrt >= 1 && fahrt <= 10 ) { 				// Vorw�rts
+  if (fahrt >= 1 && fahrt <= 10 ) {
     digitalWrite(relaisPin, HIGH);
     setTempo(fahrt);
     analogWrite(tempoPin, (130 + (fahrt * 178)));
 
-  } else if (fahrt == 0) {							// Stopp
+  } else if (fahrt == 0) {
     analogWrite(tempoPin, 0);
     setTempo(fahrt);
 
-  } else if (fahrt <= -1 && fahrt >= -10 ) {		// R�ckw�rts
+  } else if (fahrt <= -1 && fahrt >= -10 ) {
     digitalWrite(relaisPin, LOW);
     analogWrite(tempoPin, (130 + (fahrt * -178)));
     setTempo(fahrt);
@@ -233,7 +244,7 @@ void zugSteuerung(int fahrt) {
   }
 }
 
-// Position ermitteln
+
 void rfid() {
   // Wenn eine RFID-Karte in der Nähe ist:
   if (mfrc522.PICC_IsNewCardPresent()) {
@@ -277,7 +288,7 @@ void rfid() {
     Serial.print("Wert zum Übertragen: ");
     Serial.println(uidTag);
 
-    client.print("p");     	// Position an Server senden
+    client.print("p");
     client.print("#");
     client.println(uidTag);
     client.flush();
