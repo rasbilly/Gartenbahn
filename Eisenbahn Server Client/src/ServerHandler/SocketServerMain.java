@@ -64,9 +64,9 @@ public class SocketServerMain {
 				String zugIP = clientSocket.getInetAddress().toString();
 
 				// IP in Name umwandeln
-				if (zugIP.equals("/192.168.178.37")) {
+				if (zugIP.equals("/192.168.178.47")) {
 					helferName = "Anna";
-				} else if (zugIP.equals("/192.168.178.47")) {
+				} else if (zugIP.equals("/192.168.178.48")) {
 					helferName = "Roland";
 				} else {
 					helferName = zugIP;

@@ -5,7 +5,7 @@ import ServerHandler.Zug;
 public class PositionUidTags {
 
 	public static final PositionUidTags INSTANCE = new PositionUidTags();
-	Gleisabschnitte ga = new Gleisabschnitte();
+	Gleisabschnitte ga = new Gleisabschnitte();//TODO
 	private String[] tags = new String[15];
 
 	/**
@@ -21,6 +21,10 @@ public class PositionUidTags {
 			tags[zug.getPosition()] = zug.getZugId();
 		}
 		ga.gleisStatusAktuallisieren(tags); //Aktuallisiert die Gleisabschnitte
+	}
+
+	public String[] getTags() {
+		return tags;
 	}
 
 }

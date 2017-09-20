@@ -1,8 +1,14 @@
 package Verwalter;
 
 public class Gleisabschnitte {
+	public static final Gleisabschnitte INSTANCE = new Gleisabschnitte();
 
 	boolean[] gleisabschnitte = new boolean[6];
+	public void ausgabe() {
+		for(int i =0; i<gleisabschnitte.length;i++){
+			System.out.println("Abschnitt "+i+": "+gleisabschnitte[i]);
+		}
+	}
 
 	// * Gleisabbschnitt 0 = Bahnhof: --- 1,2,3
 	// * Gleisabbschnitt 1 = Umfahrung Bahnhof: --- 4,5
@@ -56,5 +62,7 @@ public class Gleisabschnitte {
 		}
 
 	}
+	
+	
 
 }

@@ -1,5 +1,7 @@
 package ServerHandler;
 
+import Verwalter.PositionUidTags;
+
 public class EmpfangHandler implements Runnable {
 
 	Device device;

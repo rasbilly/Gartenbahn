@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 import GPIO.Signal;
 import GPIO.Weichen;
+import Verwalter.Gleisabschnitte;
+import Verwalter.PositionUidTags;
 
 public class ConsoleEinlesen implements Runnable {
 
@@ -28,13 +30,39 @@ public class ConsoleEinlesen implements Runnable {
 						System.out.println(s.getId());
 					}
 					System.out.println("----------------- Ende Liste --------------------");
-				} else if (input.startsWith("Weiche")) {
+				}  else if (input.startsWith("uid")) {
+					System.out.println("------------------ UID Postition der Züge -----------------------------");
+					String[] sa= PositionUidTags.INSTANCE.getTags();
+					for(Zug s : ZugManager.INSTANCE.zugMap.values()) {
+
+						System.out.println(s.getId() + " ist an Position: "+s.getPosition());
+					}
+					for (int i = 1; i<sa.length;i++) {
+						System.out.println(i+": "+sa[i]);
+					}
+					System.out.println("----------------- Ende Position --------------------");
+					
+				}else if (input.startsWith("abschnitte")) {
+					System.out.println("------------------ Gleisabschnitte -----------------------------");
+					Gleisabschnitte.INSTANCE.ausgabe();
+					System.out.println("----------------- Ende Gleisabschnitte --------------------");
+					
+				}else if (input.startsWith("hea")) {
+					System.out.println("------------------ Heartbeat -----------------------------");
+					for(Zug s : ZugManager.INSTANCE.zugMap.values()) {
+
+						System.out.println(s.getId() + " hea: "+s.aliveHelper +" islaive "+ s.isAlive());
+					}
+					System.out.println("----------------- Ende Heartbeat --------------------");
+					
+				}else if (input.startsWith("Weiche")) {
 					try {
 						processConsoleCommandWeiche(input);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-				} else if (input.startsWith("Signal")) {
+				}
+				else if (input.startsWith("Signal")) {
 					String[] split = input.split(";");
 					char s = split[1].charAt(0);
 					if (s == 's' || s == 'g') {

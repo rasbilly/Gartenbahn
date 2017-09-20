@@ -5,6 +5,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import Verwalter.PositionUidTags;
+
 public class Zug extends Device{
 
 	private String zugId;
@@ -62,6 +64,7 @@ public class Zug extends Device{
 
 	public void setPosition(int uid) {
 		this.position = uid;
+		PositionUidTags.INSTANCE.tagsAktualisieren(this);
 		System.out.println(zugId+" UID: " + uid);
 	}
 

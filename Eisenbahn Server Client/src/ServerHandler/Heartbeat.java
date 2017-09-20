@@ -23,7 +23,7 @@ public class Heartbeat implements Runnable {
 			zug.aliveHelper = false;
 
 					
-			while ((System.currentTimeMillis() - timeStart) < 1500) {
+			while ((System.currentTimeMillis() - timeStart) < 2500) {
 				
 
 				if (zug.aliveHelper == true) {
