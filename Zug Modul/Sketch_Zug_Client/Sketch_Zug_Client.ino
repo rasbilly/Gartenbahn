@@ -3,12 +3,12 @@
    noch zu erledigen:
       Kommentar: lib-> rfidmaster->MFRC522.cpp -> In der Methode PCD_Init() vor PCD_AntennaOn() --> PCD_WriteRegister(RFCfgReg, (0x07<<4)); einfügen  // Set Rx Gain to max 111 48 dB HEX = 0x07 // Hinzugefuegt 23.04.17 tobias
     erhört die Antennenleistung auf Max
-    
-  //Datei -> Voreinstellungen -> Zus�tzliche Boardverwalter-URLs: 
+
+  //Datei -> Voreinstellungen -> Zus�tzliche Boardverwalter-URLs:
     http://arduino.esp8266.com/stable/package_esp8266com_index.json
-    
-    
-    
+
+
+
 */
 
 
@@ -120,7 +120,9 @@ void loop() {
     String line = client.readStringUntil('\r');
     Serial.print("Empfangen: "); Serial.println(line);
     if ( line.startsWith("heartbeat")) {
-      client.println("ichLebe");
+      client.print("h");
+      client.print("#");
+      client.println("0");
       client.flush();
     }
     if (line.startsWith("t")) {
