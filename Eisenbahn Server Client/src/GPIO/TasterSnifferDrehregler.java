@@ -14,25 +14,33 @@ import ServerHandler.ZugManager;
 public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 
 	public TasterSnifferDrehregler() {
-	
-
 	}
 
 	// Drehregler Eins
+	static final GpioPinDigitalInput drehregler1Taster = gpio.provisionDigitalInputPin(expander2,
+			MCP23017Pin.GPIO_A2, "Button Drehknopf",PinPullResistance.PULL_UP);
+	final GpioPinDigitalInput drehregler1DT = gpio.provisionDigitalInputPin(RaspiPin.GPIO_00,
+			PinPullResistance.PULL_DOWN);
+	final GpioPinDigitalInput drehregler1Clk = gpio.provisionDigitalInputPin(RaspiPin.GPIO_03,
+			PinPullResistance.PULL_DOWN);
 
-//	static final GpioPinDigitalInput drehreglerEinsClk = gpio.provisionDigitalInputPin(steuerungZug1,
-//			MCP23017Pin.GPIO_A3, "CLK Drehknopf");
-//	static final GpioPinDigitalInput drehreglerEinsDT = gpio.provisionDigitalInputPin(steuerungZug1,
-//			MCP23017Pin.GPIO_A4, "DT Drehknopf");
-	static final GpioPinDigitalInput drehreglerEinsTaster = gpio.provisionDigitalInputPin(steuerungZug1,
-			MCP23017Pin.GPIO_A5, "Button Drehknopf",PinPullResistance.PULL_UP);
+	// Drehregler Zwei
+	static final GpioPinDigitalInput drehregler2Taster = gpio.provisionDigitalInputPin(expander2,
+			MCP23017Pin.GPIO_A3, "Button Drehknopf",PinPullResistance.PULL_UP);
+	final GpioPinDigitalInput drehregler2DT = gpio.provisionDigitalInputPin(RaspiPin.GPIO_01,
+			PinPullResistance.PULL_DOWN);
+	final GpioPinDigitalInput drehregler2Clk = gpio.provisionDigitalInputPin(RaspiPin.GPIO_04,
+			PinPullResistance.PULL_DOWN);
 	
-	final GpioPinDigitalInput drehreglerEinsClk = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02,
+	
+	// Drehregler Drei
+	static final GpioPinDigitalInput drehregler3Taster = gpio.provisionDigitalInputPin(expander2,
+			MCP23017Pin.GPIO_A4, "Button Drehknopf",PinPullResistance.PULL_UP);
+	final GpioPinDigitalInput drehregler3DT = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02,
 			PinPullResistance.PULL_DOWN);
-	final GpioPinDigitalInput drehreglerEinsDT = gpio.provisionDigitalInputPin(RaspiPin.GPIO_03,
+	final GpioPinDigitalInput drehregler3Clk = gpio.provisionDigitalInputPin(RaspiPin.GPIO_05,
 			PinPullResistance.PULL_DOWN);
-//	final GpioPinDigitalInput drehreglerEinsTaster = gpio.provisionDigitalInputPin(RaspiPin.GPIO_04,
-//			PinPullResistance.PULL_UP);
+	
 
 	// Regler dem Zug zuweisen
 	Zug zugAnna;
@@ -41,7 +49,7 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 	int counter;
 	int helfer;
 	int clk_Aktuell;
-	int clk_Letzter = drehreglerEinsClk.getState().getValue();
+	int clk_Letzter = drehregler1Clk.getState().getValue();
 
 	@Override
 	public void run() {
@@ -51,7 +59,7 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 		 * Max 5; Da der Drehregler zwischen den Spürbaren Rastungen noch einen
 		 * Zwischenschritt hat, wird dieser mit "counter % 2 == 0 " Übersprungen.
 		 */
-		drehreglerEinsClk.addListener(new GpioPinListenerDigital() {
+		drehregler1Clk.addListener(new GpioPinListenerDigital() {
 
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
@@ -60,8 +68,8 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 
 				if (zugAnna != null) { // Prüfen ob Zug "Online"
 
-					clk_Aktuell = drehreglerEinsClk.getState().getValue();
-					int dt = drehreglerEinsDT.getState().getValue();
+					clk_Aktuell = drehregler1Clk.getState().getValue();
+					int dt = drehregler1DT.getState().getValue();
 					if (counter % 2 == 0 || counter == 0) {
 						 counter = 2*zugAnna.getTempo(); //TODO Anzeige kommt durcheinander bei schnellen Drehungen..timestamp ??
 					}
@@ -105,7 +113,7 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 		 * Wartet auf Tasterdruck, dann wird das Tempo vom Zug auf 0 gesetzt
 		 * Pull_UP
 		 */
-		drehreglerEinsTaster.addListener(new GpioPinListenerDigital() {
+		drehregler1Taster.addListener(new GpioPinListenerDigital() {
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				if (zugAnna != null) {

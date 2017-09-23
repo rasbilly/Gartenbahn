@@ -1,5 +1,6 @@
-
 /*
+ GARTENBAHN - Steuerung - Zug
+   
    noch zu erledigen:
       Kommentar: lib-> rfidmaster->MFRC522.cpp -> In der Methode PCD_Init() vor PCD_AntennaOn() --> PCD_WriteRegister(RFCfgReg, (0x07<<4)); einfügen  // Set Rx Gain to max 111 48 dB HEX = 0x07 // Hinzugefuegt 23.04.17 tobias
     erhört die Antennenleistung auf Max
@@ -49,9 +50,9 @@ void setup() {
   pinMode(trigger, OUTPUT);
   pinMode(echo, INPUT);
 
-  analogWrite(tempoPin, 0);
+  analogWrite(tempoPin, 0);  // Sofortiges 0 setzen, damit Zug nicht losfahren tut beim aufsetzen auf die Schiene.
 
-  Serial.begin(115200); //Verbindung zum PC aufbauen //Im Seriellen Monitor auf selben Port achten
+  Serial.begin(115200); //Im Seriellen Monitor auf selben Port achten
   SPI.begin();
 
 
@@ -61,7 +62,7 @@ void setup() {
   Serial.print("Verbindungsaufbau");
   while (WiFi.status() != WL_CONNECTED) {
     Serial.print(".");
-    delay(500);
+    delay(300);
   }
   if (WiFi.status() != WL_CONNECTED) {
     Serial.println("keine Verbindung");
@@ -101,21 +102,22 @@ void setup() {
   client.println("0");
   client.flush();
 
-}
+} // Ende Setup
 
-int zaehler = 0;
+int zaehler = 0; // Abstandsmessung austricksen
 
 void loop() {
   zaehler = zaehler + 1;
-  delay(1);
+  delay(1); //Nötig??
   if (tempo > 0) {
     if (zaehler > 25) { // um verzögerungen zu vermeiden
       abstandMessung();
       zaehler = 0;
     }
   }
-  // rfid();
+  rfid();
 
+//Netzwerk lauschen
   if (client.available()) {
     String line = client.readStringUntil('\r');
     Serial.print("Empfangen: "); Serial.println(line);
@@ -130,50 +132,49 @@ void loop() {
       int tt = f.toInt();
       zugSteuerung(tt);
     }
-    if (line.startsWith("Ende")) {
-      client.println("bye bye");
-      client.flush();
-      client.stop();
-    }
   }
 
   if (!client.connected()) {
     Serial.println("ENDE");
     if (!client.connect(host, port)) {
       Serial.println("connection failed");
-      delay(80);
+      delay(100);
       return;
     }
     if (client.connected()) {
       Serial.println("Verbunden");
-      delay(100);
+      delay(50);
       client.print("r");
       client.print("#");
-      client.println("0");
+      client.println("0");  //client.println("r#0"); möglich?
       client.flush();
     }
   }
 }
 
 
-
+/*
+ * Tempo setzen und an Server senden
+ */
 void setTempo(int t) {
-  //client.print("tempo "); client.println(t);
-  //client.flush();
-
+  
   client.print("t");
   client.print("#");
   client.println(t);
   client.flush();
-
-
   Serial.print("tempo "); Serial.println(t);
   tempo = t;
 }
 
 
 
-
+/*
+ * Prueft ob hindernis in 40cm sichtweite.
+ * wenn ja, führt Sicherheitsmessung durch
+ * Fall 1: zwischen 35 und und 20 Tempo drosseln 
+ * Fall 2: unter 20 Stopp
+ * Fall 3: größer 40 Abbruch
+ */
 void abstandMessung() {
   messen();
   if (entfernung >= 40 || entfernung <= 0) {
@@ -204,6 +205,10 @@ void abstandMessung() {
   }
 }
 
+/*
+ * Misst die Entfernung
+ * @return entferung
+ */
 long messen() {
   digitalWrite(trigger, LOW);
   delay(5);
@@ -217,15 +222,17 @@ long messen() {
 
 }
 
-void zugSteuerung(int fahrt) {
-
-  /*Berechnung:
+  /*
+   * Transistorsteuerung
+   * 
+   * Berechnung:
      - Tansistor von 0 bis 1024
      - Zug Start bei 110
      - Rest 914
      - Rest / 10 = 91,4
      - Ergebnis mal Variable fahrt
   */
+void zugSteuerung(int fahrt) {
 
   if (fahrt >= 1 && fahrt <= 10 ) {
     digitalWrite(relaisPin, HIGH);
@@ -246,7 +253,9 @@ void zugSteuerung(int fahrt) {
   }
 }
 
-
+/*
+ * RFID auslesen und dann Server senden
+ */
 void rfid() {
   // Wenn eine RFID-Karte in der Nähe ist:
   if (mfrc522.PICC_IsNewCardPresent()) {

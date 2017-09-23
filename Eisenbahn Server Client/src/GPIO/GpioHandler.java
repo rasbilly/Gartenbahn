@@ -16,18 +16,17 @@ public class GpioHandler {
 
 	static GpioController gpio = GpioFactory.getInstance();
 
-	static MCP23017GpioProvider steuerungZug1;
-	static MCP23017GpioProvider steuerungZug2;
-	static MCP23017GpioProvider weiSig;
+	static MCP23017GpioProvider expander1;
+	static MCP23017GpioProvider expander2;
 	static MCP23017GpioProvider lcdRelay;
-
+	static MCP23017GpioProvider weiSig;
+	
+	
 	public void portExpanderErsteller() throws UnsupportedBusNumberException, IOException {
-
-		steuerungZug1 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x20);
-		// steuerungZug2 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x21);
-		//lcdRelay = new MCP23017GpioProvider(I2CBus.BUS_1, 0x22);
+		expander1 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x20);
+		expander2 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x21);
+		lcdRelay = new MCP23017GpioProvider(I2CBus.BUS_1, 0x22);
 		weiSig = new MCP23017GpioProvider(I2CBus.BUS_1, 0x23);
-
 	}
 
 	/**
@@ -38,17 +37,18 @@ public class GpioHandler {
 		try {
 
 			Thread tasterDrehregler = new Thread(new TasterSnifferDrehregler());
-			//Thread tasterSignalWeiche = new Thread(new TasterSnifferSignalWeiche());
-			// Thread tasterProgramme = new Thread(new TasterSnifferProgramme());
+			Thread tasterSignalWeiche = new Thread(new TasterSnifferSignalWeiche());
+			Thread tasterProgramme = new Thread(new TasterSnifferProgramme());
 
 			LedStatusZugHandler lsh = new LedStatusZugHandler();
 
-			Thread.sleep(500);
+			Thread.sleep(200);
 			lsh.sch();
 
 			tasterDrehregler.start();
-			// tasterProgramme.start();
-			//tasterSignalWeiche.start();
+			tasterSignalWeiche.start();
+			tasterProgramme.start();
+			
 
 		} catch (Exception r) {
 			r.printStackTrace();

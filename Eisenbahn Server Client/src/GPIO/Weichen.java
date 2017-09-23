@@ -10,21 +10,16 @@ public class Weichen extends GpioHandler {
 	public Weichen() {
 		super();
 	}
-	// 0x23 A
+
 	
 	//RELAY WEICHEN
-	final GpioPinDigitalOutput weiche1Links = gpio.provisionDigitalOutputPin(lcdRelay, MCP23017Pin.GPIO_B2,
-			"Weiche 1 Links", PinState.HIGH);
-	final GpioPinDigitalOutput weiche1Rechts = gpio.provisionDigitalOutputPin(lcdRelay, MCP23017Pin.GPIO_B3,
-			"Weiche 1 Rechts", PinState.HIGH);
-	final GpioPinDigitalOutput weiche2Links = gpio.provisionDigitalOutputPin(lcdRelay, MCP23017Pin.GPIO_B4,
-			"Weiche 2 Links", PinState.HIGH);
-	final GpioPinDigitalOutput weiche2Rechts = gpio.provisionDigitalOutputPin(lcdRelay, MCP23017Pin.GPIO_B5,
-			"Weiche 2 Rechts", PinState.HIGH);
-	final GpioPinDigitalOutput weiche3Links = gpio.provisionDigitalOutputPin(lcdRelay, MCP23017Pin.GPIO_B6,
-			"Weiche 2 Links", PinState.HIGH);
-	final GpioPinDigitalOutput weiche3Rechts = gpio.provisionDigitalOutputPin(lcdRelay, MCP23017Pin.GPIO_B7,
-			"Weiche 2 Rechts", PinState.HIGH);
+	final GpioPinDigitalOutput weiche1Relay = gpio.provisionDigitalOutputPin(lcdRelay, MCP23017Pin.GPIO_B1,
+			"Weiche 1", PinState.HIGH);
+	final GpioPinDigitalOutput weiche2Relay = gpio.provisionDigitalOutputPin(lcdRelay, MCP23017Pin.GPIO_B2,
+			"Weiche 2", PinState.HIGH);
+	final GpioPinDigitalOutput weiche3Relay = gpio.provisionDigitalOutputPin(lcdRelay, MCP23017Pin.GPIO_B3,
+			"Weiche 3", PinState.HIGH);
+	
 
 	//LED WEICHEN
 	final GpioPinDigitalOutput ledWeiche1L = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A0,
@@ -58,18 +53,14 @@ public class Weichen extends GpioHandler {
 		if (c == 'r') {
 			ledWeiche1L.low();
 			ledWeiche1R.high();
-			weiche1Rechts.low();
-			Thread.sleep(100);
-			weiche1Rechts.high();
+			weiche1Relay.low();
 			statusWeiche1 = 'r';
 			System.out.println("Weiche 1 Rechts");
 
 		} else if (c == 'l') {
 			ledWeiche1L.high();
 			ledWeiche1R.low();
-			weiche1Links.low();
-			Thread.sleep(100);
-			weiche1Links.high();
+			weiche1Relay.high();
 			statusWeiche1 = 'l';
 			System.out.println("Weiche 1 Links");
 
@@ -91,18 +82,14 @@ public class Weichen extends GpioHandler {
 		if (c == 'r') {
 			ledWeiche2L.low();
 			ledWeiche2R.high();
-			weiche2Rechts.low();
-			Thread.sleep(100);
-			weiche2Rechts.high();
+			weiche2Relay.low();
 			statusWeiche2 = 'r';
 			System.out.println("Weiche 2 Rechts");
 
 		} else if (c == 'l') {
 			ledWeiche2L.high();
 			ledWeiche2R.low();
-			weiche2Links.low();
-			Thread.sleep(100);
-			weiche2Links.high();
+			weiche2Relay.high();
 			statusWeiche2 = 'l';
 			System.out.println("Weiche 2 Links");
 
@@ -123,17 +110,13 @@ public class Weichen extends GpioHandler {
 		if (c == 'r') {
 			ledWeiche3L.low();
 			ledWeiche3R.high();
-			weiche3Rechts.high();
-			Thread.sleep(100);
-			weiche3Rechts.low();
+			weiche3Relay.low();
 			statusWeiche3 = 'r';
 
 		} else if (c == 'l') {
 			ledWeiche3L.high();
 			ledWeiche3R.low();
-			weiche3Links.high();
-			Thread.sleep(100);
-			weiche3Links.low();
+			weiche3Relay.high();
 			statusWeiche3 = 'l';
 
 		} else if (c == 't') {
