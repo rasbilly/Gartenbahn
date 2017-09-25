@@ -3,7 +3,7 @@ package Verwalter;
 public class Gleisabschnitte {
 	public static final Gleisabschnitte INSTANCE = new Gleisabschnitte();
 
-	boolean[] gleisabschnitte = new boolean[6];
+	boolean[] gleisabschnitte = new boolean[7];
 	public void ausgabe() {
 		for(int i =0; i<gleisabschnitte.length;i++){
 			System.out.println("Abschnitt "+i+": "+gleisabschnitte[i]);
@@ -23,17 +23,23 @@ public class Gleisabschnitte {
 	 * @param tags
 	 */
 	public void gleisStatusAktuallisieren(String[] tags) {
-		for (int i = 0; i < tags.length; i++) {
+		for (int i = 1; i < tags.length; i++) {
+
+			if(tags[5]!=null) {
+				//System.out.println("hier"+i);
+			}
+			
 			if ((tags[0] != null) || (tags[1] != null) || (tags[2] != null) || (tags[3] != null)) {
 				gleisabschnitte[0] = true;
-			} else {
+			} 
+			else {
 				gleisabschnitte[0] = false;
 			}
 			if ((tags[4] != null) || (tags[5] != null)) {
 				gleisabschnitte[1] = true;
 			} else {
 				gleisabschnitte[1] = false;
-			}
+			}/*
 			if ((tags[6] != null) || (tags[7] != null)) {
 				gleisabschnitte[2] = true;
 			} else {
@@ -58,7 +64,8 @@ public class Gleisabschnitte {
 				gleisabschnitte[6] = true;
 			} else {
 				gleisabschnitte[6] = false;
-			}
+			}*/
+			System.out.println(gleisabschnitte[i]);
 		}
 
 	}

@@ -6,7 +6,7 @@ public class PositionUidTags {
 
 	public static final PositionUidTags INSTANCE = new PositionUidTags();
 	Gleisabschnitte ga = new Gleisabschnitte();//TODO
-	private String[] tags = new String[15];
+	public String[] tags = new String[15];
 
 	/**
 	 * Entfernt den letzten Zug eintrag und setzt die neue Position
@@ -14,8 +14,9 @@ public class PositionUidTags {
 	 * @param zug
 	 */
 	public void tagsAktualisieren(Zug zug) {
-		for (int i = 0; i < tags.length; i++) {
-			if (tags[i].equals(zug.getZugId())) {
+		System.out.println("driin"+ zug.getZugId());
+		for (int i = 1; i < (tags.length-1); i++) {
+			if (tags[i]==zug.getZugId()) {
 				tags[i] = null;
 			}
 			tags[zug.getPosition()] = zug.getZugId();

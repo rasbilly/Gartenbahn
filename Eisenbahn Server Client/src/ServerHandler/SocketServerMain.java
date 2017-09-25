@@ -18,18 +18,18 @@ public class SocketServerMain {
 		System.out.println("Start Gartenbahn\n");
 
 		// GPIO Pins aktivieren
-		try {
-			GpioHandler gp = new GpioHandler();
-			Thread.sleep(200);
-
-			gp.portExpanderErsteller();
-			Thread.sleep(200);
-
-			gp.threadErstellerEingang();
-
-		} catch (Exception e) {
-			System.out.println("!-- main GPIO Fehler -- BEENDEN");
-		}
+//		try {
+//			GpioHandler gp = new GpioHandler();
+//			Thread.sleep(200);
+//
+//			gp.portExpanderErsteller();
+//			Thread.sleep(200);
+//
+//			gp.threadErstellerEingang();
+//
+//		} catch (Exception e) {
+//			System.out.println("!-- main GPIO Fehler -- BEENDEN");
+//		}
 
 		System.out.println("GPIOs erfolgreich aktiviert. \n");
 
