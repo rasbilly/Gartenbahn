@@ -56,7 +56,6 @@ public class SocketServerMain {
 			try {
 
 				// Client akzeptieren
-
 				System.out.println("ServerSocket -  warten auf Client..");
 				Socket clientSocket = serverSocket.accept();
 
@@ -83,10 +82,7 @@ public class SocketServerMain {
 					connectedDevice = new Zug(helferName, clientSocket);
 					ZugManager.INSTANCE.registerZug((Zug) connectedDevice);
 
-					// //Heartbeat
-					// Thread heartbeat = new Thread(new Heartbeat((Zug) connectedDevice));
-					// heartbeat.start();
-					// System.out.println("Heartbeat erfolgreich gestartet.");
+				
 				}
 
 				// Thread erstellen und zug übergeben
