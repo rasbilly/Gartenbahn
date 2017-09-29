@@ -1,6 +1,5 @@
 package ServerHandler;
 
-import Verwalter.PositionUidTags;
 
 public class EmpfangHandler implements Runnable {
 
@@ -29,6 +28,7 @@ public class EmpfangHandler implements Runnable {
 						Zug zug = (Zug) device;
 						int j = Integer.parseInt(splits[1]);
 						zug.setTempo(j);
+						System.out.println(zug.getId()+" - Neues Tempo: " + zug.getTempo() );
 					} else if(device instanceof Regler) {
 						Regler regler = (Regler) device;
 						int tempo = Integer.parseInt(splits[1]);
@@ -36,7 +36,7 @@ public class EmpfangHandler implements Runnable {
 						System.out.println("Dreh: " + regler.getZug().getTempo());
 						//Senden
 						ZugManager.INSTANCE.sendeAnZug(regler.getZug(), regler.getZug().getTempoKommando());
-						ZugManager.INSTANCE.sendeAnZug(regler.getZug(), regler.getZug().getTempoKommando());
+						//ZugManager.INSTANCE.sendeAnZug(regler.getZug(), regler.getZug().getTempoKommando());
 					}
 					break;
 					

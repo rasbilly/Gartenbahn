@@ -42,7 +42,7 @@ public class ConsoleEinlesen implements Runnable {
 					}
 					System.out.println("----------------- Ende Position --------------------");
 					
-				}else if (input.startsWith("abschnitte")) {
+				}else if (input.startsWith("ab")) {
 					System.out.println("------------------ Gleisabschnitte -----------------------------");
 					Gleisabschnitte.INSTANCE.ausgabe();
 					System.out.println("----------------- Ende Gleisabschnitte --------------------");

@@ -64,8 +64,7 @@ public class Zug extends Device{
 
 	public void setPosition(int uid) {
 		this.position = uid;
-		System.out.println("THIS: "+this.zugId);
-		System.out.println(zugId+" UID: " + uid);
+		System.out.println(zugId+" an Position: " + uid);
 		PositionUidTags.INSTANCE.tagsAktualisieren(this);
 		
 	}

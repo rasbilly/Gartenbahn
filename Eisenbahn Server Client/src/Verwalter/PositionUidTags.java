@@ -5,8 +5,8 @@ import ServerHandler.Zug;
 public class PositionUidTags {
 
 	public static final PositionUidTags INSTANCE = new PositionUidTags();
-	Gleisabschnitte ga = new Gleisabschnitte();//TODO
-	public String[] tags = new String[15];
+	//Gleisabschnitte ga = new Gleisabschnitte();//TODO
+	public String[] tags = new String[16];
 
 	/**
 	 * Entfernt den letzten Zug eintrag und setzt die neue Position
@@ -14,14 +14,16 @@ public class PositionUidTags {
 	 * @param zug
 	 */
 	public void tagsAktualisieren(Zug zug) {
-		System.out.println("driin"+ zug.getZugId());
+
 		for (int i = 1; i < (tags.length-1); i++) {
 			if (tags[i]==zug.getZugId()) {
 				tags[i] = null;
 			}
 			tags[zug.getPosition()] = zug.getZugId();
 		}
-		ga.gleisStatusAktuallisieren(tags); //Aktuallisiert die Gleisabschnitte
+
+		Gleisabschnitte.INSTANCE.gleisStatusAktuallisieren(tags);
+		//ga.gleisStatusAktuallisieren(tags); //Aktuallisiert die Gleisabschnitte
 	}
 
 	public String[] getTags() {
