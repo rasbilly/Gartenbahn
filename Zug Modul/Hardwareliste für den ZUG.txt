@@ -22,6 +22,7 @@ Transistor zum Steuern des Tempos
 - IRL3803
 - Widerstand zur Ansteuerung 220 besser 1k
 - Erdung 10K besser 100k
+- Freilaufdiode
 
 
 Sonstiges:
