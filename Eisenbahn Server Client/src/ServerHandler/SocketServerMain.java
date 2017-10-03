@@ -5,6 +5,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import GPIO.GpioHandler;
+import GUI.GuiHandler;
 
 /**
  * 
@@ -30,6 +31,9 @@ public class SocketServerMain {
 //		} catch (Exception e) {
 //			System.out.println("!-- main GPIO Fehler -- BEENDEN");
 //		}
+		
+		GuiHandler gh = new GuiHandler();
+		
 
 		System.out.println("GPIOs erfolgreich aktiviert. \n");
 
@@ -64,9 +68,9 @@ public class SocketServerMain {
 
 				// IP in Name umwandeln
 				if (zugIP.equals("/192.168.178.47")) {
-					helferName = "Anna";
-				} else if (zugIP.equals("/192.168.178.48")) {
 					helferName = "Roland";
+				} else if (zugIP.equals("/192.168.178.48")) {
+					helferName = "Anna";
 				} else {
 					helferName = zugIP;
 				}

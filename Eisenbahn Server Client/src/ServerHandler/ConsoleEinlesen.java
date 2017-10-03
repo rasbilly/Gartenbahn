@@ -21,6 +21,7 @@ public class ConsoleEinlesen implements Runnable {
 	public void run() {
 		String input = null;
 		while (true) {
+			try {
 			input = scanner.nextLine();
 			if (input != null) {
 				if (input.equals("liste")) { // TODO
@@ -76,8 +77,15 @@ public class ConsoleEinlesen implements Runnable {
 					}
 
 				} else {
-					processConsoleCommand(input);
+					String[] s1 = input.split(";");
+					if((s1[1].startsWith("t")) || s1[1].startsWith("l")) {
+					processConsoleCommand(input);}
+					else {
+						System.out.println("Fehlerhafte eingabe: "+ input);
+					}
 				}
+			}}catch (Exception e) {
+				System.out.println("Fehlerhafte eingabe: "+ input);
 			}
 		}
 	}

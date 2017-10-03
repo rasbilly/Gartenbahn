@@ -14,6 +14,7 @@ public class EmpfangHandler implements Runnable {
 		//TODO hier keine Unterscheidung zwischen regler und zug ODER im Socket Server
 		Thread heartbeat = new Thread(new Heartbeat((Zug) device));
 		heartbeat.start();
+		 
 		System.out.println("Heartbeat erfolgreich gestartet für "+device.getId());
 			
 		// EMPFANGEN

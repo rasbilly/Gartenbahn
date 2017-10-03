@@ -6,6 +6,8 @@ public class ProgrammHandler {
 	P2 p2 = new P2();
 	P3 p3 = new P3();
 	
+	Thread manu = new Thread(new ManuellHelper());
+	
 	/**
 	 * Aktiviert das jeweilige Programm
 	 * @param p

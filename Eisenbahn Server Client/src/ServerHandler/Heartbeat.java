@@ -23,7 +23,7 @@ public class Heartbeat implements Runnable {
 			zug.aliveHelper = false;
 
 					
-			while ((System.currentTimeMillis() - timeStart) < 2500) {
+			while ((System.currentTimeMillis() - timeStart) < 1500) {
 				
 
 				if (zug.aliveHelper == true) {
@@ -47,6 +47,7 @@ public class Heartbeat implements Runnable {
 				} else if (helfer == 5) {
 
 					zug.setAlive(false);
+					GUI.GuiHandler.posZug.posZug1(0);
 					System.out.println("!! " +zug.getId()+"ist tot !!");
 					ZugManager.INSTANCE.zugMap.remove(zug.getId(), zug);
 
