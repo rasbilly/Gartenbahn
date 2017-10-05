@@ -25,9 +25,10 @@ public class GuiHandler {
 			e1.printStackTrace();
 		}
 
-		for (int i = 0; i <= 15; i++) {
+		for (int i = 0; i <= 11; i++) {
 			posZug.posZug1(i);
-			//posZug.posZug2(i + 3);
+			posZug.posZug2(i + 3);
+			posZug.posZug3(i + 5);
 			System.out.println(i);
 
 			try {
