@@ -18,20 +18,22 @@ public class Hauptmenu extends JFrame {
 	private JPanel contentPane;
 	Button butWeiche1, weiche2, weiche3, signal;
 	JLabel zug1, zug2, zug3;
-	public Canvas canvasAbschnitt1, canvasAbschnitt2, canvasAbschnitt3, canvasAbschnitt4, canvasAbschnitt5,
+	public Canvas canvasAbschnitt1, canvasAbschnitt2, canvasAbschnitt3,canvasAbschnitt3_1, canvasAbschnitt4,canvasAbschnitt4_1, canvasAbschnitt5,
 			canvasAbschnitt6, canvasAbschnitt6_2,canvasAbschnitt6_3,canvasAbschnitt7;
+
 
 	public Hauptmenu() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Gartenbahn Steuerung");
-		setExtendedState(MAXIMIZED_BOTH);
+		//setExtendedState(MAXIMIZED_BOTH);
 		setBounds(0, 0, 1631, 900);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 
-		abschnitte();
+		
 		zug();
+		abschnitte();
 		buttons();
 
 		contentPane.setLayout(null);
@@ -74,12 +76,20 @@ public class Hauptmenu extends JFrame {
 		contentPane.add(canvasAbschnitt2);
 
 		canvasAbschnitt3 = new Canvas();
-		canvasAbschnitt3.setBounds(100, 105, 340, 2);
+		canvasAbschnitt3.setBounds(45, 105, 395, 2);
 		contentPane.add(canvasAbschnitt3);
+		
+		canvasAbschnitt3_1 = new Canvas();
+		canvasAbschnitt3_1.setBounds(45, 105, 2, 365);
+		contentPane.add(canvasAbschnitt3_1);
 
 		canvasAbschnitt4 = new Canvas();
 		canvasAbschnitt4.setBounds(46, 616, 432, 2);
 		contentPane.add(canvasAbschnitt4);
+		
+		canvasAbschnitt4_1 = new Canvas();
+		canvasAbschnitt4_1.setBounds(45, 470, 2, 148);
+		contentPane.add(canvasAbschnitt4_1);
 
 		canvasAbschnitt5 = new Canvas();
 		canvasAbschnitt5.setBounds(477, 616, 590, 2);

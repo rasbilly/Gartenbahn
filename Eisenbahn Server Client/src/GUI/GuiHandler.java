@@ -12,7 +12,7 @@ public class GuiHandler {
 
 	public GuiHandler() {
 		System.out.println("guten tag");
-		//zugAnimation();
+		zugAnimation();
 
 	}
 

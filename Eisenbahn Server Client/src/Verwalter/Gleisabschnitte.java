@@ -50,16 +50,20 @@ public class Gleisabschnitte {
 			if ((tags[6] != null) || (tags[7] != null)) {
 				gleisabschnitte[3] = true;
 				GuiHandler.h.canvasAbschnitt3.setBackground(Color.RED);
+				GuiHandler.h.canvasAbschnitt3_1.setBackground(Color.RED);
 			} else {
 				gleisabschnitte[3] = false;
 				GuiHandler.h.canvasAbschnitt3.setBackground(Color.GREEN);
+				GuiHandler.h.canvasAbschnitt3_1.setBackground(Color.GREEN);
 			}
 			if ((tags[8] != null) || (tags[9] != null)) {
 				gleisabschnitte[4] = true;
 				GuiHandler.h.canvasAbschnitt4.setBackground(Color.RED);
+				GuiHandler.h.canvasAbschnitt4_1.setBackground(Color.RED);
 			} else {
 				gleisabschnitte[4] = false;
 				GuiHandler.h.canvasAbschnitt4.setBackground(Color.GREEN);
+				GuiHandler.h.canvasAbschnitt4_1.setBackground(Color.GREEN);
 			}
 			if ((tags[10] != null) || (tags[11] != null)) {
 				gleisabschnitte[5] = true;
@@ -72,10 +76,12 @@ public class Gleisabschnitte {
 				gleisabschnitte[6] = true;
 				GuiHandler.h.canvasAbschnitt6.setBackground(Color.RED);
 				GuiHandler.h.canvasAbschnitt6_2.setBackground(Color.RED);
+				GuiHandler.h.canvasAbschnitt6_3.setBackground(Color.RED);
 			} else {
 				gleisabschnitte[6] = false;
 				GuiHandler.h.canvasAbschnitt6.setBackground(Color.GREEN);
 				GuiHandler.h.canvasAbschnitt6_2.setBackground(Color.GREEN);
+				GuiHandler.h.canvasAbschnitt6_3.setBackground(Color.GREEN);
 			}
 			if ((tags[14] != null) || (tags[15] != null)) {
 				gleisabschnitte[7] = true;
