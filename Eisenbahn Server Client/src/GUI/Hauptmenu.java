@@ -19,9 +19,7 @@ public class Hauptmenu extends JFrame {
 	Button butWeiche1, weiche2, weiche3, signal;
 	JLabel zug1, zug2, zug3;
 	public Canvas canvasAbschnitt1, canvasAbschnitt2, canvasAbschnitt3, canvasAbschnitt4, canvasAbschnitt5,
-			canvasAbschnitt6, canvasAbschnitt6_2,canvasAbschnitt7;
-	private Canvas canvas;
-	private Canvas canvas_1;
+			canvasAbschnitt6, canvasAbschnitt6_2,canvasAbschnitt6_3,canvasAbschnitt7;
 
 	public Hauptmenu() {
 
@@ -95,9 +93,9 @@ public class Hauptmenu extends JFrame {
 		canvasAbschnitt6_2.setBounds(1278, 105, 2, 513);
 		contentPane.add(canvasAbschnitt6_2);
 		
-		canvas_1 = new Canvas();
-		canvas_1.setBounds(942, 105, 338, 2);
-		contentPane.add(canvas_1);
+		canvasAbschnitt6_3 = new Canvas();
+		canvasAbschnitt6_3.setBounds(942, 105, 338, 2);
+		contentPane.add(canvasAbschnitt6_3);
 
 		canvasAbschnitt7 = new Canvas();
 		canvasAbschnitt7.setBounds(652, 552, 250, 2);
