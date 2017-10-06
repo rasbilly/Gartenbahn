@@ -1,4 +1,4 @@
 # Gartenbahn
 
 
-![Projektübersicht](https://raw.githubusercontent.com/rasbilly/Gartenbahn/master/%C3%9Cbersicht%20Gartenbahnplan.jpg)
+![Projektübersicht](https://github.com/rasbilly/Gartenbahn/blob/master/Doku/%C3%9Cbersicht%20Gartenbahnplan.jpg)
