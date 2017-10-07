@@ -39,7 +39,8 @@ public class GpioHandler {
 			Thread tasterDrehregler = new Thread(new TasterSnifferDrehregler());
 			Thread tasterSignalWeiche = new Thread(new TasterSnifferSignalWeiche());
 			Thread tasterProgramme = new Thread(new TasterSnifferProgramme());
-
+			Thread magSensoren = new Thread(new MagnetSensoren());
+			
 			LedStatusZugHandler lsh = new LedStatusZugHandler();
 
 			Thread.sleep(200);
@@ -48,6 +49,7 @@ public class GpioHandler {
 			tasterDrehregler.start();
 			tasterSignalWeiche.start();
 			tasterProgramme.start();
+			magSensoren.start();
 			
 
 		} catch (Exception r) {
