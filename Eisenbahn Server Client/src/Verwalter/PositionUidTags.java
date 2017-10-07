@@ -1,7 +1,5 @@
 package Verwalter;
 
-import GUI.GuiHandler;
-import GUI.PositionZuege;
 import ServerHandler.Zug;
 
 public class PositionUidTags {
