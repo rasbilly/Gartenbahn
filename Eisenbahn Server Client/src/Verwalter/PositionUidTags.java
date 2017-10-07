@@ -1,12 +1,13 @@
 package Verwalter;
 
 import GUI.GuiHandler;
+import GUI.PositionZuege;
 import ServerHandler.Zug;
 
 public class PositionUidTags {
 
 	public static final PositionUidTags INSTANCE = new PositionUidTags();
-	//Gleisabschnitte ga = new Gleisabschnitte();//TODO
+
 	public String[] tags = new String[16];
 
 	/**
@@ -21,7 +22,7 @@ public class PositionUidTags {
 				tags[i] = null;
 			}
 			tags[zug.getPosition()] = zug.getZugId();
-			GuiHandler.posZug.posZug1(zug.getPosition());
+			
 		}
 
 		Gleisabschnitte.INSTANCE.gleisStatusAktuallisieren(tags);

@@ -1,11 +1,14 @@
 package ServerHandler;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import GPIO.GpioHandler;
 import GUI.GuiHandler;
+import GUI.Hauptmenu;
+import Verwalter.Gleisabschnitte;
 
 /**
  * 
@@ -31,11 +34,15 @@ public class SocketServerMain {
 //		} catch (Exception e) {
 //			System.out.println("!-- main GPIO Fehler -- BEENDEN");
 //		}
+//		System.out.println("GPIOs erfolgreich aktiviert. \n");
+		
+		
+		new Hauptmenu().setVisible(true);
 		
 		GuiHandler gh = new GuiHandler();
-		
+		System.out.println("GUI erstellt. \n");
 
-		System.out.println("GPIOs erfolgreich aktiviert. \n");
+		
 
 		ServerSocket serverSocket = null;
 
@@ -54,6 +61,17 @@ public class SocketServerMain {
 		consoleEinlesen.start();
 
 		String helferName;
+		
+		for(int ii = 0;ii<10;ii++) {
+			System.out.println("Hallo "+ ii);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 
 		// auf Anfragen warten
 		while (true) {

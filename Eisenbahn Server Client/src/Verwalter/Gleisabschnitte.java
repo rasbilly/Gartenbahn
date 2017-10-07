@@ -3,8 +3,9 @@ package Verwalter;
 import java.awt.Color;
 
 import GUI.GuiHandler;
+import GUI.Hauptmenu;
 
-public class Gleisabschnitte {
+public class Gleisabschnitte extends Hauptmenu{
 	public static final Gleisabschnitte INSTANCE = new Gleisabschnitte();
 
 	boolean[] gleisabschnitte = new boolean[8];
@@ -35,60 +36,60 @@ public class Gleisabschnitte {
 		try {
 			if ((tags[1] != null) || (tags[2] != null) || (tags[3] != null)) {
 				gleisabschnitte[1] = true;
-				GuiHandler.h.canvasAbschnitt1.setBackground(Color.RED);
+				canvasAbschnitt1.setBackground(Color.RED);
 			} else {
 				gleisabschnitte[1] = false;
-				GuiHandler.h.canvasAbschnitt1.setBackground(Color.GREEN);
+				canvasAbschnitt1.setBackground(Color.GREEN);
 			}
 			if ((tags[4] != null) || (tags[5] != null)) {
 				gleisabschnitte[2] = true;
-				GuiHandler.h.canvasAbschnitt2.setBackground(Color.RED);
+				canvasAbschnitt2.setBackground(Color.RED);
 			} else {
 				gleisabschnitte[2] = false;
-				GuiHandler.h.canvasAbschnitt2.setBackground(Color.GREEN);
+				canvasAbschnitt2.setBackground(Color.GREEN);
 			}
 			if ((tags[6] != null) || (tags[7] != null)) {
 				gleisabschnitte[3] = true;
-				GuiHandler.h.canvasAbschnitt3.setBackground(Color.RED);
-				GuiHandler.h.canvasAbschnitt3_1.setBackground(Color.RED);
+				canvasAbschnitt3.setBackground(Color.RED);
+				canvasAbschnitt3_1.setBackground(Color.RED);
 			} else {
 				gleisabschnitte[3] = false;
-				GuiHandler.h.canvasAbschnitt3.setBackground(Color.GREEN);
-				GuiHandler.h.canvasAbschnitt3_1.setBackground(Color.GREEN);
+				canvasAbschnitt3.setBackground(Color.GREEN);
+				canvasAbschnitt3_1.setBackground(Color.GREEN);
 			}
 			if ((tags[8] != null) || (tags[9] != null)) {
 				gleisabschnitte[4] = true;
-				GuiHandler.h.canvasAbschnitt4.setBackground(Color.RED);
-				GuiHandler.h.canvasAbschnitt4_1.setBackground(Color.RED);
+				canvasAbschnitt4.setBackground(Color.RED);
+				canvasAbschnitt4_1.setBackground(Color.RED);
 			} else {
 				gleisabschnitte[4] = false;
-				GuiHandler.h.canvasAbschnitt4.setBackground(Color.GREEN);
-				GuiHandler.h.canvasAbschnitt4_1.setBackground(Color.GREEN);
+				canvasAbschnitt4.setBackground(Color.GREEN);
+				canvasAbschnitt4_1.setBackground(Color.GREEN);
 			}
 			if ((tags[10] != null) || (tags[11] != null)) {
 				gleisabschnitte[5] = true;
-				GuiHandler.h.canvasAbschnitt5.setBackground(Color.RED);
+				canvasAbschnitt5.setBackground(Color.RED);
 			} else {
 				gleisabschnitte[5] = false;
-				GuiHandler.h.canvasAbschnitt5.setBackground(Color.GREEN);
+				canvasAbschnitt5.setBackground(Color.GREEN);
 			}
 			if ((tags[12] != null) || (tags[13] != null)) {
 				gleisabschnitte[6] = true;
-				GuiHandler.h.canvasAbschnitt6.setBackground(Color.RED);
-				GuiHandler.h.canvasAbschnitt6_2.setBackground(Color.RED);
-				GuiHandler.h.canvasAbschnitt6_3.setBackground(Color.RED);
+				canvasAbschnitt6.setBackground(Color.RED);
+				canvasAbschnitt6_2.setBackground(Color.RED);
+				canvasAbschnitt6_3.setBackground(Color.RED);
 			} else {
 				gleisabschnitte[6] = false;
-				GuiHandler.h.canvasAbschnitt6.setBackground(Color.GREEN);
-				GuiHandler.h.canvasAbschnitt6_2.setBackground(Color.GREEN);
-				GuiHandler.h.canvasAbschnitt6_3.setBackground(Color.GREEN);
+				canvasAbschnitt6.setBackground(Color.GREEN);
+				canvasAbschnitt6_2.setBackground(Color.GREEN);
+				canvasAbschnitt6_3.setBackground(Color.GREEN);
 			}
 			if ((tags[14] != null) || (tags[15] != null)) {
 				gleisabschnitte[7] = true;
-				GuiHandler.h.canvasAbschnitt7.setBackground(Color.RED);
+				canvasAbschnitt7.setBackground(Color.RED);
 			} else {
 				gleisabschnitte[7] = false;
-				GuiHandler.h.canvasAbschnitt7.setBackground(Color.GREEN);
+				canvasAbschnitt7.setBackground(Color.GREEN);
 			}
 		} catch (Exception e) {
 			System.out.println("Gleisabschnitee??");

@@ -1,19 +1,25 @@
 package GUI;
 
-public class GuiHandler {
-	public static final Hauptmenu h = new Hauptmenu();
+import javax.swing.JFrame;
 
-	public static final PositionZuege posZug = new PositionZuege();
+public class GuiHandler extends JFrame{
+	
+	
+	
 
-	public static final GuiHandler INSTANCE = new GuiHandler();
+	//public static final PositionZuege posZug = new PositionZuege();
+	
+//	public static final StatusWeichenSignal statusWS = new StatusWeichenSignal();
+//
+//	public static final GuiHandler INSTANCE = new GuiHandler();
 	
 	
 	
 
 	public GuiHandler() {
-		System.out.println("guten tag");
-		zugAnimation();
-
+		//zugAnimation();
+		
+		
 	}
 
 	//ZUM Programm testen
@@ -26,9 +32,9 @@ public class GuiHandler {
 		}
 
 		for (int i = 0; i <= 11; i++) {
-			posZug.posZug1(i);
-			posZug.posZug2(i + 3);
-			posZug.posZug3(i + 5);
+//			posZug.posZug1(i);
+//			posZug.posZug2(i + 3);
+//			posZug.posZug3(i + 5);
 			System.out.println(i);
 
 			try {
