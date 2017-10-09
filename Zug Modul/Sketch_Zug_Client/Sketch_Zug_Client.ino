@@ -19,8 +19,8 @@
 
 //Pins definieren
 #define SS_PIN 15 				// RFID
-#define RST_PIN 16 				// RFID
-MFRC522 mfrc522(SS_PIN, RST_PIN);  // RFID
+#define RST_PIN 16 				
+MFRC522 mfrc522(SS_PIN, RST_PIN);  
 #define relaisPin 5 			// D1 Relais f�r Fahrtrichtungs�nderung
 #define tempoPin 0  			// D3 Transistor Tempo regulieren
 #define trigger 2 				// D4 Ultraschall Sensor Trigger
@@ -88,7 +88,7 @@ void setup() {
 	delay(10);
 	client.print("r");
 	client.print("#");
-	client.println("0");
+	client.println("0");  //client.println("r#0");
 	client.flush();
 
 } // Ende Setup
@@ -148,7 +148,7 @@ void setTempo(int t) {
 
 	client.print("t");
 	client.print("#");
-	client.println(t);
+	client.println(t);  
 	client.flush();
 	Serial.print("tempo ");
 	Serial.println(t);
