@@ -23,10 +23,26 @@ public class GpioHandler {
 	
 	
 	public void portExpanderErsteller() throws UnsupportedBusNumberException, IOException {
-		expander1 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x20);
-		expander2 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x21);
-		lcdRelay = new MCP23017GpioProvider(I2CBus.BUS_1, 0x22);
-		weiSig = new MCP23017GpioProvider(I2CBus.BUS_1, 0x23);
+		try {
+			expander1 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x20);
+		} catch (Exception e) {
+			System.out.println("Expander 1");
+			e.printStackTrace();
+		}
+		try {
+			expander2 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x21);
+		} catch (Exception f) {
+			System.out.println("Expander 2");
+			f.printStackTrace();
+		}
+		try {
+			lcdRelay = new MCP23017GpioProvider(I2CBus.BUS_1, 0x22);
+			weiSig = new MCP23017GpioProvider(I2CBus.BUS_1, 0x23);
+		} catch (Exception g) {
+			System.out.println("Expander 3+4");
+			g.printStackTrace();
+		}
+		
 	}
 
 	/**

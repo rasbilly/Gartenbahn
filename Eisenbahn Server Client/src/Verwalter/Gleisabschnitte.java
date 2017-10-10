@@ -2,10 +2,14 @@ package Verwalter;
 
 import java.awt.Color;
 
-import GUI.GuiHandler;
 import GUI.Hauptmenu;
 
 public class Gleisabschnitte extends Hauptmenu{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public static final Gleisabschnitte INSTANCE = new Gleisabschnitte();
 
 	boolean[] gleisabschnitte = new boolean[8];

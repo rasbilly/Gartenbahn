@@ -84,10 +84,10 @@ public class Device {
 					} catch (InterruptedException e) {
 
 					}
-					System.out.println("-------------");
-					for (String s : queue) {
-						System.out.println(s);
-					}
+//					System.out.println("-------------");
+//					for (String s : queue) {
+//						System.out.println(s);
+//					}
 					
 
 					if (!queue.isEmpty()) {

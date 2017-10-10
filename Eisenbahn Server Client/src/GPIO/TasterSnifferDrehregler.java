@@ -18,7 +18,7 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 
 	// Drehregler Eins
 	static final GpioPinDigitalInput drehregler1Taster = gpio.provisionDigitalInputPin(expander2,
-			MCP23017Pin.GPIO_A2, "Button Drehknopf",PinPullResistance.PULL_UP);
+			MCP23017Pin.GPIO_A4, "Button Drehknopf",PinPullResistance.PULL_UP);
 	final GpioPinDigitalInput drehregler1DT = gpio.provisionDigitalInputPin(RaspiPin.GPIO_00,
 			PinPullResistance.PULL_DOWN);
 	final GpioPinDigitalInput drehregler1Clk = gpio.provisionDigitalInputPin(RaspiPin.GPIO_03,
@@ -35,7 +35,7 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 	
 	// Drehregler Drei
 	static final GpioPinDigitalInput drehregler3Taster = gpio.provisionDigitalInputPin(expander2,
-			MCP23017Pin.GPIO_A4, "Button Drehknopf",PinPullResistance.PULL_UP);
+			MCP23017Pin.GPIO_A2, "Button Drehknopf",PinPullResistance.PULL_UP);
 	final GpioPinDigitalInput drehregler3DT = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02,
 			PinPullResistance.PULL_DOWN);
 	final GpioPinDigitalInput drehregler3Clk = gpio.provisionDigitalInputPin(RaspiPin.GPIO_05,
@@ -116,12 +116,38 @@ public class TasterSnifferDrehregler extends GpioHandler implements Runnable {
 		drehregler1Taster.addListener(new GpioPinListenerDigital() {
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+				if(drehregler1Taster.isLow()){
+				System.out.println("Drehregler Taster Zug 1");
 				if (zugAnna != null) {
 				counter = 0;
 				drehreglerausgabe(zugAnna, counter);
 				sendeReglerAnZug(zugAnna, counter);
-				}
+				}}
 			}
+		});
+		drehregler2Taster.addListener(new GpioPinListenerDigital() {
+			@Override
+			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+				if(drehregler2Taster.isLow()){
+				System.out.println("Drehregler Taster Zug 2");
+//				if (zugAnna != null) {
+//				counter = 0;
+//				drehreglerausgabe(zugAnna, counter);
+//				sendeReglerAnZug(zugAnna, counter);
+//				}
+			}}
+		});
+		drehregler3Taster.addListener(new GpioPinListenerDigital() {
+			@Override
+			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+				if(drehregler3Taster.isLow()){
+				System.out.println("Drehregler Taster Zug 3");
+//				if (zugAnna != null) {
+//				counter = 0;
+//				drehreglerausgabe(zugAnna, counter);
+//				sendeReglerAnZug(zugAnna, counter);
+//				}
+			}}
 		});
 
 	}

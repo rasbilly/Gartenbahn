@@ -24,7 +24,7 @@ public class MagnetSensoren extends GpioHandler implements Runnable {
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				try {
 					if (sensorW2L.isLow()) {
-
+						System.out.println("Magnetsensor L");
 						Weichen.WEICHEN.schalteWeiche2('l');
 						StatusWeichenSignal.schaltenWeiche2Gui('o');
 						Thread.sleep(400);
@@ -40,6 +40,7 @@ public class MagnetSensoren extends GpioHandler implements Runnable {
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				try {
 					if (sensorW2R.isLow()) {
+						System.out.println("Magnetsensor R");
 						Weichen.WEICHEN.schalteWeiche2('r');
 						StatusWeichenSignal.schaltenWeiche2Gui('u');
 						Thread.sleep(400);

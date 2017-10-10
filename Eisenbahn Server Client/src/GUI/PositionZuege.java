@@ -7,14 +7,14 @@ import javax.swing.ImageIcon;
 public class PositionZuege extends Hauptmenu {	
 	public static final PositionZuege INSTANCE = new PositionZuege();
 	
-	ImageIcon picAnnaLinks = new ImageIcon("resources/Zug/annaLinks.gif");
-	ImageIcon picAnnaRechts= new ImageIcon("resources/Zug/annaRechts.gif");
+	ImageIcon picAnnaLinks = new ImageIcon(getClass().getResource("/resources/annaLinks.gif"));
+	ImageIcon picAnnaRechts= new ImageIcon(getClass().getResource("/resources/annaRechts.gif"));
 	
-	ImageIcon picZug2Links = new ImageIcon("resources/Zug/zug2links.gif");
-	ImageIcon picZug2Rechts= new ImageIcon("resources/Zug/zug2rechts.gif");
+	ImageIcon picZug2Links = new ImageIcon(getClass().getResource("/resources/zug2links.gif"));
+	ImageIcon picZug2Rechts= new ImageIcon(getClass().getResource("/resources/zug2rechts.gif"));
 	
-	ImageIcon picZug3Links = new ImageIcon("resources/Zug/zug3links.gif");
-	ImageIcon picZug3Rechts= new ImageIcon("resources/Zug/zug3Rechts.gif");
+	ImageIcon picZug3Links = new ImageIcon(getClass().getResource("/resources/zug3links.gif"));
+	ImageIcon picZug3Rechts= new ImageIcon(getClass().getResource("/resources/zug3Rechts.gif"));
 	
 	//TODO Bildrichtung beim Rückwärtsfahren
 	

@@ -1,31 +1,38 @@
 package GPIO;
 
+import java.awt.Color;
+
 import com.pi4j.gpio.extension.mcp.MCP23017Pin;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinState;
 
+import GUI.Hauptmenu;
+import GUI.SchaltungStatus;
+
 public class Signal extends GpioHandler {
-	
+
 	public Signal() {
 		super();
 	}
 
-	//RELAY SIGNAL
-	final GpioPinDigitalOutput signalRelay = gpio.provisionDigitalOutputPin(lcdRelay, MCP23017Pin.GPIO_B0, "Signal AN Relay", PinState.HIGH);
+	// RELAY SIGNAL
+	final GpioPinDigitalOutput signalRelay = gpio.provisionDigitalOutputPin(lcdRelay, MCP23017Pin.GPIO_B1,
+			"Signal AN Relay", PinState.HIGH);
 
-	//LED SIGNAL
-	final GpioPinDigitalOutput ledSignalAn = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A6, "Led Signal An", PinState.LOW);
-	final GpioPinDigitalOutput ledSignalAus = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A7, "Led Signal Aus", PinState.LOW);
-	
+	// LED SIGNAL
+	final GpioPinDigitalOutput ledSignalAn = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A6,
+			"Led Signal An", PinState.LOW);
+	final GpioPinDigitalOutput ledSignalAus = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A7,
+			"Led Signal Aus", PinState.LOW);
+
 	public static final Signal SIGNAL = new Signal();
-	
+
 	private char statusSignal = 'g';
-	
+
 	/**
-	 * Pins steuern Schaltbox an und überbrücken den Taster
-	 * g = go
-	 * s = stopp
-	 * t = toogle
+	 * Pins steuern Schaltbox an und überbrücken den Taster g = go s = stopp t =
+	 * toogle
+	 * 
 	 * @param c
 	 * @throws InterruptedException
 	 */
@@ -36,6 +43,7 @@ public class Signal extends GpioHandler {
 			signalRelay.low();
 			statusSignal = 'g';
 			System.out.println("Signal Grün");
+			Hauptmenu.butSignal.setBackground(Color.green);
 
 		} else if (c == 's') {
 			ledSignalAn.low();
@@ -43,6 +51,7 @@ public class Signal extends GpioHandler {
 			signalRelay.high();
 			statusSignal = 's';
 			System.out.println("Signal Rot");
+			Hauptmenu.butSignal.setBackground(Color.red);
 
 		} else if (c == 't') {
 			if (statusSignal == 's') {

@@ -7,6 +7,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
+import GPIO.Signal;
+import GPIO.Weichen;
+
 import java.awt.event.ActionListener;
 import java.io.PrintStream;
 import java.awt.event.ActionEvent;
@@ -17,38 +21,48 @@ import java.awt.Canvas;
 public class Hauptmenu extends JFrame {
 
 	private JPanel contentPane;
-	static Button butWeiche1, butWeiche2, butWeiche3, butSignal;
-	JLabel zug1, zug2, zug3;
+	public static Button butWeiche1, butWeiche2, butWeiche3, butSignal, butPro1, butPro2, butPro3;
+	public static JLabel zug1, zug2, zug3;
 	public static Canvas canvasAbschnitt1, canvasAbschnitt2, canvasAbschnitt3, canvasAbschnitt3_1, canvasAbschnitt4,
 			canvasAbschnitt4_1, canvasAbschnitt5, canvasAbschnitt6, canvasAbschnitt6_2, canvasAbschnitt6_3,
 			canvasAbschnitt7;
 	public static Canvas canvasWeiche1_oben, canvasWeiche1_unten, canvasWeiche2_oben, canvasWeiche2_unten,
 			canvasWeiche3_oben, canvasWeiche3_unten;
-	private JLabel labelProgamme,lblKonsole, lblLokschuppen;
-	
+	private JLabel labelProgamme, lblKonsole, lblLokschuppen;
 
 	public Hauptmenu() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Gartenbahn Steuerung");
 		// setExtendedState(MAXIMIZED_BOTH);
-		setBounds(0, 0, 1631, 900);
+		setBounds(0, 0, 1631, 780);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 
 		zug();
 		abschnitte();
 		buttons();
-		console();
+		// console();
 		hintergrund();
+
+		getContentPane().setLayout(null); // contentPane.setLayout(null);
 		
-		setLayout(null);    //contentPane.setLayout(null);
+		
+		JLabel gleisplan = new JLabel(
+				new ImageIcon(getClass().getResource("/resources/Gleisanlage_mit_Tags_voll.png")));
+		gleisplan.setBounds(0, 0, 1631, 668);
+		contentPane.add(gleisplan);
 
 	}
 
 	private void hintergrund() {
-		JLabel gleisplan = new JLabel(new ImageIcon("resources/Gleisanlage_mit_Tags_voll.png"));
-		gleisplan.setBounds(0, 0, 1631, 668);
-		contentPane.add(gleisplan);
+		// JLabel gleisplan = new JLabel(new
+		// ImageIcon("resources/Gleisanlage_mit_Tags_voll.png"));
+		try {
+		} catch (Exception e) {
+			System.out.println("hier der fehler");
+			e.printStackTrace();
+		}
+
 	}
 
 	private void console() {
@@ -86,41 +100,53 @@ public class Hauptmenu extends JFrame {
 
 		zug1 = new JLabel("");
 		zug1.setBounds(235, 670, 208, 135);
-		zug1.setIcon(new ImageIcon("resources/Zug/annaRechts.gif"));
+		zug1.setIcon(new ImageIcon(getClass().getResource("/resources/annaRechts.gif")));
 		contentPane.add(zug1);
 
 		zug2 = new JLabel("");
 		zug2.setBounds(453, 680, 220, 127);
-		zug2.setIcon(new ImageIcon("resources/Zug/zug2rechts.gif"));
+		zug2.setIcon(new ImageIcon(getClass().getResource("/resources/zug2rechts.gif")));
 		contentPane.add(zug2);
 
 		zug3 = new JLabel("");
 		zug3.setBounds(683, 680, 220, 127);
-		zug3.setIcon(new ImageIcon("resources/Zug/zug3links.gif"));
+		zug3.setIcon(new ImageIcon(getClass().getResource("/resources/zug3links.gif")));
 		contentPane.add(zug3);
 	}
 
 	public void abschnitte() {
 		canvasWeiche1_oben = new Canvas();
 		canvasWeiche1_oben.setBounds(902, 116, 13, 13);
+		canvasWeiche1_oben.setBackground(Color.RED);
+		canvasWeiche1_oben.setVisible(false);
 		contentPane.add(canvasWeiche1_oben);
 
 		canvasWeiche1_unten = new Canvas();
 		canvasWeiche1_unten.setBounds(902, 141, 13, 13);
+		canvasWeiche1_unten.setBackground(Color.RED);
+		canvasWeiche1_unten.setVisible(false);
 		contentPane.add(canvasWeiche1_unten);
 
 		canvasWeiche2_oben = new Canvas();
 		canvasWeiche2_oben.setBounds(477, 141, 13, 13);
+		canvasWeiche2_oben.setBackground(Color.RED);
+		canvasWeiche2_oben.setVisible(false);
 		contentPane.add(canvasWeiche2_oben);
 		canvasWeiche2_unten = new Canvas();
 		canvasWeiche2_unten.setBounds(477, 116, 13, 13);
+		canvasWeiche2_unten.setBackground(Color.RED);
+		canvasWeiche2_unten.setVisible(false);
 		contentPane.add(canvasWeiche2_unten);
 
 		canvasWeiche3_oben = new Canvas();
 		canvasWeiche3_oben.setBounds(515, 564, 13, 13);
+		canvasWeiche3_oben.setBackground(Color.RED);
+		canvasWeiche3_oben.setVisible(false);
 		contentPane.add(canvasWeiche3_oben);
 		canvasWeiche3_unten = new Canvas();
 		canvasWeiche3_unten.setBounds(515, 591, 13, 13);
+		canvasWeiche3_unten.setBackground(Color.RED);
+		canvasWeiche3_unten.setVisible(false);
 		contentPane.add(canvasWeiche3_unten);
 
 		canvasAbschnitt1 = new Canvas();
@@ -174,10 +200,11 @@ public class Hauptmenu extends JFrame {
 		butWeiche1.setBounds(936, 186, 70, 22);
 		butWeiche1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (canvasWeiche1_oben.getBackground() == Color.RED) {
-					// StatusWeichenSignal.schaltenWeiche1Gui('o');
-				} else {
-					// StatusWeichenSignal.schaltenWeiche1Gui('u');
+				try {
+					Weichen.WEICHEN.schalteWeiche1('t');
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -187,6 +214,12 @@ public class Hauptmenu extends JFrame {
 		butWeiche2.setBounds(421, 186, 70, 22);
 		butWeiche2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					Weichen.WEICHEN.schalteWeiche2('t');
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		contentPane.add(butWeiche2);
@@ -195,37 +228,40 @@ public class Hauptmenu extends JFrame {
 		butWeiche3.setBounds(421, 519, 70, 22);
 		butWeiche3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					Weichen.WEICHEN.schalteWeiche3('t');
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		contentPane.add(butWeiche3);
 
-		Button butSignal = new Button("Signal");
+		butSignal = new Button("Signal");
 		butSignal.setBounds(421, 64, 70, 22);
 		butSignal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				if (butSignal.getBackground() == Color.green) {
-					butSignal.setBackground(Color.red);
-				} else {
-					butSignal.setBackground(Color.green);
+				try {
+					Signal.SIGNAL.schalteSignal('t');
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-
-				// if(GPIO.Signal.SIGNAL.getStatusSignal()=='g') {
-				// butSignal.setBackground(Color.RED);
-				// try {
-				// GPIO.Signal.SIGNAL.schalteSignal('s');
-				// } catch (InterruptedException e1) {
-				// e1.printStackTrace();
-				// }
-				// }else if(GPIO.Signal.SIGNAL.getStatusSignal()=='s'){
-				// butSignal.setBackground(Color.GREEN);
-				// try {
-				// GPIO.Signal.SIGNAL.schalteSignal('g');
-				// } catch (InterruptedException e1) {
-				// e1.printStackTrace();
-				// }
 			}
 		});
 		contentPane.add(butSignal);
+
+		butPro1 = new Button("Programm 1");
+		butPro1.setBounds(1400, 150, 100, 22);
+		contentPane.add(butPro1);
+		
+		butPro2 = new Button("Programm 2");
+		butPro2.setBounds(1400, 200, 100, 22);
+		contentPane.add(butPro2);
+		
+		butPro3  = new Button("Programm 3");
+		butPro3.setBounds(1400, 250, 100, 22);
+		contentPane.add(butPro3);
 	}
 }

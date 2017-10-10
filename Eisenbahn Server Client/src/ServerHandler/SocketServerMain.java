@@ -1,14 +1,11 @@
 package ServerHandler;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import GPIO.GpioHandler;
-import GUI.GuiHandler;
 import GUI.Hauptmenu;
-import Verwalter.Gleisabschnitte;
 
 /**
  * 
@@ -21,59 +18,46 @@ public class SocketServerMain {
 
 		System.out.println("Start Gartenbahn\n");
 
+		System.out.print("GPIO...");
 		// GPIO Pins aktivieren
-//		try {
-//			GpioHandler gp = new GpioHandler();
-//			Thread.sleep(200);
-//
-//			gp.portExpanderErsteller();
-//			Thread.sleep(200);
-//
-//			gp.threadErstellerEingang();
-//
-//		} catch (Exception e) {
-//			System.out.println("!-- main GPIO Fehler -- BEENDEN");
-//		}
-//		System.out.println("GPIOs erfolgreich aktiviert. \n");
-		
-		
-		new Hauptmenu().setVisible(true);
-		
-		GuiHandler gh = new GuiHandler();
-		System.out.println("GUI erstellt. \n");
+		try {
+			GpioHandler gp = new GpioHandler();
+			Thread.sleep(300);
+			gp.portExpanderErsteller();
+			Thread.sleep(200);
+			gp.threadErstellerEingang();
+			System.out.println("erfolgreich aktiviert. \n");
+		} catch (Exception e) {
+			System.out.println("!-- main GPIO Fehler -- BEENDEN");
+			e.printStackTrace();
+		}
 
-		
-
-		ServerSocket serverSocket = null;
+		System.out.print("GUI...");
+		try {
+			new Hauptmenu().setVisible(true);
+			System.out.println("erstellt. \n");
+		} catch (Exception e) {
+			System.err.println("konnte nicht erstellt werden");
+		}
 
 		// ServerSocket erstellen
+		ServerSocket serverSocket = null;
 		try {
 			serverSocket = new ServerSocket(603);
 		} catch (IOException e) {
 			System.out.println("!! - ServerSocket -Port schlug fehl: " + e.getMessage());
 		}
 
-		System.out.println("Gartenbahn Server gestartet! mit Port: " + serverSocket.getLocalPort() + " ,IP-Adresse: "+ InetAddress.getLocalHost()+"\n");
-
+		System.out.println("Gartenbahn Server gestartet! mit Port: " + serverSocket.getLocalPort() + " ,IP-Adresse: "
+				+ InetAddress.getLocalHost() + "\n");
 
 		// Thread zum einlesen von der Konsole
 		Thread consoleEinlesen = new Thread(new ConsoleEinlesen());
 		consoleEinlesen.start();
 
 		String helferName;
-		
-		for(int ii = 0;ii<10;ii++) {
-			System.out.println("Hallo "+ ii);
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
 
-		// auf Anfragen warten
+		// auf Anfragen/Züge warten
 		while (true) {
 			try {
 
@@ -85,9 +69,9 @@ public class SocketServerMain {
 				String zugIP = clientSocket.getInetAddress().toString();
 
 				// IP in Name umwandeln
-				if (zugIP.equals("/192.168.178.47")) {
+				if (zugIP.equals("/192.168.178.48")) {
 					helferName = "Roland";
-				} else if (zugIP.equals("/192.168.178.48")) {
+				} else if (zugIP.equals("/192.168.4.3")) {
 					helferName = "Anna";
 				} else {
 					helferName = zugIP;
@@ -103,8 +87,6 @@ public class SocketServerMain {
 					// Zug connected gerade
 					connectedDevice = new Zug(helferName, clientSocket);
 					ZugManager.INSTANCE.registerZug((Zug) connectedDevice);
-
-				
 				}
 
 				// Thread erstellen und zug übergeben
