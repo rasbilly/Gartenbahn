@@ -37,7 +37,9 @@ public class Heartbeat implements Runnable {
 
 			if (zug.aliveHelper == false) {
 				if (helfer < 5) {
+					if(helfer>2){
 					System.out.println(zug.getId() + " Verbindung verloren! Neuversuch: " + helfer);
+					}
 					try {
 						zug.sendeDaten("heartbeat");
 					} catch (Exception e) {
@@ -48,7 +50,7 @@ public class Heartbeat implements Runnable {
 
 					zug.setAlive(false);
 				//	GUI.GuiHandler.posZug.posZug1(0);
-					System.out.println("!! " +zug.getId()+"ist tot !!");
+					System.out.println("!! " +zug.getId()+" ist tot !!");
 					ZugManager.INSTANCE.zugMap.remove(zug.getId(), zug);
 
 					Thread.currentThread().interrupt();

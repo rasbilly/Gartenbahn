@@ -27,7 +27,7 @@ public class LedStatusZugHandler extends GpioHandler {
 	static final GpioPinDigitalOutput gDigit1 = gpio.provisionDigitalOutputPin(expander1, MCP23017Pin.GPIO_B6, "g",
 			PinState.HIGH);
 	static final GpioPinDigitalOutput punktDigit1 = gpio.provisionDigitalOutputPin(expander1, MCP23017Pin.GPIO_B7, ".",
-			PinState.LOW);
+			PinState.HIGH);
 
 
 	// Zug 2
@@ -46,7 +46,7 @@ public class LedStatusZugHandler extends GpioHandler {
 	static final GpioPinDigitalOutput bDigit2 = gpio.provisionDigitalOutputPin(expander1, MCP23017Pin.GPIO_A6, "b",
 			PinState.HIGH);
 	static final GpioPinDigitalOutput aDigit2 = gpio.provisionDigitalOutputPin(expander1, MCP23017Pin.GPIO_A7, "a",
-			PinState.LOW);
+			PinState.HIGH);
 
 	// Zug 3
 	static final GpioPinDigitalOutput aDigit3 = gpio.provisionDigitalOutputPin(expander2, MCP23017Pin.GPIO_B0, "a",
@@ -64,7 +64,7 @@ public class LedStatusZugHandler extends GpioHandler {
 	static final GpioPinDigitalOutput gDigit3 = gpio.provisionDigitalOutputPin(expander2, MCP23017Pin.GPIO_B6, "g",
 			PinState.HIGH);
 	static final GpioPinDigitalOutput punktDigit3 = gpio.provisionDigitalOutputPin(expander2, MCP23017Pin.GPIO_B7,
-			".", PinState.LOW);
+			".", PinState.HIGH);
 	
 	//Led Fahrtrichtung
 	static final GpioPinDigitalOutput ledRichtung1 = gpio.provisionDigitalOutputPin(expander2, MCP23017Pin.GPIO_A7,

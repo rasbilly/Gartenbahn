@@ -1,13 +1,18 @@
 package GPIO;
 
-public class LedTest extends DigitLed implements Runnable{
+public class LedTest extends DigitLed implements Runnable {
 	int time = 150;
-	int time2 = 150;
+	int time2 = 100;
+	
+	@Override
+	public void run() {
+		startAndResetLeds();
+	}
 
-
-	public void startAndResetLeds()  {
-
-		while (time > 50) {
+	public void startAndResetLeds() {
+		resetLed();
+		resetDigits();
+		while (time > 100) {
 			time -= 25;
 			aDigit1.low();
 			aDigit2.low();
@@ -57,6 +62,8 @@ public class LedTest extends DigitLed implements Runnable{
 			sleep();
 			Weichen.WEICHEN.ledWeiche2R.high();
 			sleep();
+			Weichen.WEICHEN.ledWeiche3L.high();
+			sleep();
 			Weichen.WEICHEN.ledWeiche3R.high();
 			sleep();
 			ledRichtung3.high();
@@ -75,6 +82,8 @@ public class LedTest extends DigitLed implements Runnable{
 			sleep();
 			Weichen.WEICHEN.ledWeiche2R.low();
 			sleep();
+			Weichen.WEICHEN.ledWeiche3L.low();
+			sleep();
 			Weichen.WEICHEN.ledWeiche3R.low();
 			sleep();
 			ledRichtung3.low();
@@ -82,7 +91,23 @@ public class LedTest extends DigitLed implements Runnable{
 			ledRichtung2.low();
 			sleep();
 			ledRichtung1.low();
+			resetLed();
+		}
+		startZustand();
+		System.out.println("Signal und Weichen wurden auf Startposition gestellt");
+	}
 
+	private void startZustand() {
+		try {
+			Signal.SIGNAL.schalteSignal('g');
+			Weichen.WEICHEN.schalteWeiche1('r');
+			Weichen.WEICHEN.schalteWeiche2('l');
+			Weichen.WEICHEN.schalteWeiche3('r');
+			punktDigit1.low();
+			punktDigit2.low();
+			punktDigit3.low();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -94,6 +119,17 @@ public class LedTest extends DigitLed implements Runnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private void resetLed() {
+		Signal.SIGNAL.ledSignalAn.low();
+		Signal.SIGNAL.ledSignalAus.low();
+		Weichen.WEICHEN.ledWeiche1L.low();
+		Weichen.WEICHEN.ledWeiche1R.low();
+		Weichen.WEICHEN.ledWeiche2L.low();
+		Weichen.WEICHEN.ledWeiche2R.low();
+		Weichen.WEICHEN.ledWeiche3L.low();
+		Weichen.WEICHEN.ledWeiche3R.low();
 	}
 
 	private void resetDigits() {

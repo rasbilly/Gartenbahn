@@ -7,33 +7,32 @@ public class DigitLed extends LedStatusZugHandler implements Runnable {
 
 	@Override
 	public void run() {
-		LedTest lt = new LedTest();
-		lt.startAndResetLeds();
+		Thread lt = new Thread(new LedTest());
+		lt.start(); //nicht start
 
+		try {
+			Thread.sleep(400);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Zug zugAnna = ZugManager.INSTANCE.findZugByName("Anna");
 		int tempoAnna = 100;
 
 		while (true) {
-			for(int i = -1;i<=5;i++){
-				zahlAusgeben1(i);
-				zahlAusgeben2(i);
-				zahlAusgeben3(i);
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+			
+			
 			if (zugAnna == null) {
 				resetDigit1();
+				punktDigit1.low();
 				zugAnna = ZugManager.INSTANCE.findZugByName("Anna");
 				
 			} else if (zugAnna != null) {
 				if (zugAnna.isAlive() == false) {
 					resetDigit1();
 					zugAnna = ZugManager.INSTANCE.findZugByName("Anna");
-				} else if (tempoAnna != zugAnna.getTempo() && (zugAnna.isAlive() == true)) {
+			//	} else if (tempoAnna != zugAnna.getTempo() && (zugAnna.isAlive() == true)) {
+				} else if ((zugAnna.isAlive() == true)) {
 					tempoAnna = zugAnna.getTempo();
 					zahlAusgeben1(tempoAnna);
 				}
@@ -63,7 +62,7 @@ public class DigitLed extends LedStatusZugHandler implements Runnable {
 			eDigit1.low();
 			dDigit1.low();
 			fDigit1.low();
-		} else if (i == 1 ){//|| i == -1) {
+		} else if (i == 1 || i == -1) {
 			bDigit1.low();
 			cDigit1.low();
 		} else if (i == 2 || i == -2) {
@@ -107,7 +106,7 @@ public class DigitLed extends LedStatusZugHandler implements Runnable {
 			eDigit2.low();
 			dDigit2.low();
 			fDigit2.low();
-		} else if (i == 1){// || i == -1) {
+		} else if (i == 1|| i == -1) {
 			bDigit2.low();
 			cDigit2.low();
 		} else if (i == 2 || i == -2) {
@@ -151,7 +150,7 @@ public class DigitLed extends LedStatusZugHandler implements Runnable {
 			eDigit3.low();
 			dDigit3.low();
 			fDigit3.low();
-		} else if (i == 1 ){//|| i == -1) {
+		} else if (i == 1 || i == -1) {
 			bDigit3.low();
 			cDigit3.low();
 		} else if (i == 2 || i == -2) {

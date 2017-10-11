@@ -34,7 +34,7 @@ public class Hauptmenu extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Gartenbahn Steuerung");
 		// setExtendedState(MAXIMIZED_BOTH);
-		setBounds(0, 0, 1631, 780);
+		setBounds(0, 0, 1631, 870);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 
@@ -85,7 +85,7 @@ public class Hauptmenu extends JFrame {
 
 		lblLokschuppen = new JLabel("Lokschuppen");
 		lblLokschuppen.setFont(new Font("Tahoma", Font.BOLD, 22));
-		lblLokschuppen.setBounds(46, 679, 153, 33);
+		lblLokschuppen.setBounds(46, 679, 179, 33);
 		contentPane.add(lblLokschuppen);
 
 		labelProgamme = new JLabel("Programme");

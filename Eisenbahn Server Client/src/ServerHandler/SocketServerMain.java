@@ -71,7 +71,7 @@ public class SocketServerMain {
 				// IP in Name umwandeln
 				if (zugIP.equals("/192.168.178.48")) {
 					helferName = "Roland";
-				} else if (zugIP.equals("/192.168.4.3")) {
+				} else if (zugIP.equals("/192.168.178.49")) {
 					helferName = "Anna";
 				} else {
 					helferName = zugIP;
