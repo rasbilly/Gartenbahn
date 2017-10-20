@@ -74,6 +74,7 @@ public class TasterSnifferProgramme extends GpioHandler implements Runnable {
 				try {
 					if (buttonLcdSwitch.isLow()) {
 						System.out.println("LCD Display Taster!");
+						LcdDisplayVerwalter.lcdSchalten();
 						Thread.sleep(1000);
 					}
 				} catch (InterruptedException e4) {
