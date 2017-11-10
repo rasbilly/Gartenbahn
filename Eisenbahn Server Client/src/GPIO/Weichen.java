@@ -5,7 +5,6 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput;
 
 import com.pi4j.io.gpio.PinState;
 
-import GUI.Hauptmenu;
 import GUI.StatusWeichenSignal;
 
 public class Weichen extends GpioHandler {

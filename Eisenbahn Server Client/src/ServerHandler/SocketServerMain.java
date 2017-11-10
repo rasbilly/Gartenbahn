@@ -14,7 +14,7 @@ import GUI.Hauptmenu;
  */
 public class SocketServerMain {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InterruptedException {
 
 		System.out.println("Start Gartenbahn\n");
 
@@ -22,15 +22,15 @@ public class SocketServerMain {
 		// GPIO Pins aktivieren
 		try {
 			GpioHandler gp = new GpioHandler();
-			Thread.sleep(300);
 			gp.portExpanderErsteller();
-			Thread.sleep(200);
 			gp.threadErstellerEingang();
 			System.out.println("erfolgreich aktiviert. \n");
 		} catch (Exception e) {
 			System.out.println("!-- main GPIO Fehler -- BEENDEN");
 			e.printStackTrace();
 		}
+		
+		
 
 		System.out.print("GUI...");
 		try {
@@ -39,6 +39,8 @@ public class SocketServerMain {
 		} catch (Exception e) {
 			System.err.println("konnte nicht erstellt werden");
 		}
+		
+		
 
 		// ServerSocket erstellen
 		ServerSocket serverSocket = null;
@@ -70,9 +72,11 @@ public class SocketServerMain {
 
 				// IP in Name umwandeln
 				if (zugIP.equals("/192.168.178.48")) {
-					helferName = "Roland";
-				} else if (zugIP.equals("/192.168.178.49")) {
 					helferName = "Anna";
+				} else if (zugIP.equals("/192.168.178.49")) {
+					helferName = "Lgb";
+				} else if (zugIP.equals("/192.168.178.50")) {
+					helferName = "DB";
 				} else {
 					helferName = zugIP;
 				}

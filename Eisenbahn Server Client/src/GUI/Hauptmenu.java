@@ -20,6 +20,8 @@ import java.awt.Canvas;
 
 public class Hauptmenu extends JFrame {
 
+
+
 	private JPanel contentPane;
 	public static Button butWeiche1, butWeiche2, butWeiche3, butSignal, butPro1, butPro2, butPro3;
 	public static JLabel zug1, zug2, zug3;

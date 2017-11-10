@@ -1,8 +1,13 @@
 package GPIO;
 
-public class LedTest extends DigitLed implements Runnable {
-	int time = 150;
-	int time2 = 100;
+import GPIO.digit.Digit1;
+import GPIO.digit.Digit2;
+import GPIO.digit.Digit3;
+
+
+public class LedTest extends LedStatusZugHandler implements Runnable {
+	int time = 125;
+	int time2 = 75;
 	
 	@Override
 	public void run() {
@@ -99,6 +104,7 @@ public class LedTest extends DigitLed implements Runnable {
 
 	private void startZustand() {
 		try {
+			Thread.sleep(2000);
 			Signal.SIGNAL.schalteSignal('g');
 			Weichen.WEICHEN.schalteWeiche1('r');
 			Weichen.WEICHEN.schalteWeiche2('l');
@@ -114,7 +120,7 @@ public class LedTest extends DigitLed implements Runnable {
 
 	private void sleep() {
 		try {
-			Thread.sleep(time2);
+			Thread.sleep(75);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -133,15 +139,11 @@ public class LedTest extends DigitLed implements Runnable {
 	}
 
 	private void resetDigits() {
-		try {
-			Thread.sleep(time);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		resetDigit1();
-		resetDigit2();
-		resetDigit3();
+		sleep();
+		Digit1.resetDigit1();
+		Digit2.resetDigit2();
+		Digit3.resetDigit3();
+		
 	}
 
 }

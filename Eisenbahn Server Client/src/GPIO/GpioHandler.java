@@ -8,20 +8,25 @@ import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException;
 
+import GPIO.digit.DigitHandler;
+import GPIO.display.LcdDisplayHandler;
+import GPIO.drehregler.DrehreglerHandler;
+import GPIO.taster.TasterSnifferProgramme;
+import GPIO.taster.TasterSnifferSignalWeiche;
+
 public class GpioHandler {
 
 	public GpioHandler() {
-		//System.out.println("GPIO Handler");
+		// System.out.println("GPIO Handler");
 	}
 
-	static GpioController gpio = GpioFactory.getInstance();
+	protected static GpioController gpio = GpioFactory.getInstance();
 
-	static MCP23017GpioProvider expander1;
-	static MCP23017GpioProvider expander2;
+	protected static MCP23017GpioProvider expander1;
+	protected static MCP23017GpioProvider expander2;
 	static MCP23017GpioProvider lcdRelay;
-	static MCP23017GpioProvider weiSig;
-	
-	
+	protected static MCP23017GpioProvider weiSig;
+
 	public void portExpanderErsteller() throws UnsupportedBusNumberException, IOException {
 		try {
 			expander1 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x20);
@@ -46,7 +51,7 @@ public class GpioHandler {
 		} catch (Exception e) {
 			System.out.println("!!Fehler - Expander 4 weiSig");
 			e.printStackTrace();
-		}		
+		}
 	}
 
 	/**
@@ -56,23 +61,23 @@ public class GpioHandler {
 		System.out.println("Threads erstellen");
 		try {
 
-			Thread tasterDrehregler = new Thread(new TasterSnifferDrehregler());
+			DrehreglerHandler drehHand = new DrehreglerHandler();
 			Thread tasterSignalWeiche = new Thread(new TasterSnifferSignalWeiche());
 			Thread tasterProgramme = new Thread(new TasterSnifferProgramme());
 			Thread magSensoren = new Thread(new MagnetSensoren());
-			
-			LedStatusZugHandler lsh = new LedStatusZugHandler();
 
 			Thread.sleep(100);
-			lsh.sch();
+			DigitHandler dh = new DigitHandler();
+			dh.threadErsteller();
 
-			tasterDrehregler.start();
+
+
+			drehHand.drehreglerErsteller();
 			tasterSignalWeiche.start();
 			tasterProgramme.start();
 			magSensoren.start();
-			
+
 			LcdDisplayHandler.startLcdDisplay();
-			
 
 		} catch (Exception r) {
 			r.printStackTrace();

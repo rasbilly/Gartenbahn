@@ -7,7 +7,7 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinState;
 
 import GUI.Hauptmenu;
-import GUI.SchaltungStatus;
+
 
 public class Signal extends GpioHandler {
 
@@ -20,9 +20,9 @@ public class Signal extends GpioHandler {
 			"Signal AN Relay", PinState.HIGH);
 
 	// LED SIGNAL
-	final GpioPinDigitalOutput ledSignalAn = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A6,
+	public final GpioPinDigitalOutput ledSignalAn = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A6,
 			"Led Signal An", PinState.LOW);
-	final GpioPinDigitalOutput ledSignalAus = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A7,
+	public final GpioPinDigitalOutput ledSignalAus = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A7,
 			"Led Signal Aus", PinState.LOW);
 
 	public static final Signal SIGNAL = new Signal();
