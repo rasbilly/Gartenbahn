@@ -7,47 +7,41 @@ import java.net.Socket;
 import GPIO.GpioHandler;
 import GUI.Hauptmenu;
 
-/**
- * 
- * Verwaltung der neuen Clients
- *
- */
+
 public class SocketServerMain {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 
 		System.out.println("Start Gartenbahn\n");
 
-		System.out.print("GPIO...");
-		// GPIO Pins aktivieren
+		// GPIO Pins ##################################################################
 		try {
+			System.out.print("GPIO...");
 			GpioHandler gp = new GpioHandler();
 			gp.portExpanderErsteller();
 			gp.threadErstellerEingang();
 			System.out.println("erfolgreich aktiviert. \n");
 		} catch (Exception e) {
-			System.out.println("!-- main GPIO Fehler -- BEENDEN");
-			e.printStackTrace();
+			System.err.println("!-- main GPIO Fehler -- BEENDEN");
 		}
-		
-		
 
-		System.out.print("GUI...");
+		
+		// GUI ########################################################################
 		try {
+			System.out.print("GUI...");
 			new Hauptmenu().setVisible(true);
 			System.out.println("erstellt. \n");
 		} catch (Exception e) {
-			System.err.println("konnte nicht erstellt werden");
+			System.err.println("! Fehler - konnte nicht erstellt werden");
 		}
-		
-		
 
-		// ServerSocket erstellen
+		
+		// ServerSocket ###############################################################
 		ServerSocket serverSocket = null;
 		try {
 			serverSocket = new ServerSocket(603);
 		} catch (IOException e) {
-			System.out.println("!! - ServerSocket -Port schlug fehl: " + e.getMessage());
+			System.err.println("!! - ServerSocket -Port schlug fehl: " + e.getMessage());
 		}
 
 		System.out.println("Gartenbahn Server gestartet! mit Port: " + serverSocket.getLocalPort() + " ,IP-Adresse: "
@@ -64,7 +58,7 @@ public class SocketServerMain {
 			try {
 
 				// Client akzeptieren
-				System.out.println("ServerSocket -  warten auf Client..");
+				System.out.println("ServerSocket -  warten auf Zug/Client..");
 				Socket clientSocket = serverSocket.accept();
 
 				// Zug bestimmen und id festlegen
@@ -84,11 +78,9 @@ public class SocketServerMain {
 				Device connectedDevice;
 
 				if (helferName.startsWith("regler")) {
-					// Regler connected gerade
 					connectedDevice = new Regler(helferName, clientSocket);
 
 				} else {
-					// Zug connected gerade
 					connectedDevice = new Zug(helferName, clientSocket);
 					ZugManager.INSTANCE.registerZug((Zug) connectedDevice);
 				}
@@ -98,7 +90,7 @@ public class SocketServerMain {
 				threadHandler.start();
 
 				System.out.println(
-						"ServerSocket - Verbindung zum Client: " + zugIP + " (" + helferName + ") hergestellt \n");
+						"ServerSocket - Verbindung zum Client: " + zugIP + " (" + helferName + ") hergestellt \n\n");
 
 			} catch (IOException e) {
 				System.out.println("!! - ServerSocket - .accept(); fehlgeschlagen");

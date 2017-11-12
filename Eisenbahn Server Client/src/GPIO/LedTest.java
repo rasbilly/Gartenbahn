@@ -3,9 +3,10 @@ package GPIO;
 import GPIO.digit.Digit1;
 import GPIO.digit.Digit2;
 import GPIO.digit.Digit3;
+import GPIO.digit.DigitHandler;
 
 
-public class LedTest extends LedStatusZugHandler implements Runnable {
+public class LedTest extends DigitHandler implements Runnable {
 	int time = 125;
 	int time2 = 75;
 	
@@ -99,12 +100,12 @@ public class LedTest extends LedStatusZugHandler implements Runnable {
 			resetLed();
 		}
 		startZustand();
-		System.out.println("Signal und Weichen wurden auf Startposition gestellt");
+		
 	}
 
 	private void startZustand() {
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(5000);
 			Signal.SIGNAL.schalteSignal('g');
 			Weichen.WEICHEN.schalteWeiche1('r');
 			Weichen.WEICHEN.schalteWeiche2('l');
@@ -112,8 +113,9 @@ public class LedTest extends LedStatusZugHandler implements Runnable {
 			punktDigit1.low();
 			punktDigit2.low();
 			punktDigit3.low();
+			System.out.println("Signal und Weichen wurden auf Startposition gestellt");
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			System.err.println("! Fehlerhafte Startposition");
 		}
 
 	}

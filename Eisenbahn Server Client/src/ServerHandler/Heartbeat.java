@@ -49,7 +49,6 @@ public class Heartbeat implements Runnable {
 				} else if (helfer == 5) {
 
 					zug.setAlive(false);
-				//	GUI.GuiHandler.posZug.posZug1(0);
 					System.out.println("!! " +zug.getId()+" ist tot !!");
 					ZugManager.INSTANCE.zugMap.remove(zug.getId(), zug);
 

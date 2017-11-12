@@ -43,7 +43,7 @@ public class Hauptmenu extends JFrame {
 		zug();
 		abschnitte();
 		buttons();
-		// console();
+		console();
 		hintergrund();
 
 		getContentPane().setLayout(null); // contentPane.setLayout(null);
@@ -70,7 +70,7 @@ public class Hauptmenu extends JFrame {
 	private void console() {
 		final JTextArea area = new JTextArea();
 		JScrollPane scrollPane = new JScrollPane(area);
-		scrollPane.setBounds(1294, 350, 311, 500);
+		scrollPane.setBounds(1294, 350, 311, 300);
 		getContentPane().add(scrollPane);
 		PrintStream stream = new PrintStream(System.out) {
 

@@ -32,7 +32,8 @@ public class TasterSnifferProgramme extends GpioHandler implements Runnable {
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				try {
 					if (buttonP1.isLow()) {
-						System.out.println("Programm 1 gestartet!");
+						System.out.println("Programm 1");
+						//ProgrammHandler.INSTANCE.programmWaehlen(1);
 						Thread.sleep(1000);
 					}
 				} catch (InterruptedException e1) {
@@ -47,7 +48,8 @@ public class TasterSnifferProgramme extends GpioHandler implements Runnable {
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				try {
 					if (buttonP2.isLow()) {
-						System.out.println("Programm 2 gestartet!");
+						System.out.println("Programm 2");
+						//ProgrammHandler.INSTANCE.programmWaehlen(2);
 						Thread.sleep(1000);
 					}
 				} catch (InterruptedException e2) {
@@ -62,7 +64,8 @@ public class TasterSnifferProgramme extends GpioHandler implements Runnable {
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				try {
 					if (buttonP3.isLow()) {
-						System.out.println("Programm 3 gestartet!");
+						System.out.println("Programm 3 ");
+						//ProgrammHandler.INSTANCE.programmWaehlen(3);
 						Thread.sleep(1000);
 					}
 				} catch (InterruptedException e3) {

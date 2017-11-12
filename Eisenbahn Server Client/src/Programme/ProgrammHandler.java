@@ -1,6 +1,10 @@
 package Programme;
 
+
+
 public class ProgrammHandler {
+	
+	public static final ProgrammHandler INSTANCE = new ProgrammHandler();
 	
 	P1 p1 = new P1();
 	P2 p2 = new P2();
@@ -19,6 +23,7 @@ public class ProgrammHandler {
 		p3.status = false;
 		if(p == 1){
 			p1.status = true;
+			p1.start();
 		}else if(p ==2){
 			p2.status = true;
 		}else if(p == 3){

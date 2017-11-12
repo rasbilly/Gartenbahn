@@ -24,7 +24,7 @@ public class GpioHandler {
 
 	protected static MCP23017GpioProvider expander1;
 	protected static MCP23017GpioProvider expander2;
-	static MCP23017GpioProvider lcdRelay;
+	protected static MCP23017GpioProvider lcdRelay;
 	protected static MCP23017GpioProvider weiSig;
 
 	public void portExpanderErsteller() throws UnsupportedBusNumberException, IOException {

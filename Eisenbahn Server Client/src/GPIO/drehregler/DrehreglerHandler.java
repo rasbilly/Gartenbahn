@@ -8,12 +8,13 @@ public class DrehreglerHandler extends GpioHandler {
 	public DrehreglerHandler() {
 	}
 
-	Thread drehregler1 = new Thread(new Drehregler1());
-	Thread drehregler2 = new Thread(new Drehregler2());
-	Thread drehregler3 = new Thread(new Drehregler3());
+	
 
 	public void drehreglerErsteller() {
 		try {
+			Thread drehregler1 = new Thread(new Drehregler1());
+			Thread drehregler2 = new Thread(new Drehregler2());
+			Thread drehregler3 = new Thread(new Drehregler3());
 			drehregler1.start();
 			drehregler2.start();
 			drehregler3.start();

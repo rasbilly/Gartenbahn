@@ -7,11 +7,10 @@ import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
-import GPIO.GpioHandler;
 import ServerHandler.Zug;
 import ServerHandler.ZugManager;
 
-public class Drehregler1 extends GpioHandler implements Runnable {
+public class Drehregler1 extends DrehreglerHandler implements Runnable {
 
 	static final GpioPinDigitalInput drehregler1Taster = gpio.provisionDigitalInputPin(expander2, MCP23017Pin.GPIO_A4,
 			"Button Drehknopf", PinPullResistance.PULL_UP);

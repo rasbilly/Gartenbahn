@@ -1,10 +1,10 @@
 package GPIO.digit;
 
-import GPIO.LedStatusZugHandler;
+
 import ServerHandler.Zug;
 import ServerHandler.ZugManager;
 
-public class Digit3 extends LedStatusZugHandler implements Runnable {
+public class Digit3 extends DigitHandler implements Runnable {
 
 	@Override
 	public void run() {
@@ -17,7 +17,7 @@ public class Digit3 extends LedStatusZugHandler implements Runnable {
 				resetDigit3();
 				punktDigit3.low();
 				zug = ZugManager.INSTANCE.findZugByName(zugName);
-
+				//GUI.PositionZuege.INSTANCE.posZug3(0);
 			} else if (zug != null) {
 				if (zug.isAlive() == false) {
 					resetDigit3();

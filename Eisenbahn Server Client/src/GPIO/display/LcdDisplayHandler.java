@@ -1,4 +1,4 @@
-package GPIO.display;
+ package GPIO.display;
 
 import com.pi4j.component.lcd.impl.I2CLcdDisplay;
 import com.pi4j.io.i2c.I2CBus;
