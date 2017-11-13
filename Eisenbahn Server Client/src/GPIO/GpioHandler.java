@@ -60,7 +60,9 @@ public class GpioHandler {
 	public void threadErstellerEingang() {
 		System.out.println("Threads erstellen");
 		try {
-
+			LcdDisplayHandler.startLcdDisplay();
+			
+			
 			DrehreglerHandler drehHand = new DrehreglerHandler();
 			Thread tasterSignalWeiche = new Thread(new TasterSnifferSignalWeiche());
 			Thread tasterProgramme = new Thread(new TasterSnifferProgramme());
@@ -70,14 +72,14 @@ public class GpioHandler {
 			DigitHandler dh = new DigitHandler();
 			dh.threadErsteller();
 
-
+			
 
 			drehHand.drehreglerErsteller();
 			tasterSignalWeiche.start();
 			tasterProgramme.start();
 			magSensoren.start();
 
-			LcdDisplayHandler.startLcdDisplay();
+			
 
 		} catch (Exception r) {
 			r.printStackTrace();

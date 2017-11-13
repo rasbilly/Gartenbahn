@@ -8,6 +8,7 @@ import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
 import GPIO.GpioHandler;
 import GPIO.display.LcdDisplayVerwalter;
+import Programme.ProgrammHandler;
 
 public class TasterSnifferProgramme extends GpioHandler implements Runnable {
 
@@ -33,7 +34,7 @@ public class TasterSnifferProgramme extends GpioHandler implements Runnable {
 				try {
 					if (buttonP1.isLow()) {
 						System.out.println("Programm 1");
-						//ProgrammHandler.INSTANCE.programmWaehlen(1);
+						ProgrammHandler.INSTANCE.programmWaehlen(1);
 						Thread.sleep(1000);
 					}
 				} catch (InterruptedException e1) {
@@ -49,7 +50,7 @@ public class TasterSnifferProgramme extends GpioHandler implements Runnable {
 				try {
 					if (buttonP2.isLow()) {
 						System.out.println("Programm 2");
-						//ProgrammHandler.INSTANCE.programmWaehlen(2);
+						ProgrammHandler.INSTANCE.programmWaehlen(2);
 						Thread.sleep(1000);
 					}
 				} catch (InterruptedException e2) {
@@ -65,7 +66,7 @@ public class TasterSnifferProgramme extends GpioHandler implements Runnable {
 				try {
 					if (buttonP3.isLow()) {
 						System.out.println("Programm 3 ");
-						//ProgrammHandler.INSTANCE.programmWaehlen(3);
+						ProgrammHandler.INSTANCE.programmWaehlen(3);
 						Thread.sleep(1000);
 					}
 				} catch (InterruptedException e3) {

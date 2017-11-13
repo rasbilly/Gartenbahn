@@ -5,12 +5,19 @@ package Programme;
 public class ProgrammHandler {
 	
 	public static final ProgrammHandler INSTANCE = new ProgrammHandler();
+	P1 p1;
+	P2 p2;
+	P3 p3;
+	Thread manu;
 	
-	P1 p1 = new P1();
-	P2 p2 = new P2();
-	P3 p3 = new P3();
+	public void proErsteller() {
+	p1 = new P1();
+	p2 = new P2();
+	p3 = new P3();
 	
-	Thread manu = new Thread(new ManuellHelper());
+	manu = new Thread(new ManuellHelper());
+	manu.start();
+	}
 	
 	/**
 	 * Aktiviert das jeweilige Programm
@@ -26,8 +33,10 @@ public class ProgrammHandler {
 			p1.start();
 		}else if(p ==2){
 			p2.status = true;
+			p2.start();
 		}else if(p == 3){
 			p3.status = true;
+			p3.start();
 		}else{
 			System.err.println("Kein Programm gefunden");
 		}
@@ -41,18 +50,13 @@ public class ProgrammHandler {
 	 */
 	public String proStatusAbfrage(){
 		if(p1.status==true){
-			return "Programm 1 Aktive";
+			return "Programm 1 Aktiv";
 		}else if (p2.status==true){
-			return"Programm 2 Aktive";
+			return"Programm 2 Aktiv";
 		}else if (p3.status==true){
-			return"Programm 3 Aktive";
+			return"Programm 3 Aktiv";
 		}
 		return "Manuelle Fahrt";
 	}
-	
-	
-	
-	
-	
 
 }

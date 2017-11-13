@@ -6,6 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import GPIO.GpioHandler;
 import GUI.Hauptmenu;
+import Programme.ProgrammHandler;
 
 
 public class SocketServerMain {
@@ -13,6 +14,14 @@ public class SocketServerMain {
 	public static void main(String[] args) throws IOException, InterruptedException {
 
 		System.out.println("Start Gartenbahn\n");
+		
+		//Programme erstellen
+		try {
+			ProgrammHandler.INSTANCE.proErsteller();
+			System.out.println("Programme wurden erstellt!");
+		} catch (Exception e) {
+			System.err.println("! Fehler - Programme konnten nicht erstellt werden");
+		}
 
 		// GPIO Pins ##################################################################
 		try {
@@ -24,6 +33,7 @@ public class SocketServerMain {
 		} catch (Exception e) {
 			System.err.println("!-- main GPIO Fehler -- BEENDEN");
 		}
+	
 
 		
 		// GUI ########################################################################

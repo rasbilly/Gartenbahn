@@ -10,6 +10,7 @@ import javax.swing.JTextArea;
 
 import GPIO.Signal;
 import GPIO.Weichen;
+import Programme.ProgrammHandler;
 
 import java.awt.event.ActionListener;
 import java.io.PrintStream;
@@ -23,7 +24,7 @@ public class Hauptmenu extends JFrame {
 
 
 	private JPanel contentPane;
-	public static Button butWeiche1, butWeiche2, butWeiche3, butSignal, butPro1, butPro2, butPro3;
+	public static Button butWeiche1, butWeiche2, butWeiche3, butSignal, butPro1, butPro2, butPro3, butAu;
 	public static JLabel zug1, zug2, zug3;
 	public static Canvas canvasAbschnitt1, canvasAbschnitt2, canvasAbschnitt3, canvasAbschnitt3_1, canvasAbschnitt4,
 			canvasAbschnitt4_1, canvasAbschnitt5, canvasAbschnitt6, canvasAbschnitt6_2, canvasAbschnitt6_3,
@@ -205,8 +206,7 @@ public class Hauptmenu extends JFrame {
 				try {
 					Weichen.WEICHEN.schalteWeiche1('t');
 				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+System.err.println("! Weiche 1 konnte nicht geschaltet werden!");
 				}
 			}
 		});
@@ -219,8 +219,7 @@ public class Hauptmenu extends JFrame {
 				try {
 					Weichen.WEICHEN.schalteWeiche2('t');
 				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.err.println("! Weiche 2 konnte nicht geschaltet werden!");
 				}
 			}
 		});
@@ -233,8 +232,7 @@ public class Hauptmenu extends JFrame {
 				try {
 					Weichen.WEICHEN.schalteWeiche3('t');
 				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.err.println("! Weiche 3 konnte nicht geschaltet werden!");
 				}
 			}
 		});
@@ -247,23 +245,50 @@ public class Hauptmenu extends JFrame {
 				try {
 					Signal.SIGNAL.schalteSignal('t');
 				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.err.println("! Signal konnte nicht geschaltet werden!");
 				}
 			}
 		});
 		contentPane.add(butSignal);
 
 		butPro1 = new Button("Programm 1");
-		butPro1.setBounds(1400, 150, 100, 22);
+		butPro1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("Button P1");
+				ProgrammHandler.INSTANCE.programmWaehlen(1);
+			}
+		});
+		butPro1.setBounds(1400, 130, 100, 22);
 		contentPane.add(butPro1);
 		
 		butPro2 = new Button("Programm 2");
-		butPro2.setBounds(1400, 200, 100, 22);
+		butPro2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Button P2");
+				ProgrammHandler.INSTANCE.programmWaehlen(2);
+			}
+		});
+		butPro2.setBounds(1400, 180, 100, 22);
 		contentPane.add(butPro2);
 		
 		butPro3  = new Button("Programm 3");
-		butPro3.setBounds(1400, 250, 100, 22);
+		butPro3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Button P3");
+				ProgrammHandler.INSTANCE.programmWaehlen(3);
+			}
+		});
+		butPro3.setBounds(1400, 220, 100, 22);
 		contentPane.add(butPro3);
+		
+		butAu  = new Button("Programm Automatik");
+		butAu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("butAu");
+				ProgrammHandler.INSTANCE.programmWaehlen(0);
+			}
+		});
+		butAu.setBounds(1400, 250, 100, 22);
+		contentPane.add(butAu);
 	}
 }
