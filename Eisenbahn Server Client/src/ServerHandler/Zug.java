@@ -11,10 +11,7 @@ import Verwalter.PositionUidTags;
 public class Zug extends Device{
 
 	private String zugId;
-	private int position;
-	private int tempo;
-	private boolean alive = true;
-	public boolean aliveHelper;
+	private int position, tempo;
 	private Socket clientSocket;
 
 	public Zug(String zugId, Socket clientSocket) {

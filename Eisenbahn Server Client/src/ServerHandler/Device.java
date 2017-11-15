@@ -11,18 +11,18 @@ public class Device {
 	public PrintWriter out;
 	private BufferedReader in;
 	protected String id;
-
+	boolean alive = true;
+	boolean aliveHelper;
+	
 	public Device(String id) {
 		this.id = id;
 		System.out.println("Devvii");
 		sendeQueue();
-
 	}
 
 	public void saveInAndOutPutStream(BufferedReader in, PrintWriter out) {
 		this.out = out;
 		this.in = in;
-
 	}
 
 	/**
