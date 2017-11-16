@@ -16,7 +16,6 @@ public class Device {
 	
 	public Device(String id) {
 		this.id = id;
-		System.out.println("Devvii");
 		sendeQueue();
 	}
 
@@ -56,18 +55,10 @@ public class Device {
 	 */
 	public void sendeDaten(int inhalt) {
 		queue.add(Integer.toString(inhalt));
-
-		// out.println(inhalt);
-		// out.flush();
 	}
 
 	public void sendeDaten(String inhalt) {
-
 		queue.add(inhalt);
-
-		// out.println(inhalt);
-		// out.flush();
-
 	}
 
 	List<String> queue = new LinkedList<String>();

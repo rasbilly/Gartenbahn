@@ -75,11 +75,11 @@ public class SocketServerMain {
 				String zugIP = clientSocket.getInetAddress().toString();
 
 				// IP in Name umwandeln
-				if (zugIP.equals("/192.168.178.48")) {
+				if (zugIP.equals("/192.168.10.48")) {
 					helferName = "Anna";
-				} else if (zugIP.equals("/192.168.178.49")) {
+				} else if (zugIP.equals("/192.168.10.49")) {
 					helferName = "Lgb";
-				} else if (zugIP.equals("/192.168.178.50")) {
+				} else if (zugIP.equals("/192.168.10.50")) {
 					helferName = "DB";
 				} else {
 					helferName = zugIP;
