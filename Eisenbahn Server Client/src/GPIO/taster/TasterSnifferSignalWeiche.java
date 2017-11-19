@@ -18,13 +18,13 @@ public class TasterSnifferSignalWeiche extends GpioHandler implements Runnable {
 	}
 
 	// 0x23 A
-	final GpioPinDigitalInput buttonSignal = gpio.provisionDigitalInputPin(weiSig, MCP23017Pin.GPIO_B0,
+	final GpioPinDigitalInput buttonSignal = gpio.provisionDigitalInputPin(expander4, MCP23017Pin.GPIO_B0,
 			PinPullResistance.PULL_UP);
-	final GpioPinDigitalInput buttonW1 = gpio.provisionDigitalInputPin(weiSig, MCP23017Pin.GPIO_B1,
+	final GpioPinDigitalInput buttonW1 = gpio.provisionDigitalInputPin(expander4, MCP23017Pin.GPIO_B1,
 			PinPullResistance.PULL_UP);
-	final GpioPinDigitalInput buttonW2 = gpio.provisionDigitalInputPin(weiSig, MCP23017Pin.GPIO_B2,
+	final GpioPinDigitalInput buttonW2 = gpio.provisionDigitalInputPin(expander4, MCP23017Pin.GPIO_B2,
 			PinPullResistance.PULL_UP);
-	final GpioPinDigitalInput buttonW3 = gpio.provisionDigitalInputPin(weiSig, MCP23017Pin.GPIO_B3,
+	final GpioPinDigitalInput buttonW3 = gpio.provisionDigitalInputPin(expander4, MCP23017Pin.GPIO_B3,
 			PinPullResistance.PULL_UP);
 
 	@Override

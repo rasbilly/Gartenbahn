@@ -16,13 +16,13 @@ public class TasterSnifferProgramme extends GpioHandler implements Runnable {
 		super();
 	}
 
-	final GpioPinDigitalInput buttonP1 = gpio.provisionDigitalInputPin(weiSig, MCP23017Pin.GPIO_B4,
+	final GpioPinDigitalInput buttonP1 = gpio.provisionDigitalInputPin(expander4, MCP23017Pin.GPIO_B4,
 			PinPullResistance.PULL_UP);
-	final GpioPinDigitalInput buttonP2 = gpio.provisionDigitalInputPin(weiSig, MCP23017Pin.GPIO_B5,
+	final GpioPinDigitalInput buttonP2 = gpio.provisionDigitalInputPin(expander4, MCP23017Pin.GPIO_B5,
 			PinPullResistance.PULL_UP);
-	final GpioPinDigitalInput buttonP3 = gpio.provisionDigitalInputPin(weiSig, MCP23017Pin.GPIO_B6,
+	final GpioPinDigitalInput buttonP3 = gpio.provisionDigitalInputPin(expander4, MCP23017Pin.GPIO_B6,
 			PinPullResistance.PULL_UP);
-	final GpioPinDigitalInput buttonLcdSwitch = gpio.provisionDigitalInputPin(weiSig, MCP23017Pin.GPIO_B7,
+	final GpioPinDigitalInput buttonLcdSwitch = gpio.provisionDigitalInputPin(expander4, MCP23017Pin.GPIO_B7,
 			PinPullResistance.PULL_UP);
 
 	@Override

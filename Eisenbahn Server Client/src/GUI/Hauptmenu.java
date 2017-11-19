@@ -21,8 +21,6 @@ import java.awt.Canvas;
 
 public class Hauptmenu extends JFrame {
 
-
-
 	private JPanel contentPane;
 	public static Button butWeiche1, butWeiche2, butWeiche3, butSignal, butPro1, butPro2, butPro3, butAu;
 	public static JLabel zug1, zug2, zug3;
@@ -32,6 +30,17 @@ public class Hauptmenu extends JFrame {
 	public static Canvas canvasWeiche1_oben, canvasWeiche1_unten, canvasWeiche2_oben, canvasWeiche2_unten,
 			canvasWeiche3_oben, canvasWeiche3_unten;
 	private JLabel labelProgamme, lblKonsole, lblLokschuppen;
+
+	ImageIcon picAnnaLinks = new ImageIcon(getClass().getResource("/resources/annaLinks.gif"));
+	ImageIcon picAnnaRechts = new ImageIcon(getClass().getResource("/resources/annaRechts.gif"));
+
+	ImageIcon picZug2Links = new ImageIcon(getClass().getResource("/resources/zug2links.gif"));
+	ImageIcon picZug2Rechts = new ImageIcon(getClass().getResource("/resources/zug2rechts.gif"));
+
+	ImageIcon picZug3Links = new ImageIcon(getClass().getResource("/resources/zug3links.gif"));
+	ImageIcon picZug3Rechts = new ImageIcon(getClass().getResource("/resources/zug3links.gif"));
+	
+	public static PositionZuege ps = new PositionZuege();
 
 	public Hauptmenu() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,12 +53,11 @@ public class Hauptmenu extends JFrame {
 		zug();
 		abschnitte();
 		buttons();
-		console();
+		// console();
 		hintergrund();
 
 		getContentPane().setLayout(null); // contentPane.setLayout(null);
-		
-		
+
 		JLabel gleisplan = new JLabel(
 				new ImageIcon(getClass().getResource("/resources/Gleisanlage_mit_Tags_voll.png")));
 		gleisplan.setBounds(0, 0, 1631, 668);
@@ -67,6 +75,7 @@ public class Hauptmenu extends JFrame {
 		}
 
 	}
+
 
 	private void console() {
 		final JTextArea area = new JTextArea();
@@ -206,7 +215,7 @@ public class Hauptmenu extends JFrame {
 				try {
 					Weichen.WEICHEN.schalteWeiche1('t');
 				} catch (InterruptedException e1) {
-System.err.println("! Weiche 1 konnte nicht geschaltet werden!");
+					System.err.println("! Weiche 1 konnte nicht geschaltet werden!");
 				}
 			}
 		});
@@ -260,7 +269,7 @@ System.err.println("! Weiche 1 konnte nicht geschaltet werden!");
 		});
 		butPro1.setBounds(1400, 130, 100, 22);
 		contentPane.add(butPro1);
-		
+
 		butPro2 = new Button("Programm 2");
 		butPro2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -270,8 +279,8 @@ System.err.println("! Weiche 1 konnte nicht geschaltet werden!");
 		});
 		butPro2.setBounds(1400, 180, 100, 22);
 		contentPane.add(butPro2);
-		
-		butPro3  = new Button("Programm 3");
+
+		butPro3 = new Button("Programm 3");
 		butPro3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Button P3");
@@ -280,8 +289,8 @@ System.err.println("! Weiche 1 konnte nicht geschaltet werden!");
 		});
 		butPro3.setBounds(1400, 220, 100, 22);
 		contentPane.add(butPro3);
-		
-		butAu  = new Button("Programm Automatik");
+
+		butAu = new Button("Programm Automatik");
 		butAu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("butAu");

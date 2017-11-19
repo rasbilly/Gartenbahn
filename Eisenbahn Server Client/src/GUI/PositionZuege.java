@@ -1,24 +1,35 @@
 package GUI;
 
-import javax.swing.ImageIcon;
+//import javax.swing.ImageIcon;
 
+import ServerHandler.Zug;
 
+public class PositionZuege extends Hauptmenu {
+	//public static final PositionZuege INSTANCE = new PositionZuege();
 
-public class PositionZuege extends Hauptmenu {	
-	public static final PositionZuege INSTANCE = new PositionZuege();
-	
-	ImageIcon picAnnaLinks = new ImageIcon(getClass().getResource("/resources/annaLinks.gif"));
-	ImageIcon picAnnaRechts= new ImageIcon(getClass().getResource("/resources/annaRechts.gif"));
-	
-	ImageIcon picZug2Links = new ImageIcon(getClass().getResource("/resources/zug2links.gif"));
-	ImageIcon picZug2Rechts= new ImageIcon(getClass().getResource("/resources/zug2rechts.gif"));
-	
-	ImageIcon picZug3Links = new ImageIcon(getClass().getResource("/resources/zug3links.gif"));
-	ImageIcon picZug3Rechts= new ImageIcon(getClass().getResource("/resources/zug3Rechts.gif"));
-	
-	//TODO Bildrichtung beim Rückwärtsfahren
-	
-	
+//	ImageIcon picAnnaLinks = new ImageIcon(getClass().getResource("/resources/annaLinks.gif"));
+//	 ImageIcon picAnnaRechts = new ImageIcon(getClass().getResource("/resources/annaRechts.gif"));
+//
+//	ImageIcon picZug2Links = new ImageIcon(getClass().getResource("/resources/zug2links.gif"));
+//	ImageIcon picZug2Rechts = new ImageIcon(getClass().getResource("/resources/zug2rechts.gif"));
+//
+//	ImageIcon picZug3Links = new ImageIcon(getClass().getResource("/resources/zug3links.gif"));
+//	ImageIcon picZug3Rechts = new ImageIcon(getClass().getResource("/resources/zug3links.gif"));
+
+	// TODO Bildrichtung beim Rückwärtsfahren
+
+	public void zugFinden(Zug zug, int uid) {
+		System.out.println("METHODE");
+		if (zug.getZugId().equals("Anna")) {
+			posZug1(uid);
+			System.out.println("HIER INNEN");
+		}else if(zug.getZugId().equals("Lgb")) {
+			//posZug2(uid);
+		}else if(zug.getZugId().equals("DB")) {
+		//	posZug3(uid);
+		}
+	}
+
 	public void posZug1(int pos) {
 		switch (pos) {
 		case 0:
@@ -84,10 +95,10 @@ public class PositionZuege extends Hauptmenu {
 		case 15:
 			zug1.setBounds(900, 395, 225, 180);
 			zug1.setIcon(picAnnaRechts);
-			break;			
+			break;
 		}
 	}
-	
+
 	public void posZug2(int pos) {
 		switch (pos) {
 		case 0:
@@ -153,11 +164,10 @@ public class PositionZuege extends Hauptmenu {
 		case 15:
 			zug2.setBounds(900, 395, 225, 180);
 			zug2.setIcon(picZug2Rechts);
-			break;			
+			break;
 		}
 	}
-	
-	
+
 	public void posZug3(int pos) {
 		switch (pos) {
 		case 0:
@@ -223,12 +233,8 @@ public class PositionZuege extends Hauptmenu {
 		case 15:
 			zug3.setBounds(900, 395, 225, 180);
 			zug3.setIcon(picZug3Rechts);
-			break;			
+			break;
 		}
 	}
-
-	
-	
-
 
 }

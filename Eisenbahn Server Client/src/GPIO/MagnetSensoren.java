@@ -11,9 +11,9 @@ import GUI.StatusWeichenSignal;
 
 public class MagnetSensoren extends GpioHandler implements Runnable {
 
-	final GpioPinDigitalInput sensorW2L = gpio.provisionDigitalInputPin(lcdRelay, MCP23017Pin.GPIO_B4,
+	final GpioPinDigitalInput sensorW2L = gpio.provisionDigitalInputPin(expander3, MCP23017Pin.GPIO_A0,
 			PinPullResistance.PULL_UP);
-	final GpioPinDigitalInput sensorW2R = gpio.provisionDigitalInputPin(lcdRelay, MCP23017Pin.GPIO_B5,
+	final GpioPinDigitalInput sensorW2R = gpio.provisionDigitalInputPin(expander3, MCP23017Pin.GPIO_A1,
 			PinPullResistance.PULL_UP);
 
 	@Override

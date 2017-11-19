@@ -16,13 +16,15 @@ public class Signal extends GpioHandler {
 	}
 
 	// RELAY SIGNAL
-	final GpioPinDigitalOutput signalRelay = gpio.provisionDigitalOutputPin(lcdRelay, MCP23017Pin.GPIO_B1,
+	final GpioPinDigitalOutput signal1A = gpio.provisionDigitalOutputPin(expander3, MCP23017Pin.GPIO_B1,
+			"Signal AN Relay", PinState.HIGH);
+	final GpioPinDigitalOutput signal1B = gpio.provisionDigitalOutputPin(expander3, MCP23017Pin.GPIO_B0,
 			"Signal AN Relay", PinState.HIGH);
 
 	// LED SIGNAL
-	public final GpioPinDigitalOutput ledSignalAn = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A6,
+	public final GpioPinDigitalOutput ledSignalAn = gpio.provisionDigitalOutputPin(expander4, MCP23017Pin.GPIO_A6,
 			"Led Signal An", PinState.LOW);
-	public final GpioPinDigitalOutput ledSignalAus = gpio.provisionDigitalOutputPin(weiSig, MCP23017Pin.GPIO_A7,
+	public final GpioPinDigitalOutput ledSignalAus = gpio.provisionDigitalOutputPin(expander4, MCP23017Pin.GPIO_A7,
 			"Led Signal Aus", PinState.LOW);
 
 	public static final Signal SIGNAL = new Signal();
@@ -40,7 +42,11 @@ public class Signal extends GpioHandler {
 		if (c == 'g') {
 			ledSignalAn.high();
 			ledSignalAus.low();
-			signalRelay.low();
+			signal1A.low();
+			signal1B.high();
+			Thread.sleep(100);
+			signal1A.low();
+			signal1B.low();
 			statusSignal = 'g';
 			System.out.println("Signal Grün");
 			Hauptmenu.butSignal.setBackground(Color.green);
@@ -48,7 +54,11 @@ public class Signal extends GpioHandler {
 		} else if (c == 's') {
 			ledSignalAn.low();
 			ledSignalAus.high();
-			signalRelay.high();
+			signal1A.high();
+			signal1B.low();
+			Thread.sleep(100);
+			signal1A.low();
+			signal1B.low();
 			statusSignal = 's';
 			System.out.println("Signal Rot");
 			Hauptmenu.butSignal.setBackground(Color.red);

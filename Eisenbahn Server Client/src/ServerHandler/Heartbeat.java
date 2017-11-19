@@ -1,6 +1,7 @@
 package ServerHandler;
 
 
+
 public class Heartbeat implements Runnable {
 
 	Zug zug;
@@ -48,8 +49,9 @@ public class Heartbeat implements Runnable {
 				} else if (helfer == 5) {
 
 					zug.setAlive(false);
+					zug.setPosition(0);
 					System.out.println("!! " +zug.getId()+" ist tot !!");
-					ZugManager.INSTANCE.zugMap.remove(zug.getId(), zug);
+					ZugManager.INSTANCE.zugMap.remove(zug.getId(), zug); //TODO löscht altes tempo :((
 
 					Thread.currentThread().interrupt();
 					break;

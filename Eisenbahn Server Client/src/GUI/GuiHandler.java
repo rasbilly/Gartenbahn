@@ -7,13 +7,6 @@ public class GuiHandler extends JFrame{
 	
 	
 
-	//public static final PositionZuege posZug = new PositionZuege();
-	
-//	public static final StatusWeichenSignal statusWS = new StatusWeichenSignal();
-//
-//	public static final GuiHandler INSTANCE = new GuiHandler();
-	
-	
 	
 
 	/**

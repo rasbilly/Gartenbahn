@@ -24,14 +24,14 @@ public class GpioHandler {
 
 	protected static MCP23017GpioProvider expander1;
 	protected static MCP23017GpioProvider expander2;
-	protected static MCP23017GpioProvider lcdRelay;
-	protected static MCP23017GpioProvider weiSig;
+	protected static MCP23017GpioProvider expander3;
+	protected static MCP23017GpioProvider expander4;
 
 	public void portExpanderErsteller() throws UnsupportedBusNumberException, IOException {
 		try {
 			expander1 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x20);
 		} catch (Exception e) {
-			System.out.println("Fehler - Expander 1");
+			System.out.println("!!Fehler - Expander 1");
 			e.printStackTrace();
 		}
 		try {
@@ -41,15 +41,15 @@ public class GpioHandler {
 			e.printStackTrace();
 		}
 		try {
-			lcdRelay = new MCP23017GpioProvider(I2CBus.BUS_1, 0x22);
+			expander3 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x22);
 		} catch (Exception e) {
-			System.out.println("!!Fehler - Expander 3 lcdRelay");
+			System.out.println("!!Fehler - Expander 3");
 			e.printStackTrace();
 		}
 		try {
-			weiSig = new MCP23017GpioProvider(I2CBus.BUS_1, 0x23);
+			expander4 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x23);
 		} catch (Exception e) {
-			System.out.println("!!Fehler - Expander 4 weiSig");
+			System.out.println("!!Fehler - Expander 4");
 			e.printStackTrace();
 		}
 	}

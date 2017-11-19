@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import GUI.PositionZuege;
+import GUI.Hauptmenu;
 import Verwalter.PositionUidTags;
 
 public class Zug extends Device{
@@ -64,8 +64,7 @@ public class Zug extends Device{
 		this.position = uid;
 		System.out.println(zugId+" an Position: " + uid);
 		PositionUidTags.INSTANCE.tagsAktualisieren(this);
-		PositionZuege.INSTANCE.posZug1(getPosition());
-		
+		Hauptmenu.ps.zugFinden(this, uid);
 	}
 
 	public int getTempo() {
