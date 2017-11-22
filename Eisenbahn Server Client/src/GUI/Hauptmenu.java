@@ -31,15 +31,7 @@ public class Hauptmenu extends JFrame {
 			canvasWeiche3_oben, canvasWeiche3_unten;
 	private JLabel labelProgamme, lblKonsole, lblLokschuppen;
 
-	ImageIcon picAnnaLinks = new ImageIcon(getClass().getResource("/resources/annaLinks.gif"));
-	ImageIcon picAnnaRechts = new ImageIcon(getClass().getResource("/resources/annaRechts.gif"));
 
-	ImageIcon picZug2Links = new ImageIcon(getClass().getResource("/resources/zug2links.gif"));
-	ImageIcon picZug2Rechts = new ImageIcon(getClass().getResource("/resources/zug2rechts.gif"));
-
-	ImageIcon picZug3Links = new ImageIcon(getClass().getResource("/resources/zug3links.gif"));
-	ImageIcon picZug3Rechts = new ImageIcon(getClass().getResource("/resources/zug3links.gif"));
-	
 	public static PositionZuege ps = new PositionZuege();
 
 	public Hauptmenu() {

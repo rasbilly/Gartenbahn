@@ -22,7 +22,7 @@ public class EmpfangHandler implements Runnable {
 			String s = device.empfangeDaten();
 			String[] splits = s.split("#");
 			Command command = getCommandoFromString(splits[0]);
-			System.out.println(s);
+			//System.out.println(s);
 
 			switch (command) {
 				case TEMPO:

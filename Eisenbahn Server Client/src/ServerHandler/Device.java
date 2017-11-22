@@ -13,7 +13,7 @@ public class Device {
 	protected String id;
 	boolean alive = true;
 	boolean aliveHelper;
-	
+
 	public Device(String id) {
 		this.id = id;
 		sendeQueue();
@@ -62,6 +62,7 @@ public class Device {
 	}
 
 	List<String> queue = new LinkedList<String>();
+
 /**
  * Sendet und Filtert Daten an Zug
  */
@@ -71,7 +72,7 @@ public class Device {
 			public void run() {
 				while (true) {
 					try {
-						Thread.sleep(500);
+						Thread.sleep(150);
 					} catch (InterruptedException e) {
 
 					}

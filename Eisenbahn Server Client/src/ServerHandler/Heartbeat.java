@@ -19,8 +19,8 @@ public class Heartbeat implements Runnable {
 		long timeStart = System.currentTimeMillis();
 
 		while (true) {
-
-			zug.sendeDaten("heartbeat");
+			String temp = Integer.toString(zug.getTempo());
+			zug.sendeDaten("h"+temp);
 			zug.aliveHelper = false;
 
 					
@@ -41,7 +41,7 @@ public class Heartbeat implements Runnable {
 					System.out.println(zug.getId() + " Verbindung verloren! Neuversuch: " + helfer);
 					}
 					try {
-						zug.sendeDaten("heartbeat");
+						zug.sendeDaten("h"+temp);
 					} catch (Exception e) {
 						System.out.println(zug.getId()+" -- konte nicht gesendet werden");
 					}

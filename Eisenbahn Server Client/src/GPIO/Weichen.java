@@ -63,7 +63,7 @@ public class Weichen extends GpioHandler {
 			ledWeiche1R.high();
 			weiche1A.low();
 			weiche1B.high();
-			Thread.sleep(100);
+			Thread.sleep(50);
 			weiche1A.low();
 			weiche1B.low();
 			statusWeiche1 = 'r';
@@ -75,7 +75,7 @@ public class Weichen extends GpioHandler {
 			ledWeiche1R.low();
 			weiche1A.high();
 			weiche1B.low();
-			Thread.sleep(100);
+			Thread.sleep(50);
 			weiche1A.low();
 			weiche1B.low();
 			statusWeiche1 = 'l';
@@ -102,7 +102,7 @@ public class Weichen extends GpioHandler {
 			ledWeiche2R.high();
 			weiche2A.low();
 			weiche2B.high();
-			Thread.sleep(100);
+			Thread.sleep(50);
 			weiche2A.low();
 			weiche2B.low();
 			statusWeiche2 = 'r';
@@ -114,7 +114,7 @@ public class Weichen extends GpioHandler {
 			ledWeiche2R.low();
 			weiche2A.high();
 			weiche2B.low();
-			Thread.sleep(100);
+			Thread.sleep(50);
 			weiche2A.low();
 			weiche2B.low();
 			statusWeiche2 = 'l';
@@ -140,7 +140,7 @@ public class Weichen extends GpioHandler {
 			ledWeiche3R.high();
 			weiche3A.low();
 			weiche3B.high();
-			Thread.sleep(100);
+			Thread.sleep(50);
 			weiche3A.low();
 			weiche3B.low();
 			statusWeiche3 = 'r';
@@ -152,7 +152,7 @@ public class Weichen extends GpioHandler {
 			ledWeiche3R.low();
 			weiche3A.high();
 			weiche3B.low();
-			Thread.sleep(100);
+			Thread.sleep(50);
 			weiche3A.low();
 			weiche3B.low();
 			statusWeiche3 = 'l';

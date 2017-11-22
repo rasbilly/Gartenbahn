@@ -15,6 +15,10 @@ public class MagnetSensoren extends GpioHandler implements Runnable {
 			PinPullResistance.PULL_UP);
 	final GpioPinDigitalInput sensorW2R = gpio.provisionDigitalInputPin(expander3, MCP23017Pin.GPIO_A1,
 			PinPullResistance.PULL_UP);
+	final GpioPinDigitalInput sensorMagnet3 = gpio.provisionDigitalInputPin(expander3, MCP23017Pin.GPIO_A2,
+			PinPullResistance.PULL_UP);
+	final GpioPinDigitalInput sensorMagnet4 = gpio.provisionDigitalInputPin(expander3, MCP23017Pin.GPIO_A3,
+			PinPullResistance.PULL_UP);
 
 	@Override
 	public void run() {
@@ -43,6 +47,31 @@ public class MagnetSensoren extends GpioHandler implements Runnable {
 						System.out.println("Magnetsensor R");
 						Weichen.WEICHEN.schalteWeiche2('r');
 						StatusWeichenSignal.schaltenWeiche2Gui('u');
+						Thread.sleep(400);
+					}
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		sensorMagnet3.addListener(new GpioPinListenerDigital() {
+			@Override
+			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+				try {
+					if (sensorMagnet3.isLow()) {
+						Thread.sleep(400);
+					}
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		sensorMagnet4.addListener(new GpioPinListenerDigital() {
+			@Override
+			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+				try {
+					if (sensorMagnet4.isLow()) {
+						System.out.println("Magnetsensor 4");
 						Thread.sleep(400);
 					}
 				} catch (InterruptedException e1) {
