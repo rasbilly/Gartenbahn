@@ -52,7 +52,7 @@ public class ConsoleEinlesen implements Runnable {
 					System.out.println("------------------ Heartbeat -----------------------------");
 					for(Zug s : ZugManager.INSTANCE.zugMap.values()) {
 
-						System.out.println(s.getId() + " hea: "+s.aliveHelper +" islaive "+ s.isAlive());
+						System.out.println(s.getId() + " Helfer:  "+s.aliveHelper +" isalive: "+ s.isAlive());
 					}
 					System.out.println("----------------- Ende Heartbeat --------------------");
 					
