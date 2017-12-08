@@ -22,9 +22,11 @@ public class Log {
 		try {
 			String timeStamp = new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date());
 			logFile = "log/" + timeStamp + "-Gartenbahn" + ".log";
-			// System.out.println(logFile);
 			FileWriter fw = new FileWriter(logFile);
 			writer = new PrintWriter(fw, true);
+			writer.println("Gartebahn Steuerung gestartet!");
+			//writer.println();
+			writer.flush();
 		} catch (IOException e) {
 			System.out.println("fehler");
 		}

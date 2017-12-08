@@ -1,0 +1,10 @@
+Gartebahn Steuerung gestartet! 
+
+[2017.12.08-13:00:06] INFO in ServerHandler.SocketServerMain: Programm Gartenbahn gestartet!
+[2017.12.08-13:00:06] Milestone in ServerHandler.SocketServerMain: Programme wurden erstellt
+[2017.12.08-13:00:06] Milestone in ServerHandler.SocketServerMain: Gpio wurde gestartet
+[2017.12.08-13:00:06] Milestone in ServerHandler.SocketServerMain: GUI wurde erstellt
+[2017.12.08-13:00:06] Milestone in ServerHandler.SocketServerMain: ServerSocket wurde gestartet
+[2017.12.08-13:00:06] Track in ServerHandler.SocketServerMain: Port:603 |Zusatz: IP: 603/Lenovo-ThinkPad/141.23.183.124
+[2017.12.08-13:00:06] Milestone in ServerHandler.SocketServerMain: Alle notwendigen Klassen estellt - los gehts!
+[2017.12.08-13:00:06] INFO in ServerHandler.SocketServerMain: warten auf Zug/Client..
