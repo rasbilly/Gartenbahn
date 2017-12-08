@@ -6,6 +6,7 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinState;
 
 import GUI.StatusWeichenSignal;
+import ServerHandler.Log;
 
 public class Weichen extends GpioHandler {
 
@@ -13,23 +14,21 @@ public class Weichen extends GpioHandler {
 		super();
 	}
 
-	
-	//RELAY WEICHEN
-	final GpioPinDigitalOutput weiche1A = gpio.provisionDigitalOutputPin(expander3, MCP23017Pin.GPIO_B3,
-			"Weiche 1", PinState.HIGH);
-	final GpioPinDigitalOutput weiche1B = gpio.provisionDigitalOutputPin(expander3, MCP23017Pin.GPIO_B2,
-			"Weiche 1", PinState.HIGH);
-	final GpioPinDigitalOutput weiche2A = gpio.provisionDigitalOutputPin(expander3, MCP23017Pin.GPIO_B5,
-			"Weiche 2", PinState.HIGH);
-	final GpioPinDigitalOutput weiche2B = gpio.provisionDigitalOutputPin(expander3, MCP23017Pin.GPIO_B4,
-			"Weiche 2", PinState.HIGH);
-	final GpioPinDigitalOutput weiche3A = gpio.provisionDigitalOutputPin(expander3, MCP23017Pin.GPIO_B7,
-			"Weiche 3", PinState.HIGH);
-	final GpioPinDigitalOutput weiche3B = gpio.provisionDigitalOutputPin(expander3, MCP23017Pin.GPIO_B6,
-			"Weiche 3", PinState.HIGH);
-	
+	// RELAY WEICHEN
+	final GpioPinDigitalOutput weiche1A = gpio.provisionDigitalOutputPin(expander3, MCP23017Pin.GPIO_B3, "Weiche 1",
+			PinState.HIGH);
+	final GpioPinDigitalOutput weiche1B = gpio.provisionDigitalOutputPin(expander3, MCP23017Pin.GPIO_B2, "Weiche 1",
+			PinState.HIGH);
+	final GpioPinDigitalOutput weiche2A = gpio.provisionDigitalOutputPin(expander3, MCP23017Pin.GPIO_B5, "Weiche 2",
+			PinState.HIGH);
+	final GpioPinDigitalOutput weiche2B = gpio.provisionDigitalOutputPin(expander3, MCP23017Pin.GPIO_B4, "Weiche 2",
+			PinState.HIGH);
+	final GpioPinDigitalOutput weiche3A = gpio.provisionDigitalOutputPin(expander3, MCP23017Pin.GPIO_B7, "Weiche 3",
+			PinState.HIGH);
+	final GpioPinDigitalOutput weiche3B = gpio.provisionDigitalOutputPin(expander3, MCP23017Pin.GPIO_B6, "Weiche 3",
+			PinState.HIGH);
 
-	//LED WEICHEN
+	// LED WEICHEN
 	public final GpioPinDigitalOutput ledWeiche1L = gpio.provisionDigitalOutputPin(expander4, MCP23017Pin.GPIO_A5,
 			"Weiche 1 Links", PinState.LOW);
 	public final GpioPinDigitalOutput ledWeiche1R = gpio.provisionDigitalOutputPin(expander4, MCP23017Pin.GPIO_A4,
@@ -50,8 +49,8 @@ public class Weichen extends GpioHandler {
 	private char statusWeiche3 = 'r';
 
 	/**
-	 * Pins steuern Schaltbox an und überbrücken den Taster r = rechts l = linksv t
-	 * = toogle
+	 * Pins steuern Schaltbox an und überbrücken den Taster r = rechts l =
+	 * linksv t = toogle
 	 * 
 	 * @param c
 	 * @throws InterruptedException
@@ -67,7 +66,7 @@ public class Weichen extends GpioHandler {
 			weiche1A.low();
 			weiche1B.low();
 			statusWeiche1 = 'r';
-			System.out.println("Weiche 1 Rechts");
+			Log.Track(getClass().getName(), "Weiche 1 Rechts");
 			StatusWeichenSignal.schaltenWeiche1Gui('r');
 
 		} else if (c == 'l') {
@@ -79,7 +78,7 @@ public class Weichen extends GpioHandler {
 			weiche1A.low();
 			weiche1B.low();
 			statusWeiche1 = 'l';
-			System.out.println("Weiche 1 Links");
+			Log.Track(getClass().getName(), "Weiche 1 Links");
 			StatusWeichenSignal.schaltenWeiche1Gui('l');
 
 		} else if (c == 't') {
@@ -88,10 +87,10 @@ public class Weichen extends GpioHandler {
 			} else if (statusWeiche1 == 'l') {
 				schalteWeiche1('r');
 			} else {
-				System.err.println("Weiche 1 - Fehler Toggle " + c);
+				Log.Warning(getClass().getName(), "Fehler Toggle","Weiche 1",false);
 			}
 		} else {
-			System.err.println("Weiche 1 - Fehlerhafte Stellung");
+			Log.Warning(getClass().getName(), "Fehlerhafte Stellung","Weiche 1",false);
 		}
 
 	}
@@ -106,7 +105,7 @@ public class Weichen extends GpioHandler {
 			weiche2A.low();
 			weiche2B.low();
 			statusWeiche2 = 'r';
-			System.out.println("Weiche 2 Rechts");
+			Log.Track(getClass().getName(), "Weiche 2 Rechts");
 			StatusWeichenSignal.schaltenWeiche2Gui('r');
 
 		} else if (c == 'l') {
@@ -118,7 +117,7 @@ public class Weichen extends GpioHandler {
 			weiche2A.low();
 			weiche2B.low();
 			statusWeiche2 = 'l';
-			System.out.println("Weiche 2 Links");
+			Log.Track(getClass().getName(), "Weiche 2 Links");
 			StatusWeichenSignal.schaltenWeiche2Gui('l');
 
 		} else if (c == 't') {
@@ -127,10 +126,10 @@ public class Weichen extends GpioHandler {
 			} else if (statusWeiche2 == 'l') {
 				schalteWeiche2('r');
 			} else {
-				System.err.println("Weiche 2 - Fehler Toggle");
+				Log.Warning(getClass().getName(), "Fehler Toggle","Weiche 2", false);
 			}
 		} else {
-			System.err.println("Weiche 2 - Fehlerhafte Stellung");
+			Log.Warning(getClass().getName(), "Fehlerhafte Stellung","Weiche 2",false);
 		}
 	}
 
@@ -144,7 +143,7 @@ public class Weichen extends GpioHandler {
 			weiche3A.low();
 			weiche3B.low();
 			statusWeiche3 = 'r';
-			System.out.println("Weiche 3 Rechts");
+			Log.Track(getClass().getName(), "Weiche 3 Rechts");
 			StatusWeichenSignal.schaltenWeiche3Gui('r');
 
 		} else if (c == 'l') {
@@ -156,7 +155,7 @@ public class Weichen extends GpioHandler {
 			weiche3A.low();
 			weiche3B.low();
 			statusWeiche3 = 'l';
-			System.out.println("Weiche 3 Links");
+			Log.Track(getClass().getName(), "Weiche 3 Links");
 			StatusWeichenSignal.schaltenWeiche3Gui('l');
 
 		} else if (c == 't') {
@@ -165,10 +164,9 @@ public class Weichen extends GpioHandler {
 			} else if (statusWeiche3 == 'l') {
 				schalteWeiche3('r');
 			} else {
-				System.err.println("Weiche 3 - Fehler Toggle");
-			}
+				Log.Warning(getClass().getName(), "Fehler Toggle","Weiche 3",false);}
 		} else {
-			System.err.println("Weiche 3 - Fehlerhafte Stellung");
+			Log.Warning(getClass().getName(), "Fehlerhafte Stellung", "Weiche 3",false);
 		}
 	}
 

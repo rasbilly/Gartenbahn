@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 public class GuiHandler extends JFrame{
 	
 	
-	
+	//TODO zum löschen
 
 	
 

@@ -9,6 +9,7 @@ import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import GPIO.GpioHandler;
 import GPIO.Signal;
 import GPIO.Weichen;
+import ServerHandler.Log;
 
 
 public class TasterSnifferSignalWeiche extends GpioHandler implements Runnable {
@@ -29,7 +30,7 @@ public class TasterSnifferSignalWeiche extends GpioHandler implements Runnable {
 
 	@Override
 	public void run() {
-		System.out.println("Thread Taster Weichen/Signale gestartet");
+		Log.Milestone(getClass().getName(), "Thread Taster Weichen/Signale gestartet");
 		/**
 		 * Signal warten auf Tasterdruck löst Toggle funktion bei Weiche aus
 		 */
@@ -40,10 +41,11 @@ public class TasterSnifferSignalWeiche extends GpioHandler implements Runnable {
 				try {
 					if (buttonSignal.isLow()) {
 						Signal.SIGNAL.schalteSignal('t');
+						Log.Track(getClass().getName(), "Taster Signal gedrückt");
 						Thread.sleep(1000);
 					}
 				} catch (InterruptedException e1) {
-					e1.printStackTrace();
+					Log.Error(getClass().getName(), "Signal Taster", e1);
 				}
 			}
 		});
@@ -56,11 +58,11 @@ public class TasterSnifferSignalWeiche extends GpioHandler implements Runnable {
 				try {
 					if (buttonW1.isLow()) {
 						Weichen.WEICHEN.schalteWeiche1('t');
+						Log.Track(getClass().getName(), "Taster Weiche 1 gedrückt");
 						Thread.sleep(1000);
 					}
 				} catch (InterruptedException e1) {
-					System.out.println("!!FEHLER - Taster Weiche 1");
-					e1.printStackTrace();
+					Log.Error(getClass().getName(), "Weiche 1 Taster", e1);
 				}
 			}
 		});
@@ -73,11 +75,11 @@ public class TasterSnifferSignalWeiche extends GpioHandler implements Runnable {
 				try {
 					if (buttonW2.isLow()) {
 						Weichen.WEICHEN.schalteWeiche2('t');
+						Log.Track(getClass().getName(), "Taster Weiche 2 gedrückt");
 						Thread.sleep(1000);
 					}
 				} catch (InterruptedException e2) {
-					System.out.println("!!FEHLER - Taster Weiche 2");
-					e2.printStackTrace();
+					Log.Error(getClass().getName(), "Weiche 2 Taster", e2);
 				}
 			}
 		});
@@ -91,11 +93,11 @@ public class TasterSnifferSignalWeiche extends GpioHandler implements Runnable {
 				try {
 					if (buttonW3.isLow()) {
 						Weichen.WEICHEN.schalteWeiche3('t');
+						Log.Track(getClass().getName(), "Taster Weiche 3 gedrückt");
 						Thread.sleep(1000);
 					}
 				} catch (InterruptedException e3) {
-					System.out.println("!!FEHLER - Taster Weiche 3");
-					e3.printStackTrace();
+					Log.Error(getClass().getName(), "Weiche 3 Taster", e3);
 				}
 			}
 		});

@@ -18,8 +18,7 @@ public class Regler extends Device{
 			saveInAndOutPutStream(in, out);
 			
 		} catch (IOException e) {
-			e.printStackTrace();
-			System.err.println("!! - Buffet konnte nicht erstellt werden! ");
+			Log.Error(getClass().getName(), "Buffer nicht erstellt" + reglerID, e);
 		}
 	}
 	

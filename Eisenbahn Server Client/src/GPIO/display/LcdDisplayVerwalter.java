@@ -59,7 +59,7 @@ public class LcdDisplayVerwalter {
 					}
 				}
 				Thread.currentThread().interrupt();
-				Thread.currentThread().stop();
+				Thread.currentThread().stop(); //Prüfen
 			}
 		}).start();
 	}

@@ -8,67 +8,64 @@ import GPIO.GpioHandler;
 import GUI.Hauptmenu;
 import Programme.ProgrammHandler;
 
-
 public class SocketServerMain {
+	static String className = SocketServerMain.class.getCanonicalName();
 
 	public static void main(String[] args) throws IOException, InterruptedException {
+		Log.Info(className, "Programm Gartenbahn gestartet!");
 
-		System.out.println("Start Gartenbahn\n");
-		
-		//Programme erstellen
+		// Programme erstellen
 		try {
 			ProgrammHandler.INSTANCE.proErsteller();
-			System.out.println("Programme wurden erstellt!");
+			Log.Milestone(className, "Programme wurden erstellt");
 		} catch (Exception e) {
-			System.err.println("! Fehler - Programme konnten nicht erstellt werden");
+			Log.Error(className, "Programme konnten nicht erstellt werden", e);
 		}
 
-		// GPIO Pins ##################################################################
+		// GPIO Pins
+		// ##################################################################
 		try {
-			System.out.print("GPIO...");
-			GpioHandler gp = new GpioHandler();
-			gp.portExpanderErsteller();
-			gp.threadErstellerEingang();
-			System.out.println("erfolgreich aktiviert. \n");
+			// GpioHandler gp = new GpioHandler();
+			// gp.portExpanderErsteller();
+			// gp.threadErstellerEingang();
+			Log.Milestone(className, "Gpio wurde gestartet");
 		} catch (Exception e) {
-			System.err.println("!-- main GPIO Fehler -- BEENDEN");
+			Log.Error(className, "GPIO - PI4J konnten nicht erstellt werden", e);
 		}
-	
 
-		
-		// GUI ########################################################################
+		// GUI
+		// ########################################################################
 		try {
-			System.out.print("GUI...");
-			new Hauptmenu().setVisible(true);
-			System.out.println("erstellt. \n");
+			// new Hauptmenu().setVisible(true);
+			Log.Milestone(className, "GUI wurde erstellt");
 		} catch (Exception e) {
-			System.err.println("! Fehler - konnte nicht erstellt werden");
+			Log.Error(className, "GUI konnte nicht erstellt werden", e);
 		}
 
-		
-		// ServerSocket ###############################################################
+		// ServerSocket
+		// ###############################################################
 		ServerSocket serverSocket = null;
 		try {
 			serverSocket = new ServerSocket(603);
+			Log.Milestone(className, "ServerSocket wurde gestartet");
+			Log.Track(className, "Port:" + serverSocket.getLocalPort(),
+					"IP: " + serverSocket.getLocalPort() + "/" + InetAddress.getLocalHost());
 		} catch (IOException e) {
-			System.err.println("!! - ServerSocket -Port schlug fehl: " + e.getMessage());
+			Log.Error(className, "Port schlug fehl", e);
 		}
-
-		System.out.println("Gartenbahn Server gestartet! mit Port: " + serverSocket.getLocalPort() + " ,IP-Adresse: "
-				+ InetAddress.getLocalHost() + "\n");
 
 		// Thread zum einlesen von der Konsole
 		Thread consoleEinlesen = new Thread(new ConsoleEinlesen());
 		consoleEinlesen.start();
+		Log.Milestone(className, "Alle notwendigen Klassen estellt - los gehts!");
 
 		String helferName;
 
 		// auf Anfragen/Züge warten
 		while (true) {
 			try {
-
 				// Client akzeptieren
-				System.out.println("ServerSocket -  warten auf Zug/Client..");
+				Log.Info(className, "warten auf Zug/Client..");
 				Socket clientSocket = serverSocket.accept();
 
 				// Zug bestimmen und id festlegen
@@ -99,11 +96,10 @@ public class SocketServerMain {
 				Thread threadHandler = new Thread(new EmpfangHandler(connectedDevice));
 				threadHandler.start();
 
-				System.out.println(
-						"ServerSocket - Verbindung zum Client: " + zugIP + " (" + helferName + ") hergestellt \n\n");
+				Log.Info(className, "Verbindung zum Client: " + zugIP + " (" + helferName + ") hergestellt");
 
 			} catch (IOException e) {
-				System.out.println("!! - ServerSocket - .accept(); fehlgeschlagen");
+				Log.Error(className, ".accept(); fehlgeschlagen. Keine Kommunikation mit Geräten mehr möglich", e);
 				serverSocket.close();
 			}
 

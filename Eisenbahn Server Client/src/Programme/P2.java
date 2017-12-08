@@ -1,11 +1,13 @@
 package Programme;
 
+import ServerHandler.Log;
+
 public class P2 extends ProgrammHandler {
 
 	boolean status = false;
 
 	public void start() {
-		System.out.println("Programm 2 ist gestartet");
+		Log.Track(getClass().getName(), "Programm 2 gestartet", null);
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -13,7 +15,7 @@ public class P2 extends ProgrammHandler {
 
 		
 				}
-				System.out.println("Programm 2 ist beendet");
+				Log.Track(getClass().getName(), "Programm 2 ist beendet", null);
 			}
 		}).start();
 	}

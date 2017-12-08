@@ -7,6 +7,7 @@ import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
+import ServerHandler.Log;
 import ServerHandler.Zug;
 import ServerHandler.ZugManager;
 
@@ -78,7 +79,7 @@ public class Drehregler2 extends DrehreglerHandler implements Runnable {
 					}
 					clk_Letzter = clk_Aktuell;
 				} else if (zug == null) {
-					System.out.println("! Zug 'LGB' nicht Online! - null ");
+					Log.Warning(getClass().getName(),"! Zug 'LGB' nicht Online!","null",true);
 				}
 
 			}
@@ -92,7 +93,7 @@ public class Drehregler2 extends DrehreglerHandler implements Runnable {
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				if(drehregler2Taster.isLow()){
-				System.out.println("Drehregler Taster Zug 2");
+					Log.Track(getClass().getName(), "Drehregler Taster Zug 2 gedrückt");
 				if (zug != null) {
 				counter = 0;
 				DrehreglerHandler.drehreglerausgabe(zug, counter);

@@ -15,7 +15,7 @@ public class EmpfangHandler implements Runnable {
 		Thread heartbeat = new Thread(new Heartbeat((Zug) device));
 		heartbeat.start();
 		 
-		System.out.println("Heartbeat erfolgreich gestartet für "+device.getId());
+		Log.Track(getClass().getName(), "Heartbeat gestartet", device.getId());
 			
 		// EMPFANGEN
 		while (true) {
@@ -30,16 +30,14 @@ public class EmpfangHandler implements Runnable {
 						Zug zug = (Zug) device;
 						int j = Integer.parseInt(splits[1]);
 						zug.setTempo(j);
-						System.out.println(zug.getId()+" - Neues Tempo: " + zug.getTempo() );
+						Log.Track(getClass().getName(),"Neues Tempo empfangen", zug.getId()+": "+zug.getTempo());
 					} else if(device instanceof Regler) {
 						Regler regler = (Regler) device;
 						int tempo = Integer.parseInt(splits[1]);
 						regler.getZug().setTempo(tempo);
-						System.out.println("Dreh: " + regler.getZug().getTempo());
-						//Senden
+						Log.Track(getClass().getName(),"Neues Tempo empfangen", regler.getId()+": "+regler.getZug().getTempo());
 						ZugManager.INSTANCE.sendeAnZug(regler.getZug(), regler.getZug().getTempoKommando());
-						//ZugManager.INSTANCE.sendeAnZug(regler.getZug(), regler.getZug().getTempoKommando());
-					}
+						}
 					break;
 					
 				case POSITION:
@@ -56,19 +54,15 @@ public class EmpfangHandler implements Runnable {
 					
 				case REQUEST_TEMPO:
 					zug = (Zug) device;
-					//Senden
-					System.out.println("Tempoabfrage von " + zug.getId());
-					ZugManager.INSTANCE.sendeAnZug(zug, zug.getTempoKommando());	
+					Log.Track(getClass().getName(), "Tempoabfrage", zug.getId());
+					ZugManager.INSTANCE.sendeAnZug(zug, zug.getTempoKommando());	//Senden
 					break;
 					
 				default:
-					System.out.println(s);
-					System.out.println("Daten vom Zug: " + device.getId() + " waren fehlerhaft");
+					Log.Warning(getClass().getName(), "Daten fehlerhaft: \""+s+"\"",device.getId(),false);
 					break;
 			}
-			
 		}
-
 	}
 	
 	private Command getCommandoFromString(String commando) {

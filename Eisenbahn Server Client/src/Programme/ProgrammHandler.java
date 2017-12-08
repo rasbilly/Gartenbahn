@@ -1,6 +1,6 @@
 package Programme;
 
-
+import ServerHandler.Log;
 
 public class ProgrammHandler {
 	
@@ -38,7 +38,7 @@ public class ProgrammHandler {
 			p3.status = true;
 			p3.start();
 		}else{
-			System.err.println("Kein Programm gefunden");
+			Log.Error(getClass().getName(), "Kein Programm gefunden", null);
 		}
 	}
 	

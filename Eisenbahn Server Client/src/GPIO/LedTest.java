@@ -4,12 +4,12 @@ import GPIO.digit.Digit1;
 import GPIO.digit.Digit2;
 import GPIO.digit.Digit3;
 import GPIO.digit.DigitHandler;
-
+import ServerHandler.Log;
 
 public class LedTest extends DigitHandler implements Runnable {
 	int time = 125;
 	int time2 = 75;
-	
+
 	@Override
 	public void run() {
 		startAndResetLeds();
@@ -100,7 +100,7 @@ public class LedTest extends DigitHandler implements Runnable {
 			resetLed();
 		}
 		startZustand();
-		
+
 	}
 
 	private void startZustand() {
@@ -113,9 +113,10 @@ public class LedTest extends DigitHandler implements Runnable {
 			punktDigit1.low();
 			punktDigit2.low();
 			punktDigit3.low();
-			System.out.println("Signal und Weichen wurden auf Startposition gestellt");
+			Log.Info(getClass().getName(), "Signal und Weichen wurden auf Startposition gestellt");
+			Log.Milestone(getClass().getName(), "Signal und Weichen wurden auf Startposition gestellt");
 		} catch (InterruptedException e) {
-			System.err.println("! Fehlerhafte Startposition");
+			Log.Error(getClass().getName(), "Fehlerhafte Startposition", e);
 		}
 
 	}
@@ -144,7 +145,7 @@ public class LedTest extends DigitHandler implements Runnable {
 		Digit1.resetDigit1();
 		Digit2.resetDigit2();
 		Digit3.resetDigit3();
-		
+
 	}
 
 }

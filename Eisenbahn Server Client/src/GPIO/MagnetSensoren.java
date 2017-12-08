@@ -6,8 +6,8 @@ import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
-
 import GUI.StatusWeichenSignal;
+import ServerHandler.Log;
 
 public class MagnetSensoren extends GpioHandler implements Runnable {
 
@@ -28,13 +28,13 @@ public class MagnetSensoren extends GpioHandler implements Runnable {
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				try {
 					if (sensorW2L.isLow()) {
-						System.out.println("Magnetsensor L");
+						Log.Track(getClass().getName(), "Magnetsensor 1");
 						Weichen.WEICHEN.schalteWeiche2('l');
 						StatusWeichenSignal.schaltenWeiche2Gui('o');
 						Thread.sleep(400);
 					}
 				} catch (InterruptedException e1) {
-					e1.printStackTrace();
+					Log.Error(getClass().getName(), "Magnetsensor 1", e1);
 				}
 			}
 		});
@@ -44,13 +44,13 @@ public class MagnetSensoren extends GpioHandler implements Runnable {
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				try {
 					if (sensorW2R.isLow()) {
-						System.out.println("Magnetsensor R");
+						Log.Track(getClass().getName(), "Magnetsensor 2");
 						Weichen.WEICHEN.schalteWeiche2('r');
 						StatusWeichenSignal.schaltenWeiche2Gui('u');
 						Thread.sleep(400);
 					}
 				} catch (InterruptedException e1) {
-					e1.printStackTrace();
+					Log.Error(getClass().getName(), "Magnetsensor 2", e1);
 				}
 			}
 		});
@@ -59,10 +59,11 @@ public class MagnetSensoren extends GpioHandler implements Runnable {
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				try {
 					if (sensorMagnet3.isLow()) {
+						Log.Track(getClass().getName(), "Magnetsensor 3");
 						Thread.sleep(400);
 					}
 				} catch (InterruptedException e1) {
-					e1.printStackTrace();
+					Log.Error(getClass().getName(), "Magnetsensor 3", e1);
 				}
 			}
 		});
@@ -71,15 +72,15 @@ public class MagnetSensoren extends GpioHandler implements Runnable {
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				try {
 					if (sensorMagnet4.isLow()) {
-						System.out.println("Magnetsensor 4");
+						Log.Track(getClass().getName(), "Magnetsensor 4");
 						Thread.sleep(400);
 					}
 				} catch (InterruptedException e1) {
-					e1.printStackTrace();
+					Log.Error(getClass().getName(), "Magnetsensor 4", e1);
 				}
 			}
 		});
-		
+
 		while (true) {
 			try {
 				Thread.sleep(100);

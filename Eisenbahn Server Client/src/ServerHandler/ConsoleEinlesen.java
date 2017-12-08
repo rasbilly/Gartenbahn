@@ -22,70 +22,74 @@ public class ConsoleEinlesen implements Runnable {
 		String input = null;
 		while (true) {
 			try {
-			input = scanner.nextLine();
-			if (input != null) {
-				if (input.equals("liste")) { // TODO
-					System.out.println("------------------ LISTE -----------------------------");
-					for (Zug s : ZugManager.INSTANCE.zugMap.values()) {
+				input = scanner.nextLine();
+				Log.Track(getClass().getName(), "Consoleneingabe", "--> " + input);
+				if (input != null) {
+					if (input.equals("liste")) { // TODO
+						System.out.println("------------------ LISTE -----------------------------");
+						for (Zug s : ZugManager.INSTANCE.zugMap.values()) {
 
-						System.out.println(s.getId());
-					}
-					System.out.println("----------------- Ende Liste --------------------");
-				}  else if (input.startsWith("uid")) {
-					System.out.println("------------------ UID Postition der Züge -----------------------------");
-					String[] sa= PositionUidTags.INSTANCE.getTags();
-					for(Zug s : ZugManager.INSTANCE.zugMap.values()) {
+							System.out.println(s.getId());
+						}
+						System.out.println("----------------- Ende Liste --------------------");
+					} else if (input.startsWith("uid")) {
+						System.out.println("------------------ UID Postition der Züge -----------------------------");
+						String[] sa = PositionUidTags.INSTANCE.getTags();
+						for (Zug s : ZugManager.INSTANCE.zugMap.values()) {
 
-						System.out.println(s.getId() + " ist an Position: "+s.getPosition());
-					}
-					for (int i = 1; i<sa.length;i++) {
-						System.out.println(i+": "+sa[i]);
-					}
-					System.out.println("----------------- Ende Position --------------------");
-					
-				}else if (input.startsWith("ab")) {
-					System.out.println("------------------ Gleisabschnitte -----------------------------");
-					Gleisabschnitte.INSTANCE.ausgabe();
-					System.out.println("----------------- Ende Gleisabschnitte --------------------");
-					
-				}else if (input.startsWith("hea")) {
-					System.out.println("------------------ Heartbeat -----------------------------");
-					for(Zug s : ZugManager.INSTANCE.zugMap.values()) {
+							System.out.println(s.getId() + " ist an Position: " + s.getPosition());
+						}
+						for (int i = 1; i < sa.length; i++) {
+							System.out.println(i + ": " + sa[i]);
+						}
+						System.out.println("----------------- Ende Position --------------------");
 
-						System.out.println(s.getId() + " hea: "+s.aliveHelper +" islaive "+ s.isAlive());
-					}
-					System.out.println("----------------- Ende Heartbeat --------------------");
-					
-				}else if (input.startsWith("Weiche")) {
-					try {
-						processConsoleCommandWeiche(input);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-				else if (input.startsWith("Signal")) {
-					String[] split = input.split(";");
-					char s = split[1].charAt(0);
-					if (s == 's' || s == 'g') {
+					} else if (input.startsWith("ab")) {
+						System.out.println("------------------ Gleisabschnitte -----------------------------");
+						Gleisabschnitte.INSTANCE.ausgabe();
+						System.out.println("----------------- Ende Gleisabschnitte --------------------");
+
+					} else if (input.startsWith("hea")) {
+						System.out.println("------------------ Heartbeat -----------------------------");
+						for (Zug s : ZugManager.INSTANCE.zugMap.values()) {
+
+							System.out.println(s.getId() + " hea: " + s.aliveHelper + " islaive " + s.isAlive());
+						}
+						System.out.println("----------------- Ende Heartbeat --------------------");
+
+					} else if (input.startsWith("Weiche")) {
 						try {
-							Signal.SIGNAL.schalteSignal(s);
+							processConsoleCommandWeiche(input);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
-					} else {
-						System.out.println("!!Fehler -- Signal muss s oder g sein!");
-					}
+					} else if (input.startsWith("log")) {
+						Log.ladeDatei();
+					} else if (input.startsWith("Signal")) {
+						String[] split = input.split(";");
+						char s = split[1].charAt(0);
+						if (s == 's' || s == 'g') {
+							try {
+								Signal.SIGNAL.schalteSignal(s);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						} else {
+							System.out.println("!!Fehler -- Signal muss s oder g sein!");
+						}
 
-				} else {
-					String[] s1 = input.split(";");
-					if((s1[1].startsWith("t")) || s1[1].startsWith("l")) {
-					processConsoleCommand(input);}
-					else {
-						System.out.println("Fehlerhafte eingabe: "+ input);
+					} else {
+						String[] s1 = input.split(";");
+						if (s1.length > 1 && ((s1[1].startsWith("t")) || s1[1].startsWith("l"))) {
+							processConsoleCommand(input);
+						} else {
+							Log.Warning(getClass().getName(), "Fehlerhafte Consoleneingabe:", input,true);
+							
+						}
 					}
 				}
-			}}catch (Exception e) {
-				System.out.println("Fehlerhafte eingabe: "+ input);
+			} catch (Exception e) {
+				Log.Warning(getClass().getName(), "Eingabe war null -->" + input, e);
 			}
 		}
 	}
@@ -101,16 +105,16 @@ public class ConsoleEinlesen implements Runnable {
 			} else if (command.startsWith("Weiche3")) {
 				Weichen.WEICHEN.schalteWeiche3(s);
 			} else {
-				System.out.println("!!Fehler -- Diese Weiche existiert nicht!");
+				Log.Warning(getClass().getName(), "Diese Weiche existiert nicht!", "", false);
 			}
 		} else {
-			System.out.println("!!Fehler -- Weiche kann nicht auf '" + s + "' gestellt werden! ");
+			Log.Warning(getClass().getName(), "Weiche kann nicht auf '" + s + "' gestellt werden! ", "",false);
 		}
 	}
 
 	/**
-	 * splittet die Eingabe in den Zug Name und den Befehl. Sucht zum Zug Name das
-	 * passende zug Objekt. Zug mit befehl weitergeben
+	 * splittet die Eingabe in den Zug Name und den Befehl. Sucht zum Zug Name
+	 * das passende zug Objekt. Zug mit befehl weitergeben
 	 * 
 	 * @param command
 	 *            // zb. Anna;t1
