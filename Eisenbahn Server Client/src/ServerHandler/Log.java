@@ -24,8 +24,7 @@ public class Log {
 			logFile = "log/" + timeStamp + "-Gartenbahn" + ".log";
 			FileWriter fw = new FileWriter(logFile);
 			writer = new PrintWriter(fw, true);
-			writer.println("Gartebahn Steuerung gestartet!");
-			//writer.println();
+			writer.println("Gartebahn Steuerung gestartet!"+"\n"+" ");
 			writer.flush();
 		} catch (IOException e) {
 			System.out.println("fehler");
