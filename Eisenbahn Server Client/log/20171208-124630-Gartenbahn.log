@@ -1,0 +1,15 @@
+[2017.12.08-12:46:30] INFO in ServerHandler.SocketServerMain: Programm Gartenbahn gestartet!
+[2017.12.08-12:46:30] Milestone in ServerHandler.SocketServerMain: Programme wurden erstellt
+[2017.12.08-12:46:30] Milestone in ServerHandler.SocketServerMain: Gpio wurde gestartet
+[2017.12.08-12:46:30] Milestone in ServerHandler.SocketServerMain: GUI wurde erstellt
+[2017.12.08-12:46:30] Milestone in ServerHandler.SocketServerMain: ServerSocket wurde gestartet
+[2017.12.08-12:46:30] Track in ServerHandler.SocketServerMain: Port:603 |Zusatz: IP: 603/Lenovo-ThinkPad/141.23.183.124
+[2017.12.08-12:46:30] Milestone in ServerHandler.SocketServerMain: Alle notwendigen Klassen estellt - los gehts!
+[2017.12.08-12:46:30] INFO in ServerHandler.SocketServerMain: warten auf Zug/Client..
+[2017.12.08-12:46:33] Track in ServerHandler.ConsoleEinlesen: Consoleneingabe |Zusatz: --> Hallo 
+[2017.12.08-12:46:33] WARN in ServerHandler.ConsoleEinlesen: Fehlerhafte Consoleneingabe: --> Hallo 
+[2017.12.08-12:46:34] Track in ServerHandler.ConsoleEinlesen: Consoleneingabe |Zusatz: --> liste
+[2017.12.08-12:46:35] Track in ServerHandler.ConsoleEinlesen: Consoleneingabe |Zusatz: --> jds
+[2017.12.08-12:46:35] WARN in ServerHandler.ConsoleEinlesen: Fehlerhafte Consoleneingabe: --> jds
+[2017.12.08-12:46:36] Track in ServerHandler.ConsoleEinlesen: Consoleneingabe |Zusatz: --> asdj  
+[2017.12.08-12:46:36] WARN in ServerHandler.ConsoleEinlesen: Fehlerhafte Consoleneingabe: --> asdj  
