@@ -1,6 +1,7 @@
 package Programme;
 
 import GPIO.Weichen;
+import ServerHandler.Log;
 import ServerHandler.Zug;
 import ServerHandler.ZugManager;
 import Verwalter.Gleisabschnitte;
@@ -16,7 +17,7 @@ public class ManuellHelper implements Runnable {
 				bahnhofUmfahrungBelegt();
 			}
 		} catch (InterruptedException e) {
-			System.err.println("Fehler - Manuelle Automatik");
+			Log.Error(getClass().getName(), "Manuelle Automatik reagiert nicht", e);
 		}
 
 	}
@@ -32,7 +33,7 @@ public class ManuellHelper implements Runnable {
 			if (Weichen.WEICHEN.getStatusWeiche1() == 'r') {
 				for (Zug zug : ZugManager.INSTANCE.getZugMap().values()) {
 					if (zug.getPosition() == 13) {
-						System.out.println("ACHTUNG Zusammenprall");
+						Log.Info(getClass().getName(), "Achtung zusammenprall!");
 					}
 				}
 			}
@@ -48,7 +49,7 @@ public class ManuellHelper implements Runnable {
 			if (Weichen.WEICHEN.getStatusWeiche1() == 'l') {
 				for (Zug zug : ZugManager.INSTANCE.getZugMap().values()) {
 					if (zug.getPosition() == 13) {
-						System.out.println("ACHTUNG Zusammenprall");
+						Log.Info(getClass().getName(), "Achtung zusammenprall!");
 					}
 				}
 			}

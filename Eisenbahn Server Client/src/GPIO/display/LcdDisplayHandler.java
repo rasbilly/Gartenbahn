@@ -3,8 +3,11 @@ package GPIO.display;
 import com.pi4j.component.lcd.impl.I2CLcdDisplay;
 import com.pi4j.io.i2c.I2CBus;
 
-public class LcdDisplayHandler {
+import ServerHandler.Log;
+import ServerHandler.SocketServerMain;
 
+public class LcdDisplayHandler {
+	static String className = SocketServerMain.class.getCanonicalName();
 	static I2CLcdDisplay lcd;
 
 	public static I2CLcdDisplay getLcd() {
@@ -35,8 +38,7 @@ public class LcdDisplayHandler {
 			lcd.setCursorHome();
 			ladeProgramm();
 		} catch (Exception e) {
-			System.out.println("LCD Display konnte nicht gestratet werden");
-			e.printStackTrace();
+			Log.Error(className, "LCD Display konnte nicht gestratet werden", e);
 		}
 
 	}
@@ -54,7 +56,7 @@ public class LcdDisplayHandler {
 						Thread.sleep(410);
 					}
 				} catch (InterruptedException e) {
-
+					Log.Error(className, "ladeProgramm()", e);
 				}
 				lcd.clear();
 				changeLcdZeileEins("Gartenbahn");

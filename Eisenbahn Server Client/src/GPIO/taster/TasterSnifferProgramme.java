@@ -9,6 +9,7 @@ import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import GPIO.GpioHandler;
 import GPIO.display.LcdDisplayVerwalter;
 import Programme.ProgrammHandler;
+import ServerHandler.Log;
 
 public class TasterSnifferProgramme extends GpioHandler implements Runnable {
 
@@ -33,13 +34,12 @@ public class TasterSnifferProgramme extends GpioHandler implements Runnable {
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				try {
 					if (buttonP1.isLow()) {
-						System.out.println("Programm 1");
+						Log.Track(getClass().getName(), "Taster Programm 1 gedrückt");
 						ProgrammHandler.INSTANCE.programmWaehlen(1);
 						Thread.sleep(1000);
 					}
 				} catch (InterruptedException e1) {
-					System.out.println("!!FEHLER - Taster P1");
-					e1.printStackTrace();
+					Log.Error(getClass().getName(), "Programm 1 Taster", e1);
 				}
 			}
 		});
@@ -49,13 +49,12 @@ public class TasterSnifferProgramme extends GpioHandler implements Runnable {
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				try {
 					if (buttonP2.isLow()) {
-						System.out.println("Programm 2");
+						Log.Track(getClass().getName(), "Taster Programm 2 gedrückt");
 						ProgrammHandler.INSTANCE.programmWaehlen(2);
 						Thread.sleep(1000);
 					}
 				} catch (InterruptedException e2) {
-					System.out.println("!!FEHLER - Taster P2");
-					e2.printStackTrace();
+					Log.Error(getClass().getName(), "Programm 2 Taster", e2);
 				}
 			}
 		});
@@ -65,13 +64,12 @@ public class TasterSnifferProgramme extends GpioHandler implements Runnable {
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				try {
 					if (buttonP3.isLow()) {
-						System.out.println("Programm 3 ");
+						Log.Track(getClass().getName(), "Taster Programm 3 gedrückt");
 						ProgrammHandler.INSTANCE.programmWaehlen(3);
 						Thread.sleep(1000);
 					}
 				} catch (InterruptedException e3) {
-					System.out.println("!!FEHLER - Taster P3");
-					e3.printStackTrace();
+					Log.Error(getClass().getName(), "Programm 3 Taster", e3);
 				}
 			}
 		});
@@ -80,13 +78,12 @@ public class TasterSnifferProgramme extends GpioHandler implements Runnable {
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 				try {
 					if (buttonLcdSwitch.isLow()) {
-						System.out.println("LCD Display Taster!");
+						Log.Track(getClass().getName(), "LCD Display Taster gedrückt");
 						LcdDisplayVerwalter.lcdSchalten();
 						Thread.sleep(1000);
 					}
 				} catch (InterruptedException e4) {
-					System.out.println("!!FEHLER - Display Taster");
-					e4.printStackTrace();
+					Log.Error(getClass().getName(), "Display Taster", e4);
 				}
 			}
 		});

@@ -11,6 +11,7 @@ import javax.swing.JTextArea;
 import GPIO.Signal;
 import GPIO.Weichen;
 import Programme.ProgrammHandler;
+import ServerHandler.Log;
 
 import java.awt.event.ActionListener;
 import java.io.PrintStream;
@@ -30,7 +31,6 @@ public class Hauptmenu extends JFrame {
 	public static Canvas canvasWeiche1_oben, canvasWeiche1_unten, canvasWeiche2_oben, canvasWeiche2_unten,
 			canvasWeiche3_oben, canvasWeiche3_unten;
 	private JLabel labelProgamme, lblKonsole, lblLokschuppen;
-
 
 	public static PositionZuege ps = new PositionZuege();
 
@@ -54,21 +54,20 @@ public class Hauptmenu extends JFrame {
 				new ImageIcon(getClass().getResource("/resources/Gleisanlage_mit_Tags_voll.png")));
 		gleisplan.setBounds(0, 0, 1631, 668);
 		contentPane.add(gleisplan);
-
 	}
 
+	// TODO aktueller sinn? testen
 	private void hintergrund() {
 		// JLabel gleisplan = new JLabel(new
 		// ImageIcon("resources/Gleisanlage_mit_Tags_voll.png"));
 		try {
 		} catch (Exception e) {
-			System.out.println("hier der fehler");
 			e.printStackTrace();
 		}
-
 	}
 
-
+	// TODO Scrollbar
+	// TODO console auslesen über log mit liste???
 	private void console() {
 		final JTextArea area = new JTextArea();
 		JScrollPane scrollPane = new JScrollPane(area);
@@ -207,7 +206,7 @@ public class Hauptmenu extends JFrame {
 				try {
 					Weichen.WEICHEN.schalteWeiche1('t');
 				} catch (InterruptedException e1) {
-					System.err.println("! Weiche 1 konnte nicht geschaltet werden!");
+					Log.Error(getClass().getName(),"! Weiche 1 konnte nicht geschaltet werden!" , e1);
 				}
 			}
 		});
@@ -220,7 +219,7 @@ public class Hauptmenu extends JFrame {
 				try {
 					Weichen.WEICHEN.schalteWeiche2('t');
 				} catch (InterruptedException e1) {
-					System.err.println("! Weiche 2 konnte nicht geschaltet werden!");
+					Log.Error(getClass().getName(),"! Weiche 2 konnte nicht geschaltet werden!" , e1);
 				}
 			}
 		});
@@ -233,7 +232,7 @@ public class Hauptmenu extends JFrame {
 				try {
 					Weichen.WEICHEN.schalteWeiche3('t');
 				} catch (InterruptedException e1) {
-					System.err.println("! Weiche 3 konnte nicht geschaltet werden!");
+					Log.Error(getClass().getName(),"! Weiche 3 konnte nicht geschaltet werden!" , e1);
 				}
 			}
 		});
@@ -246,7 +245,7 @@ public class Hauptmenu extends JFrame {
 				try {
 					Signal.SIGNAL.schalteSignal('t');
 				} catch (InterruptedException e1) {
-					System.err.println("! Signal konnte nicht geschaltet werden!");
+					Log.Error(getClass().getName(),"Signal konnte nicht geschaltet werden!" , e1);
 				}
 			}
 		});
@@ -255,7 +254,7 @@ public class Hauptmenu extends JFrame {
 		butPro1 = new Button("Programm 1");
 		butPro1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Button P1");
+				Log.Track(getClass().getName(), "GUI Button 1 gedrückt");
 				ProgrammHandler.INSTANCE.programmWaehlen(1);
 			}
 		});
@@ -265,7 +264,7 @@ public class Hauptmenu extends JFrame {
 		butPro2 = new Button("Programm 2");
 		butPro2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Button P2");
+				Log.Track(getClass().getName(), "GUI Button 2 gedrückt");
 				ProgrammHandler.INSTANCE.programmWaehlen(2);
 			}
 		});
@@ -275,7 +274,7 @@ public class Hauptmenu extends JFrame {
 		butPro3 = new Button("Programm 3");
 		butPro3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Button P3");
+				Log.Track(getClass().getName(), "GUI Button 3 gedrückt");
 				ProgrammHandler.INSTANCE.programmWaehlen(3);
 			}
 		});
@@ -285,7 +284,7 @@ public class Hauptmenu extends JFrame {
 		butAu = new Button("Programm Automatik");
 		butAu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("butAu");
+				Log.Track(getClass().getName(), "GUI Button Automatik gedrückt");
 				ProgrammHandler.INSTANCE.programmWaehlen(0);
 			}
 		});

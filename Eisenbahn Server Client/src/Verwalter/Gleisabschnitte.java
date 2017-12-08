@@ -3,6 +3,7 @@ package Verwalter;
 import java.awt.Color;
 
 import GUI.Hauptmenu;
+import ServerHandler.Log;
 
 public class Gleisabschnitte extends Hauptmenu{
 	/**
@@ -96,7 +97,7 @@ public class Gleisabschnitte extends Hauptmenu{
 				canvasAbschnitt7.setBackground(Color.GREEN);
 			}
 		} catch (Exception e) {
-			System.out.println("Gleisabschnitee??");
+			Log.Error(getClass().getName(), "Gleisabschnitte konnten nicht aktualisiert werden", e);
 		}
 	}
 

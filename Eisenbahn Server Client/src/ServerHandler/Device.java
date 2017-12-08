@@ -27,7 +27,7 @@ public class Device {
 	/**
 	 * Daten EMPFANGEN
 	 * 
-	 * @return
+	 * @return Empfangene Daten
 	 * @throws IOException
 	 */
 	public String empfangeDaten() {
@@ -38,12 +38,10 @@ public class Device {
 			try {
 				in.close();
 			} catch (IOException e1) {
-				System.out.println("Fehler");
-				e1.printStackTrace();
+				Log.Error(getClass().getName(), "Netzwerkverbindung zu " + id + "verloren", e1);
 			}
+			Log.Error(getClass().getName(), "BufferedReader konnte " + id + " nicht lesen", e);
 			Thread.currentThread().interrupt();
-			System.err.println("!! - Kann Buffet in nicht lesen -> " + id);
-
 		}
 		return null;
 	}
@@ -63,9 +61,9 @@ public class Device {
 
 	List<String> queue = new LinkedList<String>();
 
-/**
- * Sendet und Filtert Daten an Zug
- */
+	/**
+	 * Sendet und Filtert Daten an Zug
+	 */
 	public void sendeQueue() {
 		new Thread(new Runnable() {
 			@Override
@@ -74,17 +72,12 @@ public class Device {
 					try {
 						Thread.sleep(150);
 					} catch (InterruptedException e) {
-
+						e.printStackTrace();
 					}
-//					System.out.println("-------------");
-//					for (String s : queue) {
-//						System.out.println(s);
-//					}
-					
 
 					if (!queue.isEmpty()) {
-						if(queue.get(0).startsWith("t")) {
-							if (((queue.size() > 3) &&queue.get(1).startsWith("t")) && (queue.get(2).startsWith("t"))
+						if (queue.get(0).startsWith("t")) {
+							if (((queue.size() > 3) && queue.get(1).startsWith("t")) && (queue.get(2).startsWith("t"))
 									&& (queue.get(3).startsWith("t"))) {
 								queue.remove(0);
 								queue.remove(0);
@@ -92,13 +85,14 @@ public class Device {
 								out.println(queue.get(0));
 								out.flush();
 								queue.remove(0);
-							} else if ((queue.size() > 2) &&(queue.get(1).startsWith("t")) && (queue.get(2).startsWith("t"))) {
+							} else if ((queue.size() > 2) && (queue.get(1).startsWith("t"))
+									&& (queue.get(2).startsWith("t"))) {
 								queue.remove(0);
 								queue.remove(0);
 								out.println(queue.get(0));
 								out.flush();
 								queue.remove(0);
-							} else if ((queue.size() > 1) &&(queue.get(1).startsWith("t"))) {
+							} else if ((queue.size() > 1) && (queue.get(1).startsWith("t"))) {
 								queue.remove(0);
 								out.println(queue.get(0));
 								out.flush();

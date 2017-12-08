@@ -1,6 +1,6 @@
 package ServerHandler;
 
-
+import java.io.IOException;
 
 public class Heartbeat implements Runnable {
 
@@ -20,10 +20,9 @@ public class Heartbeat implements Runnable {
 
 		while (true) {
 			String temp = Integer.toString(zug.getTempo());
-			zug.sendeDaten("h"+temp);
+			zug.sendeDaten("h" + temp);
 			zug.aliveHelper = false;
 
-					
 			while ((System.currentTimeMillis() - timeStart) < 1800) {
 
 				if (zug.aliveHelper == true) {
@@ -31,27 +30,30 @@ public class Heartbeat implements Runnable {
 					warten(4000);
 					break;
 				}
-
 			}
 			timeStart = System.currentTimeMillis();
 
 			if (zug.aliveHelper == false) {
 				if (helfer < 5) {
-					if(helfer>2){
-					System.out.println(zug.getId() + " Verbindung verloren! Neuversuch: " + helfer);
+					if (helfer > 2) {
+						Log.Warning(getClass().getName(), "Verbindung zu " + zug.getId() + "verloren",
+								"Neuversuch: " + helfer, false);
 					}
 					try {
-						zug.sendeDaten("h"+temp);
+						zug.sendeDaten("h" + temp);
 					} catch (Exception e) {
-						System.out.println(zug.getId()+" -- konte nicht gesendet werden");
+						Log.Warning(getClass().getName(), "h konnte nicht an " + zug.getId() + "gesendet werden", e);
 					}
 					helfer++;
 				} else if (helfer == 5) {
-
 					zug.setAlive(false);
 					zug.setPosition(0);
-					System.out.println("!! " +zug.getId()+" ist tot !!");
-					ZugManager.INSTANCE.zugMap.remove(zug.getId(), zug); //TODO löscht altes tempo :((
+					Log.Warning(getClass().getName(), zug.getId()+" abgemeldet!","keine Verbindung mehr möglich",new IOException("Thread löschen"));
+					ZugManager.INSTANCE.zugMap.remove(zug.getId(), zug); // TODO
+																			// löscht
+																			// altes
+																			// tempo
+																			// :((
 
 					Thread.currentThread().interrupt();
 					break;

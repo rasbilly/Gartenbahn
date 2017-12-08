@@ -20,15 +20,15 @@ public class ZugManager {
 	public static final ZugManager INSTANCE = new ZugManager();
 
 	/**
-	 * Fügt Züge zur Map hinzu und überschreibt alte (gleiche), aber übernimmt alle
-	 * werte.
+	 * Fügt Züge zur Map hinzu und überschreibt alte (gleiche), aber übernimmt
+	 * alle werte.
 	 * 
 	 * @param zug
 	 */
 	public void registerZug(Zug zug) {
 		// Wenn es den ZugName schon gibt, dann
 		if (zugMap.containsKey(zug.getZugId())) {
-			//TODO holt altes tempo nicht mehr
+			// TODO holt altes tempo nicht mehr
 			// hole altes Tempo und Position
 			zug.setTempo(zugMap.get(zug.getZugId()).getTempo());
 			zug.setPosition(zugMap.get(zug.getZugId()).getPosition());
@@ -46,8 +46,8 @@ public class ZugManager {
 
 		if (kommando.startsWith("t")) {
 			zug.setTempo(Integer.parseInt(kommando.substring(1)));
-			System.out.println("Tempo " + kommando.substring(1) + " wurde an " + zug.getId() + " gesendet.");
-		}
+			Log.Track(getClass().getName(),"Tempo " + kommando.substring(1) + " wurde an " + zug.getId() + " gesendet.",null);
+			}
 		zug.sendeDaten(kommando);
 	}
 

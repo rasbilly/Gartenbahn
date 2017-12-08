@@ -13,44 +13,47 @@ import GPIO.display.LcdDisplayHandler;
 import GPIO.drehregler.DrehreglerHandler;
 import GPIO.taster.TasterSnifferProgramme;
 import GPIO.taster.TasterSnifferSignalWeiche;
+import ServerHandler.Log;
 
 public class GpioHandler {
 
 	public GpioHandler() {
-		// System.out.println("GPIO Handler");
 	}
-
-	protected static GpioController gpio = GpioFactory.getInstance();
+	
+	protected static GpioController gpio;
 
 	protected static MCP23017GpioProvider expander1;
 	protected static MCP23017GpioProvider expander2;
 	protected static MCP23017GpioProvider expander3;
 	protected static MCP23017GpioProvider expander4;
 
-	public void portExpanderErsteller() throws UnsupportedBusNumberException, IOException {
+	public void portExpanderErsteller()  {
+		try {
+			gpio = GpioFactory.getInstance();
+		} catch (Exception e) {
+			System.out.println("lalal");
+			Log.Error(getClass().getName(), "GPIO get Instance", e);
+			
+		}
 		try {
 			expander1 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x20);
 		} catch (Exception e) {
-			System.out.println("!!Fehler - Expander 1");
-			e.printStackTrace();
+			Log.Error(getClass().getName(), "Expander 1", e);
 		}
 		try {
 			expander2 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x21);
 		} catch (Exception e) {
-			System.out.println("!!Fehler - Expander 2");
-			e.printStackTrace();
+			Log.Error(getClass().getName(), "Expander 2", e);
 		}
 		try {
 			expander3 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x22);
 		} catch (Exception e) {
-			System.out.println("!!Fehler - Expander 3");
-			e.printStackTrace();
+			Log.Error(getClass().getName(), "Expander 3", e);
 		}
 		try {
 			expander4 = new MCP23017GpioProvider(I2CBus.BUS_1, 0x23);
 		} catch (Exception e) {
-			System.out.println("!!Fehler - Expander 4");
-			e.printStackTrace();
+			Log.Error(getClass().getName(), "Expander 4", e);
 		}
 	}
 
@@ -58,11 +61,9 @@ public class GpioHandler {
 	 * Threads für Taster und andere eingaben erstellen
 	 */
 	public void threadErstellerEingang() {
-		System.out.println("Threads erstellen");
 		try {
 			LcdDisplayHandler.startLcdDisplay();
-			
-			
+
 			DrehreglerHandler drehHand = new DrehreglerHandler();
 			Thread tasterSignalWeiche = new Thread(new TasterSnifferSignalWeiche());
 			Thread tasterProgramme = new Thread(new TasterSnifferProgramme());
@@ -72,18 +73,13 @@ public class GpioHandler {
 			DigitHandler dh = new DigitHandler();
 			dh.threadErsteller();
 
-			
-
 			drehHand.drehreglerErsteller();
 			tasterSignalWeiche.start();
 			tasterProgramme.start();
 			magSensoren.start();
 
-			
-
-		} catch (Exception r) {
-			r.printStackTrace();
-			System.out.println("thrad nicht erstellt");
+		} catch (Exception e) {
+			Log.Error(getClass().getName(), "GPIO Pins konnten nicht erstellt werden. Ports werden geschlossen", e);
 			gpio.shutdown();
 			gpio.unexportAll();
 		}

@@ -7,6 +7,7 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinState;
 
 import GUI.Hauptmenu;
+import ServerHandler.Log;
 
 
 public class Signal extends GpioHandler {
@@ -48,7 +49,7 @@ public class Signal extends GpioHandler {
 			signal1A.low();
 			signal1B.low();
 			statusSignal = 'g';
-			System.out.println("Signal Grün");
+			Log.Track(getClass().getName(), "Signal Grün");
 			Hauptmenu.butSignal.setBackground(Color.green);
 
 		} else if (c == 's') {
@@ -60,7 +61,7 @@ public class Signal extends GpioHandler {
 			signal1A.low();
 			signal1B.low();
 			statusSignal = 's';
-			System.out.println("Signal Rot");
+			Log.Track(getClass().getName(), "Signal Rot");
 			Hauptmenu.butSignal.setBackground(Color.red);
 
 		} else if (c == 't') {
@@ -69,10 +70,10 @@ public class Signal extends GpioHandler {
 			} else if (statusSignal == 'g') {
 				schalteSignal('s');
 			} else {
-				System.err.println("Signal - Fehler Toggle");
+				Log.Warning(getClass().getName(), "Fehler Toggle","Signal", false);
 			}
 		} else {
-			System.err.println("Signal - Fehlerhafte Stellung");
+			Log.Warning(getClass().getName(), "Fehlerhafte Stellung","Signal", false);
 		}
 	}
 

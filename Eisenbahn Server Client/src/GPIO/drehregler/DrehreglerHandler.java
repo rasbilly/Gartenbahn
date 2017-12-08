@@ -1,14 +1,13 @@
 package GPIO.drehregler;
 
 import GPIO.GpioHandler;
+import ServerHandler.Log;
 import ServerHandler.Zug;
 
 public class DrehreglerHandler extends GpioHandler {
 
 	public DrehreglerHandler() {
 	}
-
-	
 
 	public void drehreglerErsteller() {
 		try {
@@ -19,10 +18,9 @@ public class DrehreglerHandler extends GpioHandler {
 			drehregler2.start();
 			drehregler3.start();
 		} catch (Exception e) {
-			System.err.println("!!Fehler - Drehregler Erstellen Threads");
-		}
+			Log.Error(getClass().getName(), "Drehregler Erstellen Threads", e);}
 	}
-
+//TODO syso in log wandeln (INFO)
 	/**
 	 * Gibt das neue Tempo auf der Console aus
 	 * 
